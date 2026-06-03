@@ -3,53 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Audio & Video Workspace</title>
+    <title>Ultimate Audio & Video Workspace v4.0</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
-        /* 사운드 합성을 위한 Web Audio API 노드 관리용 스타일 및 애니메이션 구동 */
         .active-noise { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex p-6 gap-6">
 
-    <div class="w-80 bg-slate-800 p-6 rounded-2xl shadow-xl flex flex-col gap-6 border border-slate-700">
+    <div class="w-80 bg-slate-800 p-6 rounded-2xl shadow-xl flex flex-col gap-5 border border-slate-700 overflow-y-auto max-h-[calc(100vh-3rem)]">
         <div>
-            <h2 class="text-xl font-bold tracking-tight text-blue-400 mb-1">Sound Effects</h2>
-            <p class="text-xs text-slate-400">시작/종료 알림음 및 집중 사운드</p>
+            <h2 class="text-xl font-bold tracking-tight text-blue-400 mb-1">Sound FX Station</h2>
+            <p class="text-xs text-slate-400">상황별 맞춤 효과음 및 집중 사운드</p>
         </div>
 
         <hr class="border-slate-700">
 
-        <div class="space-y-3">
-            <h3 class="text-sm font-semibold text-slate-300">TTS Chime Option</h3>
-            <label class="flex items-center gap-3 bg-slate-750 p-3 rounded-lg border border-slate-700 cursor-pointer hover:bg-slate-700 transition">
+        <div class="space-y-2">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">TTS Option</h3>
+            <label class="flex items-center gap-3 bg-slate-750 p-2.5 rounded-lg border border-slate-700 cursor-pointer hover:bg-slate-700 transition">
                 <input type="checkbox" id="useChime" checked class="w-4 h-4 text-blue-600 rounded bg-slate-900 border-slate-700">
-                <span class="text-sm">TTS 시작/종료 효과음 자동 재생</span>
+                <span class="text-sm">TTS 시작/종료 효과음 자동</span>
             </label>
         </div>
 
-        <div class="space-y-3">
-            <h3 class="text-sm font-semibold text-slate-300">Manual Triggers</h3>
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="playChime(true)" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition">🔔 시작 띵동</button>
-                <button onclick="playChime(false)" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition">🔕 종료 띵동</button>
-                <button onclick="playBell()" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition col-span-2">⛪ 깊은 종소리 (Bell)</button>
+        <div class="space-y-2">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Sound Presets (6종)</h3>
+            <div class="flex flex-col gap-1.5">
+                <button onclick="playChime(true)" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">🔔 기본 시작 알림 (띵동댕동)</button>
+                <button onclick="playChime(false)" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">🔕 기본 종료 알림 (띵동동동)</button>
+                <button onclick="playSchoolBell()" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">🏫 정겨운 학교 종소리 (솔도라솔~)</button>
+                <button onclick="playEventGong()" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">🎺 행사 시작 징글 (개회 선언)</button>
+                <button onclick="playSingingBowl()" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">🧘 정신 집중 싱잉볼 (명상/치유)</button>
+                <button onclick="playDeepBell()" class="w-full bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition text-left">⛪ 깊은 사찰/교회 대종소리</button>
             </div>
         </div>
 
-        <div class="space-y-3">
-            <h3 class="text-sm font-semibold text-slate-300">Focus Ambient (Noise)</h3>
-            <div class="flex flex-col gap-2">
-                <button id="whiteNoiseBtn" onclick="toggleNoise('white')" class="w-full bg-slate-700 hover:bg-slate-600 py-2.5 text-xs rounded-lg font-medium transition">⚪ 화이트 노이즈 켜기</button>
-                <button id="pinkNoiseBtn" onclick="toggleNoise('pink')" class="w-full bg-slate-700 hover:bg-slate-600 py-2.5 text-xs rounded-lg font-medium transition">🟤 핑크 노이즈 켜기</button>
+        <div class="space-y-2">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Focus Ambient</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <button id="whiteNoiseBtn" onclick="toggleNoise('white')" class="bg-slate-700 hover:bg-slate-600 py-2 text-xs rounded-lg font-medium transition">⚪ 화이트</button>
+                <button id="pinkNoiseBtn" onclick="toggleNoise('pink')" class="bg-slate-700 hover:bg-slate-600 py-2 text-xs rounded-lg font-medium transition">🟤 핑크</button>
             </div>
             <div class="pt-1">
-                <label class="block text-xxs text-slate-400 mb-1">노이즈 볼륨 조절</label>
+                <label class="block text-xxs text-slate-400 mb-1">앰비언트 볼륨</label>
                 <input type="range" id="noiseVolume" min="0" max="0.1" step="0.01" value="0.03" class="w-full accent-blue-500">
             </div>
         </div>
@@ -60,7 +58,7 @@
         <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 space-y-4">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold tracking-tight text-white">In-Browser TTS & Video Hub</h1>
-                <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-300">Cross-Browser Engine v2.5</span>
+                <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-300">Advanced Capture Engine v4.0</span>
             </div>
             
             <div class="grid grid-cols-3 gap-4">
@@ -70,7 +68,7 @@
                 </div>
                 <div class="col-span-2">
                     <label class="block text-sm font-medium text-slate-400 mb-1">Text to Speak</label>
-                    <textarea id="ttsText" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100" placeholder="텍스트를 입력하세요...">안녕하세요! 기능이 한층 업그레이드된 통합 오디오 워크스페이스입니다.</textarea>
+                    <textarea id="ttsText" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100" placeholder="텍스트를 입력하세요...">안녕하세요! 실시간 구간 캡처 기능과 고품질 다이내믹 사운드가 구현된 마스터 워크스페이스입니다.</textarea>
                 </div>
             </div>
 
@@ -90,24 +88,38 @@
                         <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm" placeholder="유튜브 영상 링크 또는 ID 입력">
                         <input type="text" id="ytTitle" class="w-40 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm" placeholder="영상 제목 명명">
                     </div>
-                    <div class="grid grid-cols-4 gap-2 text-xs">
-                        <div>
-                            <label class="block text-slate-400 mb-1">시작 시점(초)</label>
-                            <input type="number" id="startSec" value="0" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                    
+                    <div class="grid grid-cols-2 gap-3 p-3 bg-slate-850 rounded-lg border border-slate-750">
+                        <div class="space-y-1">
+                            <label class="block text-xs text-slate-400">시작 구간 (초)</label>
+                            <div class="flex gap-1">
+                                <input type="number" id="startSec" value="0" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm text-center">
+                                <button onclick="captureCurrentTime('start')" class="bg-blue-600 hover:bg-blue-500 text-xxs font-medium px-2 rounded whitespace-nowrap">⏱️ 현재 위치</button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-slate-400 mb-1">마무리 시점(초)</label>
-                            <input type="number" id="endSec" value="60" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        <div class="space-y-1">
+                            <label class="block text-xs text-slate-400">마무리 구간 (초)</label>
+                            <div class="flex gap-1">
+                                <input type="number" id="endSec" value="60" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm text-center">
+                                <button onclick="captureCurrentTime('end')" class="bg-blue-600 hover:bg-blue-500 text-xxs font-medium px-2 rounded whitespace-nowrap">⏱️ 현재 위치</button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-slate-400 mb-1">페이드 인(초)</label>
-                            <input type="number" id="fadeIn" value="2" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        <div class="space-y-1">
+                            <label class="block text-xs text-slate-400">페이드 인 (초)</label>
+                            <div class="flex gap-1">
+                                <input type="number" id="fadeIn" value="2" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm text-center">
+                                <button onclick="captureDuration('in')" class="bg-indigo-600 hover:bg-indigo-500 text-xxs px-1.5 rounded whitespace-nowrap">현재까지</button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-slate-400 mb-1">페이드 아웃(초)</label>
-                            <input type="number" id="fadeOut" value="2" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        <div class="space-y-1">
+                            <label class="block text-xs text-slate-400">페이드 아웃 (초)</label>
+                            <div class="flex gap-1">
+                                <input type="number" id="fadeOut" value="2" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm text-center">
+                                <button onclick="captureDuration('out')" class="bg-indigo-600 hover:bg-indigo-500 text-xxs px-1.5 rounded whitespace-nowrap">남은시간</button>
+                            </div>
                         </div>
                     </div>
+
                     <div class="flex justify-between items-center pt-1">
                         <div class="flex gap-2">
                             <button onclick="saveVideoItem()" id="saveBtn" class="bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-4 py-1.5 rounded transition text-white">비디오 추가 / 저장</button>
@@ -123,19 +135,22 @@
                     </div>
                 </div>
 
-                <div class="flex-1 overflow-y-auto max-h-64 space-y-2" id="videoListContainer">
-                    </div>
+                <div class="flex-1 overflow-y-auto max-h-56 space-y-2" id="videoListContainer"></div>
             </div>
 
             <div class="col-span-5 bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center min-h-[340px]">
                 <div class="w-full flex justify-between items-center mb-2">
-                    <h2 class="text-sm font-bold text-slate-300">Mini Video Display</h2>
+                    <h2 class="text-sm font-bold text-slate-300">Mini Video Display Area</h2>
                     <span id="playingTitle" class="text-xs text-blue-400 font-medium truncate max-w-[180px]">재생 중인 영상 없음</span>
                 </div>
-                <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center relative border border-slate-700">
-                    <div id="ytPlayerNode"></div>
+                
+                <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center relative border border-slate-700" id="playerWrapper">
+                    <div class="text-slate-500 text-xs text-center p-4">목록에서 비디오를 재생하거나,<br>상단에 링크를 기입해 캡처 기능을 사용하세요.</div>
                 </div>
-                <p class="text-xxs text-slate-500 mt-2 text-center w-full">※ 지정된 구간을 넘어가면 페이드 아웃 후 자동 정지 및 볼륨 초기화 처리가 작동합니다.</p>
+                <div class="w-full flex gap-1 mt-2">
+                    <button onclick="controlActiveVideo('play')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded">▶️ 재생</button>
+                    <button onclick="controlActiveVideo('pause')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded">⏸️ 일시정지</button>
+                </div>
             </div>
 
         </div>
@@ -143,116 +158,152 @@
 
     <script>
         /* ==========================================================================
-           CORE 1. WEB AUDIO API 기반 효과음 및 노이즈 생성 엔진
+           CORE 1. WEB AUDIO API 기반 효과음 생성 장치 (확장 6종 프리셋)
            ========================================================================== */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let noiseNode = null;
         let noiseGain = null;
 
-        // 띵동댕동 소리 합성 장치 (시작: 상행선 음계, 종료: 하행선 음계)
+        // 1 & 2. 기본 알림음 (띵동댕동 / 띵동동동)
         function playChime(isStart) {
             const now = audioCtx.currentTime;
-            const freqs = isStart ? [523.25, 659.25, 783.99, 1046.50] : [1046.50, 783.99, 659.25, 523.25]; // C-E-G-C 대역 아르페지오
-            
+            const freqs = isStart ? [523.25, 659.25, 783.99, 1046.50] : [1046.50, 783.99, 659.25, 523.25];
             freqs.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
-                
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, now + index * 0.12);
-                
-                gainNode.gain.setValueAtTime(0.3, now + index * 0.12);
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.12 + 0.6);
-                
+                osc.frequency.setValueAtTime(freq, now + index * 0.1);
+                gainNode.gain.setValueAtTime(0.2, now + index * 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.1 + 0.5);
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
-                
-                osc.start(now + index * 0.12);
-                osc.stop(now + index * 0.12 + 0.6);
+                osc.start(now + index * 0.1);
+                osc.stop(now + index * 0.1 + 0.5);
             });
         }
 
-        // 깊고 웅장한 종소리 합성 알고리즘 (FM 및 배음 구조 모사)
-        function playBell() {
+        // 3. 정겨운 학교 종소리 (4타 가락 모사: 솔-도-라-솔)
+        function playSchoolBell() {
             const now = audioCtx.currentTime;
-            const fundamental = 220; // 기본 주파수 (A3)
-            const partials = [1, 1.2, 1.5, 2, 2.5, 3]; // 불협화 종소리 배음 구조 변조
-            
-            partials.forEach((p) => {
+            const notes = [392.00, 523.25, 440.00, 392.00]; // G4 - C5 - A4 - G4
+            notes.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + index * 0.6);
+                gainNode.gain.setValueAtTime(0.25, now + index * 0.6);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + index * 0.6 + 0.8);
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start(now + index * 0.6);
+                osc.stop(now + index * 0.6 + 0.9);
+            });
+        }
+
+        // 4. 행사 시작 징글 (화려한 브라스 개회 선언 효과)
+        function playEventGong() {
+            const now = audioCtx.currentTime;
+            const chords = [261.63, 329.63, 392.00, 523.25]; // C메이저 코드 동시 화음 연출
+            chords.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'sawtooth'; // 브라스 느낌을 위한 톱니파 변조
+                osc.frequency.setValueAtTime(freq, now);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.02, now + 0.4); // 비브라토 효과
                 
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(fundamental * p, now);
+                gainNode.gain.setValueAtTime(0.08, now);
+                gainNode.gain.linearRampToValueAtTime(0.12, now + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
                 
-                // 고조파일수록 빨리 감쇄하는 자연 물리 현상 적용
-                const duration = 2.5 / p; 
+                // 로우패스 필터로 귀가 아프지 않게 보정
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(1200, now);
+
+                osc.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 1.3);
+            });
+        }
+
+        // 5. 명상 및 집중용 싱잉볼 Sound (비트 주파수 간섭 기법 탑재)
+        function playSingingBowl() {
+            const now = audioCtx.currentTime;
+            const baseFreq = 293.66; // D4 대역 (치유의 대역)
+            // 미세하게 다른 주파수를 동시에 틀어 우웅~ 하는 간섭 파동(Beat) 유도
+            const detunes = [0, 1.5, -2, 3.5]; 
+            
+            detunes.forEach((dt) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(baseFreq + dt, now);
+                
                 gainNode.gain.setValueAtTime(0.15, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 4.0); // 4초간 길게 지속
                 
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
-                
+                osc.start(now);
+                osc.stop(now + 4.1);
+            });
+        }
+
+        // 6. 깊고 웅장한 사찰/대종소리
+        function playDeepBell() {
+            const now = audioCtx.currentTime;
+            const base = 110; // A2 저음역대
+            const partials = [1, 1.2, 1.48, 1.98, 2.3, 3];
+            partials.forEach((p) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(base * p, now);
+                const duration = 3.5 / p;
+                gainNode.gain.setValueAtTime(0.15, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
                 osc.start(now);
                 osc.stop(now + duration);
             });
         }
 
-        // 오디오 버퍼 조작을 통한 리얼타임 집중 소음(White/Pink Noise) 생성 장치
+        // 백색소음 엔진
         function toggleNoise(type) {
             const volumeInput = document.getElementById('noiseVolume');
-            
             if (noiseNode) {
-                noiseNode.stop();
-                noiseNode = null;
+                noiseNode.stop(); noiseNode = null;
                 document.getElementById('whiteNoiseBtn').classList.remove('bg-blue-600', 'active-noise');
                 document.getElementById('pinkNoiseBtn').classList.remove('bg-amber-600', 'active-noise');
                 if (noiseGain) noiseGain.disconnect();
                 return;
             }
-
             const bufferSize = 2 * audioCtx.sampleRate;
             const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const output = noiseBuffer.getChannelData(0);
 
             if (type === 'white') {
-                for (let i = 0; i < bufferSize; i++) {
-                    output[i] = Math.random() * 2 - 1;
-                }
+                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
                 document.getElementById('whiteNoiseBtn').classList.add('bg-blue-600', 'active-noise');
             } else if (type === 'pink') {
-                let b0, b1, b2, b3, b4, b5, b6;
-                b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+                let b0, b1, b2, b3, b4, b5, b6; b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
                 for (let i = 0; i < bufferSize; i++) {
                     let white = Math.random() * 2 - 1;
-                    b0 = 0.99886 * b0 + white * 0.0555179;
-                    b1 = 0.99332 * b1 + white * 0.0750759;
-                    b2 = 0.96900 * b2 + white * 0.1538520;
-                    b3 = 0.86650 * b3 + white * 0.3104856;
-                    b4 = 0.55000 * b4 + white * 0.5329522;
-                    b5 = -0.7616 * b5 - white * 0.0168980;
-                    output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-                    output[i] *= 0.11; // 대역폭 보정
-                    b6 = white * 0.115926;
+                    b0 = 0.99886 * b0 + white * 0.0555179; b1 = 0.99332 * b1 + white * 0.0750759; b2 = 0.96900 * b2 + white * 0.1538520;
+                    b3 = 0.86650 * b3 + white * 0.3104856; b4 = 0.55000 * b4 + white * 0.5329522; b5 = -0.7616 * b5 - white * 0.0168980;
+                    output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362; output[i] *= 0.11; b6 = white * 0.115926;
                 }
                 document.getElementById('pinkNoiseBtn').classList.add('bg-amber-600', 'active-noise');
             }
 
-            noiseNode = audioCtx.createBufferSource();
-            noiseNode.buffer = noiseBuffer;
-            noiseNode.loop = true;
-
-            noiseGain = audioCtx.createGain();
-            noiseGain.gain.setValueAtTime(parseFloat(volumeInput.value), audioCtx.currentTime);
-
-            noiseNode.connect(noiseGain);
-            noiseGain.connect(audioCtx.destination);
-            noiseNode.start();
-
-            // 실시간 볼륨 슬라이더 이벤트 연결
-            volumeInput.oninput = (e) => {
-                if(noiseGain) noiseGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
-            };
+            noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = noiseBuffer; noiseNode.loop = true;
+            noiseGain = audioCtx.createGain(); noiseGain.gain.setValueAtTime(parseFloat(volumeInput.value), audioCtx.currentTime);
+            noiseNode.connect(noiseGain); noiseGain.connect(audioCtx.destination); noiseNode.start();
+            volumeInput.oninput = (e) => { if(noiseGain) noiseGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime); };
         }
 
         /* ==========================================================================
@@ -267,108 +318,76 @@
             allVoices = synth.getVoices();
             if (voiceSelect.value) lastSelectedVoiceName = voiceSelect.value;
             voiceSelect.innerHTML = '';
-
-            if (allVoices.length === 0) {
-                voiceSelect.innerHTML = '<option value="">등록 가능한 목소리 없음</option>';
-                return;
-            }
-
+            if (allVoices.length === 0) { voiceSelect.innerHTML = '<option value="">등록 가능한 목소리 없음</option>'; return; }
             allVoices.forEach(voice => {
-                const option = document.createElement('option');
-                option.value = voice.name;
+                const option = document.createElement('option'); option.value = voice.name;
                 let qualityHint = voice.name.includes('Neural') || voice.name.includes('Natural') ? ' ✨' : '';
-                option.textContent = `${voice.name} (${voice.lang})${qualityHint}`;
-                voiceSelect.appendChild(option);
+                option.textContent = `${voice.name} (${voice.lang})${qualityHint}`; voiceSelect.appendChild(option);
             });
-
-            if (lastSelectedVoiceName) {
-                if (allVoices.some(v => v.name === lastSelectedVoiceName)) {
-                    voiceSelect.value = lastSelectedVoiceName;
-                }
-            }
+            if (lastSelectedVoiceName && allVoices.some(v => v.name === lastSelectedVoiceName)) voiceSelect.value = lastSelectedVoiceName;
         }
-
-        if (typeof synth !== 'undefined') {
-            updateVoiceList();
-            if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = updateVoiceList;
-        }
+        if (typeof synth !== 'undefined') { updateVoiceList(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = updateVoiceList; }
 
         function speakText() {
-            if (synth.speaking || synth.pending) {
-                synth.cancel();
-                setTimeout(startSpeaking, 150);
-                return;
-            }
+            if (synth.speaking || synth.pending) { synth.cancel(); setTimeout(startSpeaking, 150); return; }
             startSpeaking();
         }
-
         function startSpeaking() {
-            const text = document.getElementById('ttsText').value.trim();
-            if (!text) return;
-
-            // 옵션 선택 시 시작 차임 벨 울림
-            if (document.getElementById('useChime').checked) {
-                playChime(true);
-            }
-
+            const text = document.getElementById('ttsText').value.trim(); if (!text) return;
+            if (document.getElementById('useChime').checked) playChime(true);
             const targetVoice = allVoices.find(v => v.name === voiceSelect.value);
             const utterance = new SpeechSynthesisUtterance(text);
-            
-            if (targetVoice) {
-                utterance.voice = targetVoice;
-                utterance.lang = targetVoice.lang;
-            }
-
-            utterance.onend = () => {
-                if (document.getElementById('useChime').checked) playChime(false);
-            };
-
-            // 브라우저 백그라운드 멈춤 극복 가속 하트비트 스크립트
-            const heartbeat = setInterval(() => {
-                if (!synth.speaking) clearInterval(heartbeat);
-                else { synth.pause(); synth.resume(); }
-            }, 10000);
-
+            if (targetVoice) { utterance.voice = targetVoice; utterance.lang = targetVoice.lang; }
+            utterance.onend = () => { if (document.getElementById('useChime').checked) playChime(false); };
+            const heartbeat = setInterval(() => { if (!synth.speaking) clearInterval(heartbeat); else { synth.pause(); synth.resume(); } }, 10000);
             synth.speak(utterance);
         }
-
-        function stopText() {
-            if (synth.speaking) synth.cancel();
-        }
-
+        function stopText() { if (synth.speaking) synth.cancel(); }
 
         /* ==========================================================================
-           CORE 3. YOUTUBE IFRAME API & 페이드 인/아웃 고정밀 트래커
+           CORE 3. REALTIME TIME-CAPTURE & AD-FREE PLAYER (구간 동적 타임스탬프 획득)
            ========================================================================== */
-        let ytPlayer = null;
-        let videoDataList = []; // 전체 영속 저장소 비디오 객체 배열
-        let currentEditingId = null; // 수정 연동 추적 ID
-        let fadeInterval = null;
+        let videoDataList = [];
+        let currentEditingId = null;
         let timeMonitorInterval = null;
+        let activeVideoElapsedTime = 0; // 실시간 타이머 가상 동기화 변수
+        let globalPlaybackState = "stopped";
 
-        // 유튜브 프레임워크 초기화 바인딩
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('ytPlayerNode', {
-                height: '100%',
-                width: '100%',
-                videoId: '', 
-                playerVars: { 'playsinline': 1, 'controls': 1 },
-                events: { 'onStateChange': onPlayerStateChange }
-            });
-        }
-
-        // 비디오 식별 추출 정규식 헬퍼 함수
         function extractVideoId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : url;
         }
 
-        // 비디오 추가 및 수정 통합 라우터
+        // [실시간 캡처 신기능 1] 버튼 누른 현재 재생 시점을 폼에 고정 입력
+        function captureCurrentTime(target) {
+            if (globalPlaybackState !== "playing") {
+                alert("영상이 재생 중이거나 대기 상태일 때 캡처가 정밀하게 작동합니다.");
+                return;
+            }
+            if (target === 'start') {
+                document.getElementById('startSec').value = Math.max(0, activeVideoElapsedTime);
+            } else if (target === 'end') {
+                document.getElementById('endSec').value = activeVideoElapsedTime;
+            }
+        }
+
+        // [실시간 캡처 신기능 2] 상대적 간격 기반 페이드 자동 할당 계산기
+        function captureDuration(mode) {
+            const current = activeVideoElapsedTime;
+            const start = parseInt(document.getElementById('startSec').value) || 0;
+            const end = parseInt(document.getElementById('endSec').value) || 60;
+
+            if (mode === 'in') {
+                document.getElementById('fadeIn').value = Math.max(0, current - start);
+            } else if (mode === 'out') {
+                document.getElementById('fadeOut').value = Math.max(0, end - current);
+            }
+        }
+
         function saveVideoItem() {
             const urlInput = document.getElementById('ytUrl').value.trim();
             const titleInput = document.getElementById('ytTitle').value.trim();
-            
             if(!urlInput) { alert("유튜브 링크 또는 ID를 기입하세요."); return; }
             
             const vId = extractVideoId(urlInput);
@@ -385,24 +404,17 @@
             };
 
             if (currentEditingId) {
-                // 수정 모드 반영
                 const idx = videoDataList.findIndex(v => v.id === currentEditingId);
                 if(idx !== -1) videoDataList[idx] = item;
-                currentEditingId = null;
-                document.getElementById('saveBtn').innerText = "비디오 추가 / 저장";
             } else {
-                // 신규 모드 추가
                 videoDataList.push(item);
             }
-
-            clearForm();
-            renderVideoList();
+            clearForm(); renderVideoList();
         }
 
         function renderVideoList() {
             const container = document.getElementById('videoListContainer');
             container.innerHTML = '';
-
             videoDataList.forEach(item => {
                 const div = document.createElement('div');
                 div.className = "flex justify-between items-center bg-slate-900 p-3 rounded-xl border border-slate-700 hover:border-blue-500 transition";
@@ -420,183 +432,122 @@
             });
         }
 
-        function editVideoItem(id) {
-            const item = videoDataList.find(v => v.id === id);
-            if(!item) return;
-
-            currentEditingId = item.id;
-            document.getElementById('ytUrl').value = `https://www.youtube.com/watch?v=${item.videoId}`;
-            document.getElementById('ytTitle').value = item.title;
-            document.getElementById('document.getElementById');
-            document.getElementById('startSec').value = item.startSec;
-            document.getElementById('endSec').value = item.endSec;
-            document.getElementById('fadeIn').value = item.fadeIn;
-            document.getElementById('fadeOut').value = item.fadeOut;
-
-            document.getElementById('saveBtn').innerText = "변경사항 저장";
-        }
-
-        function deleteVideoItem(id) {
-            videoDataList = videoDataList.filter(v => v.id !== id);
-            renderVideoList();
-        }
-
-        function clearForm() {
-            currentEditingId = null;
-            document.getElementById('ytUrl').value = '';
-            document.getElementById('ytTitle').value = '';
-            document.getElementById('startSec').value = '0';
-            document.getElementById('endSec').value = '60';
-            document.getElementById('fadeIn').value = '2';
-            document.getElementById('fadeOut').value = '2';
-            document.getElementById('saveBtn').innerText = "비디오 추가 / 저장";
-        }
-
-        // 특정 리스트 아이템 실행 및 정밀 오디오 페이드 볼륨 제어 매커니즘
+        // 플레이어 구동 엔진
         function playVideoItem(id) {
             const item = videoDataList.find(v => v.id === id);
-            if (!item || !ytPlayer) return;
+            if (!item) return;
 
-            // 기존 인터벌 타임라인 소멸 처리
-            clearInterval(fadeInterval);
             clearInterval(timeMonitorInterval);
-
             document.getElementById('playingTitle').innerText = item.title;
             
-            // 지정 큐 지점으로 로드 및 재생
-            ytPlayer.loadVideoById({
-                videoId: item.videoId,
-                startSeconds: item.startSec
-            });
+            const wrapper = document.getElementById('playerWrapper');
+            wrapper.innerHTML = ''; 
 
-            // 오디오 페이드 인 프로세스 세팅
+            const iframe = document.createElement('iframe');
+            iframe.id = "activeEmbedPlayer";
+            iframe.className = "w-full h-full border-0 absolute top-0 left-0";
+            // 실시간 상호작용 제어를 위해 포스트 메시지 통로 개방 세팅
+            iframe.src = `https://www.youtube-nocookie.com/embed/${item.videoId}?start=${item.startSec}&end=${item.endSec}&autoplay=1&rel=0&controls=1&enablejsapi=1`;
+            iframe.allow = "autoplay; encrypted-media";
+            
             if (item.fadeIn > 0) {
-                ytPlayer.setVolume(0);
-                let currentVol = 0;
-                const step = 100 / (item.fadeIn * 10); // 100ms마다 볼륨 상승량 계산
-                
-                fadeInterval = setInterval(() => {
-                    currentVol += step;
-                    if (currentVol >= 100) {
-                        ytPlayer.setVolume(100);
-                        clearInterval(fadeInterval);
-                    } else {
-                        ytPlayer.setVolume(Math.floor(currentVol));
-                    }
-                }, 100);
-            } else {
-                ytPlayer.setVolume(100);
+                iframe.style.transition = `opacity ${item.fadeIn}s ease-in-out`;
+                iframe.style.opacity = '0';
             }
+            wrapper.appendChild(iframe);
 
-            // 고정밀 런타임 종료 시점 및 페이드 아웃 구간 감시 모니터링
+            if (item.fadeIn > 0) { setTimeout(() => { iframe.style.opacity = '1'; }, 50); }
+
+            activeVideoElapsedTime = item.startSec;
+            globalPlaybackState = "playing";
+
+            // 정밀 타임 라인 클럭 트래커 구동
             timeMonitorInterval = setInterval(() => {
-                const currTime = ytPlayer.getCurrentTime();
-                const timeLeft = item.endSec - currTime;
+                if (globalPlaybackState === "playing") {
+                    activeVideoElapsedTime += 1;
+                    const timeLeft = item.endSec - activeVideoElapsedTime;
 
-                // 페이드 아웃 조건 시작 처리 점검
-                if (item.fadeOut > 0 && timeLeft <= item.fadeOut && timeLeft > 0) {
-                    let currentVol = ytPlayer.getVolume();
-                    if(currentVol > 0) {
-                        const fadeOutStep = currentVol / (timeLeft * 10);
-                        ytPlayer.setVolume(Math.max(0, Math.floor(currentVol - fadeOutStep)));
+                    if (item.fadeOut > 0 && timeLeft <= item.fadeOut && timeLeft > 0) {
+                        iframe.style.transition = `opacity ${timeLeft}s ease-out`;
+                        iframe.style.opacity = '0';
                     }
-                }
 
-                // 지정된 마무리 시간 초과 시 완벽 정지 및 리셋
-                if (currTime >= item.endSec) {
-                    clearInterval(timeMonitorInterval);
-                    clearInterval(fadeInterval);
-                    ytPlayer.stopVideo();
-                    ytPlayer.setVolume(100); // 다음 재생용 볼륨 원복
-                    document.getElementById('playingTitle').innerText = "재생 종료";
+                    if (activeVideoElapsedTime >= item.endSec) {
+                        clearInterval(timeMonitorInterval);
+                        globalPlaybackState = "stopped";
+                        wrapper.innerHTML = `<div class="text-slate-500 text-xs">재생 런타임 완료구간 도달</div>`;
+                        document.getElementById('playingTitle').innerText = "재생 종료";
+                    }
                 }
             }, 100);
         }
 
-        function onPlayerStateChange(event) {
-            // 외부 컨트롤로 인해 멈추는 경우 모니터링 인터벌 해제 제어
-            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
-                // 사용자 수동 컨트롤 대응용 예외 핸들러 영역
+        // 수동 플레이어 인터페이스 스위치 제어
+        function controlActiveVideo(action) {
+            const iframe = document.getElementById('activeEmbedPlayer');
+            if(!iframe) return;
+            
+            if(action === 'pause') {
+                globalPlaybackState = "paused";
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            } else if(action === 'play') {
+                globalPlaybackState = "playing";
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
             }
         }
 
+        function editVideoItem(id) {
+            const item = videoDataList.find(v => v.id === id);
+            if(!item) return;
+            currentEditingId = item.id;
+            document.getElementById('ytUrl').value = `https://www.youtube.com/watch?v=${item.videoId}`;
+            document.getElementById('ytTitle').value = item.title;
+            document.getElementById('startSec').value = item.startSec;
+            document.getElementById('endSec').value = item.endSec;
+            document.getElementById('fadeIn').value = item.fadeIn;
+            document.getElementById('fadeOut').value = item.fadeOut;
+            document.getElementById('saveBtn').innerText = "변경사항 저장";
+        }
+
+        function deleteVideoItem(id) { videoDataList = videoDataList.filter(v => v.id !== id); renderVideoList(); }
+        
+        function clearForm() {
+            currentEditingId = null; document.getElementById('ytUrl').value = ''; document.getElementById('ytTitle').value = '';
+            document.getElementById('startSec').value = '0'; document.getElementById('endSec').value = '60';
+            document.getElementById('fadeIn').value = '2'; document.getElementById('fadeOut').value = '2';
+            document.getElementById('saveBtn').innerText = "비디오 추가 / 저장";
+        }
+
         /* ==========================================================================
-           CORE 4. CSV 데이터 익스포트 및 인포트 파싱 엔진
+           CORE 4. CSV DATA INTERCHANGE
            ========================================================================== */
         function exportToCSV() {
-            if (videoDataList.length === 0) { alert("내보낼 데이터 목록이 비어있습니다."); return; }
-
-            // CSV 헤더 배열 생성 및 RFC 4180 컴플라이언스 처리
-            let csvContent = "\uFEFF"; // 엑셀 한글 깨짐 방지용 UTF-8 BOM 필수 주입
-            csvContent += "id,videoId,title,startSec,endSec,fadeIn,fadeOut\n";
-
+            if (videoDataList.length === 0) return;
+            let csvContent = "\uFEFFid,videoId,title,startSec,endSec,fadeIn,fadeOut\n";
             videoDataList.forEach(v => {
-                // 제목에 콤마가 포함될 수 있으므로 따옴표 이스케이핑
-                const safeTitle = `"${v.title.replace(/"/g, '""')}"`;
-                csvContent += `${v.id},${v.videoId},${safeTitle},${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`;
+                csvContent += `${v.id},${v.videoId},"${v.title.replace(/"/g, '""')}",${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`;
             });
-
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute("download", `tts_yt_workspace_list_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `audio_workspace_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         function importFromCSV(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
+            const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
-                const text = e.target.result;
-                const lines = text.split("\n");
-                const importedData = [];
-
-                // 첫 줄 헤더 스킵 후 라인 파싱 실행
+                const text = e.target.result; const lines = text.split("\n"); const imported = [];
                 for (let i = 1; i < lines.length; i++) {
-                    let line = lines[i].trim();
-                    if (!line) continue;
-
-                    // 정규식을 활용하여 큰따옴표 안의 콤마 이스케이프 파싱 실행
-                    const matches = line.match(/(".*?"|[^,]+)(?=\s*,|\s*$|\s*\n)/g) || line.split(",");
-                    if (matches.length < 7) {
-                        // 규격에 맞지 않는 불완전 레코드 스킵 연산
-                        const simpleSplit = line.split(",");
-                        if (simpleSplit.length >= 7) {
-                            importedData.push({
-                                id: simpleSplit[0], videoId: simpleSplit[1],
-                                title: simpleSplit[2].replace(/"/g, ''),
-                                startSec: parseInt(simpleSplit[3]), endSec: parseInt(simpleSplit[4]),
-                                fadeIn: parseInt(simpleSplit[5]), fadeOut: parseInt(simpleSplit[6])
-                            });
-                        }
-                        continue;
+                    let line = lines[i].trim(); if (!line) continue;
+                    const m = line.match(/(".*?"|[^,]+)(?=\s*,|\s*$|\s*\n)/g) || line.split(",");
+                    if (m.length >= 7) {
+                        imported.push({ id: m[0], videoId: m[1], title: m[2].replace(/"/g, ''), startSec: parseInt(m[3]), endSec: parseInt(m[4]), fadeIn: parseInt(m[5]), fadeOut: parseInt(m[6]) });
                     }
-
-                    importedData.push({
-                        id: matches[0],
-                        videoId: matches[1],
-                        title: matches[2].replace(/"/g, ''), // 따옴표 복구
-                        startSec: parseInt(matches[3]),
-                        endSec: parseInt(matches[4]),
-                        fadeIn: parseInt(matches[5]),
-                        fadeOut: parseInt(matches[6])
-                    });
                 }
-
-                if (importedData.length > 0) {
-                    videoDataList = importedData;
-                    renderVideoList();
-                    alert(`총 ${importedData.length}개의 비디오 프로필을 CSV에서 정상적으로 불러왔습니다.`);
-                } else {
-                    alert("유효한 데이터를 CSV 내부에서 찾지 못했습니다.");
-                }
+                if (imported.length > 0) { videoDataList = imported; renderVideoList(); }
             };
-            reader.readAsText(file, "UTF-8");
-            event.target.value = ''; // 재업로드 가능하도록 초기화
+            reader.readAsText(file, "UTF-8"); event.target.value = '';
         }
     </script>
 </body>
