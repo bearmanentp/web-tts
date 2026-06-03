@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Audio Studio v9.0 Enterprise</title>
+    <title>Ultimate Audio Studio v9.5 Enterprise</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         .active-noise { animation: pulse 2s infinite; }
@@ -16,6 +16,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex p-4 gap-4 select-none font-sans">
 
+    <!-- 좌측 사이드바: 확장형 실전 FX 사운드 제어 보드 -->
     <div class="w-[28rem] bg-slate-800 p-4 rounded-2xl shadow-xl flex flex-col gap-4 border border-slate-700 overflow-y-auto max-h-[calc(100vh-2rem)]">
         <div>
             <div class="flex justify-between items-center">
@@ -27,6 +28,7 @@
 
         <hr class="border-slate-700 my-0">
 
+        <!-- 카테고리 1: 웅장한 오프닝 & 연출 -->
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">👑 <span id="cat-1">Opening & Awards (개막식/시상식)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
@@ -40,6 +42,7 @@
             </div>
         </div>
 
+        <!-- 카테고리 2: 정밀 안내 방송 차임 -->
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">🔔 <span id="cat-2">Broadcast Chimes (안내방송/시그널)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
@@ -52,6 +55,7 @@
             </div>
         </div>
 
+        <!-- 카테고리 3: 이벤트 및 예능 퀴즈 -->
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">🎮 <span id="cat-3">Event & Quiz Game (이벤트/예능/퀴즈)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
@@ -64,6 +68,7 @@
             </div>
         </div>
 
+        <!-- 카테고리 4: 공간 백그라운드 앰비언트 -->
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1">🌿 <span id="cat-4">Focus & Relax Ambient (공간 백그라운드)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
@@ -79,12 +84,14 @@
         </div>
     </div>
 
+    <!-- 우측 메인 대시보드 스튜디오 영역 -->
     <div class="flex-1 flex flex-col gap-3">
         
+        <!-- 상단: TTS 마스터 코어 체인 인터페이스 -->
         <div class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 space-y-3">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">Ultimate Audio Hub & Broadcast v9.0</h1>
+                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">Ultimate Audio Hub & Broadcast v9.5</h1>
                     <button onclick="toggleUILanguage()" id="langToggleBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-2 py-0.5 rounded font-bold text-xxs transition">Language: KO</button>
                 </div>
                 <span class="text-xxs bg-emerald-700 px-2.5 py-0.5 rounded-full text-emerald-100 font-semibold">🔊 Live Core Engine</span>
@@ -128,16 +135,20 @@
             </div>
         </div>
 
+        <!-- 하단: 오디오 트랙 매니저 & 로컬 인프라 탑재 모니터 -->
         <div class="grid grid-cols-12 gap-3 flex-1">
             
+            <!-- 트랙 제어 데스크 -->
             <div class="col-span-8 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col gap-2">
                 <div class="flex justify-between items-center">
                     <h2 id="lang-mgr-title" class="text-xs font-bold text-slate-200 uppercase tracking-wide">Audio List Master Control Board</h2>
                     <span id="storage-status" class="text-[9px] bg-slate-900 px-2 py-0.5 rounded text-emerald-400 font-mono">DB 인프라 정상동작 중</span>
                 </div>
                 
+                <!-- 메인 로컬 파일/영상 연동 매트릭스 인풋 단 -->
                 <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-2">
                     <div class="grid grid-cols-12 gap-2 items-center">
+                        <!-- 드롭다운/업로드 인터페이스 -->
                         <div class="col-span-8 p-2 bg-slate-850 rounded-lg border border-dashed border-slate-600 text-center relative hover:border-slate-400 transition">
                             <input type="file" id="localMediaLoader" accept="audio/*,video/*" onchange="processMediaFile(this.files[0])" class="absolute inset-0 opacity-0 cursor-pointer">
                             <span id="media-load-status" class="text-xxs font-medium text-slate-300">🎵 여기에 로컬 소리/영상 파일 클릭 또는 드롭 (.mp3, .wav, .mp4, .webm)</span>
@@ -158,6 +169,7 @@
                         </div>
                     </div>
 
+                    <!-- 페이드 인 / 아웃 타임 슬라이더 설정 -->
                     <div class="grid grid-cols-2 gap-2 px-1 text-[10px] text-slate-400">
                         <div>
                             <span>페이드 인 (Fade-In):</span> <span id="fadeInVal" class="text-blue-400 font-mono">200</span>ms
@@ -170,7 +182,7 @@
                     </div>
 
                     <div class="flex justify-between items-center pt-1 border-t border-slate-800">
-                        <button onclick="commitTrackItem()" id="saveBtn" class="bg-blue-600 hover:bg-blue-500 text-xxs px-4 py-1 rounded transition font-bold">트랙 타임라인 배치</button>
+                        <button onclick="commitTrackItem()" id="saveBtn" class="bg-blue-600 hover:bg-blue-500 text-xxs px-4 py-1 rounded transition font-bold">트랙 타임라인 배치 (TTS 설정 포함)</button>
                         <div class="flex gap-1">
                             <button onclick="packageExportSystem()" class="bg-emerald-700 hover:bg-emerald-600 text-[10px] font-bold px-2 py-1 rounded text-white shadow">📦 전체 파일 포함 통합 백업 내보내기</button>
                             <label class="bg-purple-700 hover:bg-purple-600 text-[10px] font-bold px-2 py-1 rounded cursor-pointer shadow">🎯 통합팩 가져오기<input type="file" id="packageImporter" accept=".json" onchange="packageImportSystem(event)" class="hidden"></label>
@@ -178,9 +190,11 @@
                     </div>
                 </div>
 
+                <!-- 재생 리스트 컨테이너 -->
                 <div class="flex-1 overflow-y-auto max-h-48 space-y-1" id="trackListContainer"></div>
             </div>
 
+            <!-- 우측: 모니터 데스크 및 유튜브 가시화 플레이어 스크린 -->
             <div class="col-span-4 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center relative">
                 
                 <div class="w-full flex flex-col gap-1">
@@ -199,8 +213,9 @@
                     <button onclick="triggerActiveTrackControl('stop')" class="bg-red-600 hover:bg-red-500 py-1.5 text-xxs font-bold rounded transition text-white">⏹️ 전체 채널 정지</button>
                 </div>
 
+                <!-- 유튜브 서브 컨트롤 기지 (우측 최하단으로 격하 및 축소배치) -->
                 <div class="w-full mt-auto p-2 bg-slate-900/60 rounded-xl border border-slate-750 space-y-1">
-                    <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">⚓ 유튜브 백업 서브 링크 링크기</div>
+                    <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">⚓ 유튜브 백업 서브 링크기</div>
                     <div class="flex gap-1">
                         <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded px-1.5 py-0.5 text-[10px] text-amber-400 font-mono" placeholder="유튜브 비디오 ID 입력" value="dQw4w9WgXcQ">
                         <button onclick="loadYoutubeSubEngine()" class="bg-slate-700 hover:bg-slate-600 text-[9px] px-1.5 rounded text-slate-300">연동</button>
@@ -223,7 +238,7 @@
         
         let db = null;
         let localBinaryCache = {}; // 메모리 내 파일 바이너리 매핑 맵
-        let videoDataList = [];    // 트랙 메타데이터 리스트
+        let videoDataList = [];    // 트랙 메타데이터 리스트 (TTS 텍스트 및 보이스 명칭 포함)
         let currentEditingId = null;
         let stagingFileBase64 = null;
         let stagingDuration = 0;
@@ -234,7 +249,11 @@
         let progressInterval = null;
         let selectedTrackData = null;
 
-        // IndexedDB 초기화: 브라우저에 대용량 바이너리(Audio/Video Base64) 영구 저장
+        const synth = window.speechSynthesis;
+        const voiceSelect = document.getElementById('voiceSelect');
+        let allVoices = [];
+
+        // IndexedDB 초기화
         const dbRequest = indexedDB.open("UltimateAudioStudioDB", 1);
         dbRequest.onupgradeneeded = function(e) {
             let database = e.target.result;
@@ -248,13 +267,11 @@
         };
 
         function loadSystemDataFromStorage() {
-            // 로컬 스토리지에서 트랙 메타데이터 복원
             const savedList = localStorage.getItem("SGW_AUDIO_TRACKS");
             if(savedList) videoDataList = JSON.parse(savedList);
             
-            // IndexedDB에서 바이너리 복원
             const transaction = db.transaction(["mediaStore"], "readonly");
-            const store = transaction.objectStore([ "mediaStore" ]);
+            const store = transaction.objectStore("mediaStore");
             const request = store.getAll();
             request.onsuccess = function() {
                 request.result.forEach(item => {
@@ -266,7 +283,7 @@
         }
 
         /* ==========================================================================
-           CORE 2. WEB AUDIO API SYNTHESIZER (웅장한 오케스트라 레이어 포함 확장)
+           CORE 2. WEB AUDIO API SYNTHESIZER
            ========================================================================== */
         function playBeep(freq, duration, type="sine", gainVal=0.15) {
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
@@ -275,44 +292,31 @@
             osc.start(now); osc.stop(now + duration);
         }
 
-        // 행사 시작용 웅장하고 긴 오케스트라 서사곡 연출 (합성음 레이어링 기법)
         function playGrandOpening() {
             const now = audioCtx.currentTime;
             const rootChords = [65.41, 130.81, 196.00, 261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
-            
-            // 1레이어: 베이스 중저음 서브 패드
             rootChords.slice(0, 3).forEach(f => {
                 const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(f, now);
-                gain.gain.setValueAtTime(0.0, now);
-                gain.gain.linearRampToValueAtTime(0.08, now + 1.5);
-                gain.gain.linearRampToValueAtTime(0.05, now + 5.0);
-                gain.gain.exponentialRampToValueAtTime(0.0001, now + 8.0);
+                gain.gain.setValueAtTime(0.0, now); gain.gain.linearRampToValueAtTime(0.08, now + 1.5);
+                gain.gain.linearRampToValueAtTime(0.05, now + 5.0); gain.gain.exponentialRampToValueAtTime(0.0001, now + 8.0);
                 osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 8.05);
             });
-
-            // 2레이어: 메인 브라스 하모니 코드 타임라인 전개
             setTimeout(() => {
                 const innerNow = audioCtx.currentTime;
                 rootChords.slice(3, 7).forEach((f, idx) => {
                     const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                     osc.type = 'triangle'; osc.frequency.setValueAtTime(f, innerNow);
-                    // 시네마틱 피치 피드백 이펙트
                     osc.frequency.linearRampToValueAtTime(f * 1.005, innerNow + 4.0);
-                    gain.gain.setValueAtTime(0.0, innerNow);
-                    gain.gain.linearRampToValueAtTime(0.1, innerNow + 1.0);
+                    gain.gain.setValueAtTime(0.0, innerNow); gain.gain.linearRampToValueAtTime(0.1, innerNow + 1.0);
                     gain.gain.exponentialRampToValueAtTime(0.0001, innerNow + 6.0);
                     osc.connect(gain); gain.connect(audioCtx.destination); osc.start(innerNow); osc.stop(innerNow + 6.05);
                 });
             }, 1000);
-
-            // 3레이어: 클라이맥스 하이라이트 벨 팡파르 스트림 소스 선언
             setTimeout(() => {
                 const chimeNow = audioCtx.currentTime;
                 const highNotes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
-                highNotes.forEach((f, i) => {
-                    setTimeout(() => playBeep(f, 2.5, 'sine', 0.08), i * 250);
-                });
+                highNotes.forEach((f, i) => { setTimeout(() => playBeep(f, 2.5, 'sine', 0.08), i * 250); });
             }, 2500);
         }
 
@@ -372,7 +376,7 @@
         }
 
         /* ==========================================================================
-           CORE 3. FILE PARSING & HIGH-RELIABILITY STORAGE PIPELINE
+           CORE 3. FILE PARSING & INDIVIDUAL TTS ENCAPSULATION INFRASTRUCTURE
            ========================================================================== */
         function processMediaFile(file) {
             if(!file) return;
@@ -382,14 +386,12 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 const base64Data = e.target.result;
-                // 임시 가상 오디오 렌더링 검사로 오디오 길이(Duration) 사전 추출
                 audioCtx.decodeAudioData(base64Data.slice(0), function(buffer) {
                     stagingFileBase64 = base64Data;
                     stagingDuration = Math.floor(buffer.duration);
                     document.getElementById('endSec').value = stagingDuration;
                     document.getElementById('media-load-status').innerText = `✅ 분석 완수 (${stagingDuration}초) | 등록 대기`;
                 }, function() {
-                    // 비디오 파일 구조 우회 처리 시 디폴트 값 할당
                     stagingFileBase64 = base64Data;
                     stagingDuration = 180; 
                     document.getElementById('endSec').value = stagingDuration;
@@ -407,6 +409,10 @@
             const endSec = parseInt(document.getElementById('endSec').value) || 10;
             const fadeIn = parseInt(document.getElementById('fadeInTime').value) || 0;
             const fadeOut = parseInt(document.getElementById('fadeOutTime').value) || 0;
+            
+            // 핵심 분기점: 현재 상단 폼에 기록된 TTS 텍스트 및 지정 보이스 식별 문자열 추출
+            const boundTtsText = document.getElementById('ttsText').value;
+            const boundVoiceName = document.getElementById('voiceSelect').value;
 
             const fileId = currentEditingId ? videoDataList.find(v=>v.id === currentEditingId).fileId : `file-${Date.now()}`;
 
@@ -417,10 +423,11 @@
                 startSec: startSec,
                 endSec: endSec,
                 fadeIn: fadeIn,
-                fadeOut: fadeOut
+                fadeOut: fadeOut,
+                ttsText: boundTtsText,       // 개별 TTS 프롬프트 매핑
+                voiceName: boundVoiceName    // 개별 목소리 타겟 매핑
             };
 
-            // IndexedDB에 바이너리 영구 커밋 (새 파일일 경우에만)
             if (!currentEditingId && stagingFileBase64) {
                 localBinaryCache[fileId] = stagingFileBase64;
                 const transaction = db.transaction(["mediaStore"], "readwrite");
@@ -435,7 +442,6 @@
                 videoDataList.push(trackMeta);
             }
 
-            // 메타데이터 저장 및 폼 초기화
             localStorage.setItem("SGW_AUDIO_TRACKS", JSON.stringify(videoDataList));
             clearConfigurationForm();
             renderTrackList();
@@ -450,7 +456,7 @@
                 div.innerHTML = `
                     <div class="flex flex-col truncate flex-1" onclick="selectActiveTrack('${item.id}')">
                         <span class="font-bold text-slate-200 truncate flex items-center gap-1">🎵 ${item.title}</span>
-                        <span class="text-[10px] text-slate-400">구간: ${item.startSec}초 ~ ${item.endSec}초 (In: ${item.fadeIn}ms / Out: ${item.fadeOut}ms)</span>
+                        <span class="text-[10px] text-slate-400 truncate">💬 TTS: ${item.ttsText ? item.ttsText.substring(0, 22) + '...' : '없음'} (${item.voiceName || '디폴트'})</span>
                     </div>
                     <div class="flex gap-1 ml-2">
                         <button onclick="editTrackItem('${item.id}')" class="bg-slate-600 hover:bg-slate-500 px-1.5 py-0.5 rounded text-[9px]">수정</button>
@@ -467,6 +473,14 @@
             selectedTrackData = track;
             document.getElementById('playingTitle').innerText = track.title;
             document.getElementById('statusText').innerText = "재생 준비 완료";
+
+            // 오디오 트랙 선택 시 바인딩된 TTS 설정과 목소리를 메인 입력단에 즉시 피드백 복원
+            if(track.ttsText !== undefined) {
+                document.getElementById('ttsText').value = track.ttsText;
+            }
+            if(track.voiceName) {
+                document.getElementById('voiceSelect').value = track.voiceName;
+            }
         }
 
         /* ==========================================================================
@@ -485,12 +499,10 @@
             
             const track = selectedTrackData;
             const rawBinary = localBinaryCache[track.fileId];
-            
             if (!rawBinary) { alert("해당 트랙의 사운드 바이너리 자원이 유실되었습니다."); return; }
 
             document.getElementById('statusText').innerText = "⏳ 하드웨어 버퍼 로딩 중...";
             
-            // 바이너리 디코딩 연산 처리 후 타임라인 인터셉트
             audioCtx.decodeAudioData(rawBinary.slice(0), function(buffer) {
                 if(activeSourceNode) { try { activeSourceNode.stop(); } catch(e){} activeSourceNode = null; }
                 clearTimeout(trackTimeout); clearInterval(progressInterval);
@@ -504,7 +516,6 @@
                 const durationSec = track.endSec - track.startSec;
                 const now = audioCtx.currentTime;
 
-                // 볼륨 스케줄링 디렉터 (Fade In/Out 정밀 설정 자동 인젝션)
                 activeGainNode.gain.setValueAtTime(0, now);
                 activeGainNode.gain.linearRampToValueAtTime(0.5, now + (track.fadeIn / 1000));
                 activeGainNode.gain.setValueAtTime(0.5, now + (durationSec - (track.fadeOut / 1000)));
@@ -513,7 +524,6 @@
                 activeSourceNode.start(0, track.startSec, durationSec);
                 document.getElementById('statusText').innerText = "🔥 실전 오디오 채널 라이브 송출 중";
 
-                // 타임라인 프로그레스 와치독 구동
                 const startTimestamp = Date.now();
                 progressInterval = setInterval(() => {
                     const elapsed = (Date.now() - startTimestamp) / 1000;
@@ -526,18 +536,18 @@
                 }, durationSec * 1000);
 
             }, function(err) {
-                alert("오디오 데이터 파싱 처리에 실패했습니다. 영상 포맷일 경우 디코더 호환성을 확인하세요.");
+                alert("오디오 데이터 파싱 처리에 실패했습니다.");
             });
         }
 
         /* ==========================================================================
-           CORE 5. CROSS-PLATFORM INTERLOCKING PACKAGING SYSTEM (핵심 기능)
+           CORE 5. CROSS-PLATFORM INTERLOCKING PACKAGING SYSTEM (TTS 설정 데이터 동기화)
            ========================================================================== */
         function packageExportSystem() {
             if (videoDataList.length === 0) { alert("내보낼 오디오 트랙 데이터 레이어가 존재하지 않습니다."); return; }
             document.getElementById('storage-status').innerText = "📦 데이터 압축 통합 패킹 중...";
 
-            // 메타데이터 리스트와 캐시된 바이너리 데이터를 단 하나의 대용량 JSON 패키지로 통합 구성
+            // 이제 meta 오브젝트 내부에 개별 ttsText 및 voiceName이 담겨 있으므로 구조 그대로 단일 패킹 진행
             const clusterExportPackage = {
                 meta: videoDataList,
                 binaries: localBinaryCache
@@ -547,7 +557,7 @@
             const blob = new Blob([jsonStr], { type: "application/json" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.setAttribute("download", `AudioStudio_Master_Package_${Date.now()}.json`);
+            link.setAttribute("download", `AudioStudio_Cluster_Package_${Date.now()}.json`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -563,13 +573,11 @@
             reader.onload = function(e) {
                 try {
                     const importedCluster = JSON.parse(e.target.result);
-                    if (!importedCluster.meta || !importedCluster.binaries) { throw new Error("유효하지 않은 스튜디오 패키지 포맷 구조"); }
+                    if (!importedCluster.meta || !importedCluster.binaries) { throw new Error("유효하지 않은 구조"); }
 
-                    // 메타데이터 마이그레이션 병합
                     videoDataList = importedCluster.meta;
                     localStorage.setItem("SGW_AUDIO_TRACKS", JSON.stringify(videoDataList));
 
-                    // IndexedDB 트랜잭션 열고 원격 바인딩 복사 처리
                     const transaction = db.transaction(["mediaStore"], "readwrite");
                     const store = transaction.objectStore("mediaStore");
 
@@ -582,10 +590,10 @@
                     transaction.oncomplete = function() {
                         renderTrackList();
                         document.getElementById('storage-status').innerText = "✅ 외부 패키지 전체 동기화 완수";
-                        alert("통합 미디어 패키지 복원이 완수되었습니다! 다른 PC에서 마이그레이션 없이 즉시 사용 가능합니다.");
+                        alert("통합 미디어 패키지(오디오+영상+TTS 프롬프트 조합) 복원이 완수되었습니다!");
                     };
                 } catch(err) {
-                    alert("가져오기 실패: 올바른 통합 백업 .json 파일이 아닙니다.");
+                    alert("가져오기 실패: 파싱 에러");
                     document.getElementById('storage-status').innerText = "DB 인프라 정상동작 중";
                 }
             };
@@ -618,6 +626,10 @@
             document.getElementById('startSec').value = item.startSec; document.getElementById('endSec').value = item.endSec;
             document.getElementById('fadeInTime').value = item.fadeIn; document.getElementById('fadeInVal').innerText = item.fadeIn;
             document.getElementById('fadeOutTime').value = item.fadeOut; document.getElementById('fadeOutVal').innerText = item.fadeOut;
+            
+            if(item.ttsText !== undefined) document.getElementById('ttsText').value = item.ttsText;
+            if(item.voiceName) document.getElementById('voiceSelect').value = item.voiceName;
+
             currentEditingId = id; document.getElementById('saveBtn').innerText = "업데이트 적용";
         }
         function deleteTrackItem(id) {
@@ -631,10 +643,11 @@
             localStorage.setItem("SGW_AUDIO_TRACKS", JSON.stringify(videoDataList));
             renderTrackList();
         }
-        function clearConfigurationForm() { document.getElementById('trackTitleInput').value = ''; document.getElementById('startSec').value = '0'; document.getElementById('endSec').value = '15'; currentEditingId = null; stagingFileBase64 = null; document.getElementById('saveBtn').innerText = "트랙 타임라인 배치"; document.getElementById('media-load-status').innerText = "🎵 여기에 로컬 소리/영상 파일 클릭 또는 드롭 (.mp3, .wav, .mp4, .webm)"; }
-        const synth = window.speechSynthesis; const voiceSelect = document.getElementById('voiceSelect'); let allVoices = [];
+        function clearConfigurationForm() { document.getElementById('trackTitleInput').value = ''; document.getElementById('startSec').value = '0'; document.getElementById('endSec').value = '15'; currentEditingId = null; stagingFileBase64 = null; document.getElementById('saveBtn').innerText = "트랙 타임라인 배치 (TTS 설정 포함)"; document.getElementById('media-load-status').innerText = "🎵 여기에 로컬 소리/영상 파일 클릭 또는 드롭 (.mp3, .wav, .mp4, .webm)"; }
+        
         function updateVoiceList() { allVoices = synth.getVoices(); voiceSelect.innerHTML = ''; if (allVoices.length === 0) { voiceSelect.innerHTML = '<option value="">No Voices Found</option>'; return; } allVoices.forEach(voice => { const option = document.createElement('option'); option.value = voice.name; option.textContent = `${voice.name} (${voice.lang})`; voiceSelect.appendChild(option); }); }
         if (typeof synth !== 'undefined') { updateVoiceList(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = updateVoiceList; }
+        
         function speakChain() { if (synth.speaking) synth.cancel(); const startFxType = document.getElementById('ttsStartFx').value; let delay = 0; if (startFxType === 'chime') { playChime(true); delay = 1100; } else if (startFxType === 'airport') { playAirportChime(); delay = 1300; } else if (startFxType === 'fanfare') { playFanfare(); delay = 1600; } setTimeout(() => { const text = document.getElementById('ttsText').value.trim(); if (!text) return; const utterance = new SpeechSynthesisUtterance(text); const targetVoice = allVoices.find(v => v.name === voiceSelect.value); if (targetVoice) { utterance.voice = targetVoice; utterance.lang = targetVoice.lang; } utterance.onend = function() { const endFxType = document.getElementById('ttsEndFx').value; if (endFxType === 'chime_end') playChime(false); else if (endFxType === 'elevator') playElevatorBell(); else if (endFxType === 'success') playSuccess(); }; synth.speak(utterance); }, delay); }
         function stopText() { if (synth.speaking) synth.cancel(); }
         function toggleUILanguage() { currentLang = (currentLang === 'KO') ? 'EN' : 'KO'; document.getElementById('langToggleBtn').innerText = `Language: ${currentLang}`; }
