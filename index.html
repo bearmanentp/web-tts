@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Audio Studio v8.0 Enterprise</title>
+    <title>Ultimate Audio Studio v8.5 Enterprise</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         .active-noise { animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        .hidden-player { width: 1px; height: 1px; opacity: 0.01; position: absolute; left: -9999px; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #1e293b; }
         ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
@@ -17,16 +16,16 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex p-4 gap-4 select-none font-sans">
 
-    <div class="w-[26rem] bg-slate-800 p-4 rounded-2xl shadow-xl flex flex-col gap-3 border border-slate-700 overflow-y-auto max-h-[calc(100vh-2rem)]">
+    <div class="w-[28rem] bg-slate-800 p-4 rounded-2xl shadow-xl flex flex-col gap-4 border border-slate-700 overflow-y-auto max-h-[calc(100vh-2rem)]">
         <div>
             <div class="flex justify-between items-center">
-                <h2 id="lang-fx-title" class="text-base font-bold tracking-tight text-blue-400">FX Sound Matrix (Essential)</h2>
+                <h2 id="lang-fx-title" class="text-base font-bold tracking-tight text-blue-400">FX Sound Matrix (Full Array)</h2>
                 <span class="text-[10px] bg-blue-900 text-blue-200 px-2 py-0.5 rounded font-mono">Web Audio Synth</span>
             </div>
             <p id="lang-fx-desc" class="text-xxs text-slate-400">실제 행사/디렉팅에 즉시 투입 가능한 실전용 오디오 믹스</p>
         </div>
 
-        <hr class="border-slate-700">
+        <hr class="border-slate-700 my-0">
 
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">👑 <span id="cat-1">Opening & Awards (개막식/시상식)</span></h3>
@@ -55,12 +54,12 @@
         <div class="space-y-1">
             <h3 class="text-xxs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">🎮 <span id="cat-3">Event & Quiz Game (이벤트/예능/퀴즈)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playSuccess()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left font-semibold truncate">🎉 정답 선언 / 미션 성공 카당!</button>
-                <button onclick="playFailure()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left font-semibold text-orange-400 truncate">❌ 오답 처리 / 탈락 버저 (꽝-)</button>
-                <button onclick="playTickTimer()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left text-yellow-400 truncate">⏱️ 타임아웃 초읽기+최종 버저</button>
-                <button onclick="playLevelUp()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left truncate">✨ 순위 상승 화려한 축하 멜로디</button>
-                <button onclick="playCoin()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left truncate">🪙 포인트/경품 획득 레트로 음</button>
-                <button onclick="playWhistle()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left text-purple-300 truncate">🎺 경기 시작/종료 심판 호루라기</button>
+                <button onclick="playSuccess()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate">🎉 정답 선언 / 미션 성공 카당!</button>
+                <button onclick="playFailure()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate text-orange-400">❌ 오답 처리 / 탈락 버저 (꽝-)</button>
+                <button onclick="playTickTimer()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate text-yellow-400">⏱️ 타임아웃 초읽기+최종 버저</button>
+                <button onclick="playLevelUp()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate">✨ 순위 상승 화려한 축하 멜로디</button>
+                <button onclick="playCoin()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate">🪙 포인트/경품 획득 레트로 음</button>
+                <button onclick="playWhistle()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-emerald-500 truncate text-purple-300">🎺 경기 시작/종료 심판 호루라기</button>
             </div>
         </div>
 
@@ -78,7 +77,7 @@
             </div>
         </div>
 
-        <div class="mt-2 p-3 bg-slate-900 rounded-xl border border-dashed border-slate-600 text-center space-y-2">
+        <div class="mt-auto p-3 bg-slate-900 rounded-xl border border-dashed border-slate-600 text-center space-y-2">
             <div id="lang-drop-title" class="text-xxs font-bold text-slate-300">📁 로컬 음원 파일 / 폴더 탑재 매트릭스</div>
             <p id="lang-drop-desc" class="text-[10px] text-slate-500">외부 파일(.mp3, .wav)이나 폴더를 여기에 드래그 앤 드롭하세요</p>
             <input type="file" id="localAudioFile" multiple accept="audio/*" onchange="handleLocalFiles(this.files)" class="hidden">
@@ -91,7 +90,7 @@
         <div class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 space-y-3">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">Ultimate Audio Hub & Broadcast v8.0</h1>
+                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">Ultimate Audio Hub & Broadcast v8.5</h1>
                     <button onclick="toggleUILanguage()" id="langToggleBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-2 py-0.5 rounded font-bold text-xxs transition">Language: KO</button>
                 </div>
                 <span class="text-xxs bg-emerald-700 px-2.5 py-0.5 rounded-full text-emerald-100 font-semibold">🔊 Live Core Engine</span>
@@ -142,7 +141,7 @@
                 
                 <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700 space-y-1.5">
                     <div class="flex gap-2">
-                        <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="유튜브 ID 또는 로컬 가상 ID 매핑" value="dQw4w9WgXcQ">
+                        <input type="text" id="ytUrl" oninput="autoExtractYoutubeId(this)" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs text-emerald-300" placeholder="유튜브 링크 입력 (붙여넣기 시 ID 자동 파싱)" value="dQw4w9WgXcQ">
                         <input type="text" id="ytTitle" class="w-32 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="트랙 식별 명칭" value="메인 백그라운드 뮤직">
                     </div>
                     
@@ -180,29 +179,31 @@
                     </div>
                 </div>
 
-                <div class="flex-1 overflow-y-auto max-h-36 space-y-1" id="videoListContainer"></div>
+                <div class="flex-1 overflow-y-auto max-h-40 space-y-1" id="videoListContainer"></div>
             </div>
 
-            <div class="col-span-5 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center min-h-[250px]">
+            <div class="col-span-5 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center">
                 <div class="w-full flex justify-between items-center">
                     <h2 id="lang-desk-title" class="text-xxs font-bold text-slate-400 uppercase">Audio Desk Status Monitor</h2>
-                    <span id="playingTitle" class="text-xxs text-blue-400 font-semibold truncate max-w-[120px]">대기 중</span>
+                    <span id="playingTitle" class="text-xxs text-blue-400 font-semibold truncate max-w-[140px]">대기 중</span>
                 </div>
                 
-                <div class="w-full flex-1 bg-slate-950 rounded-xl flex flex-col items-center justify-center relative border border-slate-700 p-3 mt-1.5">
-                    <div class="text-center space-y-1.5">
-                        <div id="radioIcon" class="text-2xl transition-all duration-300">📻</div>
-                        <div id="statusText" class="text-xxs font-medium text-slate-400">트랙 스트림 차단 대기 중</div>
-                        <div id="timeProgress" class="text-xxs tracking-wider font-mono text-slate-500">00:00 / 00:00</div>
-                    </div>
-                    <div id="playerWrapper" class="hidden-player">
-                        <div id="yt-hidden-core"></div>
+                <div class="w-full aspect-video bg-slate-950 rounded-xl relative border border-slate-700 overflow-hidden my-2">
+                    <div id="yt-hidden-core" class="w-full h-full"></div>
+                </div>
+
+                <div class="w-full p-2 bg-slate-900 rounded-lg flex flex-col gap-1 text-center border border-slate-750">
+                    <div class="flex justify-between items-center px-1">
+                        <div id="radioIcon" class="text-base transition-all duration-300">📻</div>
+                        <div id="statusText" class="text-[10px] font-medium text-slate-400 truncate max-w-[160px]">트랙 링크 로드 대기 중</div>
+                        <div id="timeProgress" class="text-[10px] tracking-wider font-mono text-slate-500">00:00 / 00:00</div>
                     </div>
                 </div>
                 
-                <div class="w-full grid grid-cols-2 gap-1 mt-2">
-                    <button onclick="controlActiveVideo('play')" id="btn-force" class="bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded transition">▶️ 수동 재생</button>
-                    <button onclick="controlActiveVideo('stop')" id="btn-force-stop" class="bg-red-900/50 hover:bg-red-900 text-red-300 py-1 text-xxs font-medium rounded transition">⏹️ 재생 차단</button>
+                <div class="w-full grid grid-cols-3 gap-1 mt-2">
+                    <button onclick="controlActiveVideo('play')" id="btn-force" class="bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded transition">▶️ 유튜브 재생</button>
+                    <button onclick="controlActiveLocal('play')" class="bg-indigo-900/60 hover:bg-indigo-800 py-1 text-xxs font-medium rounded transition text-indigo-200">🎵 로컬 개별재생</button>
+                    <button onclick="stopAllChannels()" class="bg-red-900/50 hover:bg-red-900 text-red-300 py-1 text-xxs font-medium rounded transition col-span-1">⏹️ 전 채널 뮤트</button>
                 </div>
             </div>
 
@@ -219,26 +220,26 @@
                 fxTitle: "FX 사운드 매트릭스 (실전형)", fxDesc: "실제 행사/디렉팅에 즉시 투입 가능한 실전용 오디오 믹스",
                 cat1: "Opening & Awards (개막식/시상식)", cat2: "Broadcast Chimes (안내방송/시그널)",
                 cat3: "Event & Quiz Game (이벤트/예능/퀴즈)", cat4: "Focus & Relax Ambient (공간 백그라운드)",
-                noiseVol: "앰비언트 백그라운드 마스터 볼륨", mainTitle: "Ultimate Audio Hub & Broadcast v8.0",
+                noiseVol: "앰비언트 백그라운드 마스터 볼륨", mainTitle: "Ultimate Audio Hub & Broadcast v8.5",
                 selectVoice: "Select Voice (목소리 선택)", startFx: "🟢 TTS 시작 효과음", endFx: "🔴 TTS 종료 효과음",
                 textarea: "Text to Speak (방송 대사 입력)", btnSpeak: "🔊 효과음 연동 방송 재생", btnStop: "정지 (Stop)",
                 mgrTitle: "Audio Track Manager (Custom Timeline)", startSec: "구간 시작 지점 (초)", endSecLabel: "구간 종료 지점 (초)",
                 fadeInLbl: "페이드 인 (Fade-In):", fadeOutLbl: "페이드 아웃 (Fade-Out):", saveBtn: "트랙 저장",
                 btnExport: "CSV 백업", btnImport: "가져오기", deskTitle: "Audio Desk Status Monitor",
-                btnForce: "▶️ 수동 재생", btnForceStop: "⏹️ 재생 차단", btnCapture: "⏱️ 캡처", dropTitle: "📁 로컬 음원 파일 / 폴더 탑재 매트릭스",
+                btnForce: "▶️ 유튜브 재생", btnCapture: "⏱️ 캡처", dropTitle: "📁 로컬 음원 파일 / 폴더 탑재 매트릭스",
                 dropDesc: "외부 파일(.mp3, .wav)이나 폴더를 여기에 드래그 앤 드롭하세요"
             },
             EN: {
-                fxTitle: "FX Sound Matrix (Essential)", fxDesc: "Production-ready audio synthesis system for real stages",
+                fxTitle: "FX Sound Matrix (Full Array)", fxDesc: "Production-ready audio synthesis system for real stages",
                 cat1: "Opening & Awards Stage", cat2: "Broadcast Chimes & Signals",
                 cat3: "Event & Quiz Gameplay", cat4: "Focus & Relax Ambient",
-                noiseVol: "Ambient Noise Master Volume", mainTitle: "Ultimate Audio Hub & Broadcast v8.0",
+                noiseVol: "Ambient Noise Master Volume", mainTitle: "Ultimate Audio Hub & Broadcast v8.5",
                 selectVoice: "Select Voice Target", startFx: "🟢 TTS Start Sound FX Chain", endFx: "🔴 TTS End Sound FX Chain",
                 textarea: "Broadcast Script Input Desk", btnSpeak: "🔊 Play Linked Audio Broadcast", btnStop: "Stop System",
                 mgrTitle: "Audio Track Manager (Custom Timeline)", startSec: "Timeline Start Point (Sec)", endSecLabel: "Timeline End Point (Sec)",
                 fadeInLbl: "Fade-In Dynamic:", fadeOutLbl: "Fade-Out Dynamic:", saveBtn: "Save Track",
                 btnExport: "CSV Export", btnImport: "Import CSV", deskTitle: "Audio Desk Status Monitor",
-                btnForce: "▶️ Manual Stream", btnForceStop: "⏹️ Force Stop Kill", btnCapture: "⏱️ Capt", dropTitle: "📁 Local Audio File / Folder Matrix Dropzone",
+                btnForce: "▶️ Play YouTube", btnCapture: "⏱️ Capt", dropTitle: "📁 Local Audio File / Folder Matrix Dropzone",
                 dropDesc: "Drag & drop local media (.mp3, .wav) or entire folder asset houses"
             }
         };
@@ -247,7 +248,6 @@
             currentLang = (currentLang === 'KO') ? 'EN' : 'KO';
             document.getElementById('langToggleBtn').innerText = `Language: ${currentLang}`;
             const pack = langPack[currentLang];
-            
             document.getElementById('lang-fx-title').innerText = pack.fxTitle; document.getElementById('lang-fx-desc').innerText = pack.fxDesc;
             document.getElementById('cat-1').innerText = pack.cat1; document.getElementById('cat-2').innerText = pack.cat2;
             document.getElementById('cat-3').innerText = pack.cat3; document.getElementById('cat-4').innerText = pack.cat4;
@@ -260,16 +260,29 @@
             document.getElementById('lang-fade-out-lbl').innerText = pack.fadeOutLbl; document.getElementById('saveBtn').innerText = pack.saveBtn;
             document.getElementById('btn-export').innerText = pack.btnExport; document.getElementById('btn-import').childNodes[0].textContent = pack.btnImport;
             document.getElementById('lang-desk-title').innerText = pack.deskTitle; document.getElementById('btn-force').innerText = pack.btnForce;
-            document.getElementById('btn-force-stop').innerText = pack.btnForceStop; document.getElementById('btn-capture').innerText = pack.btnCapture;
-            document.getElementById('lang-drop-title').innerText = pack.dropTitle; document.getElementById('lang-drop-desc').innerText = pack.dropDesc;
+            document.getElementById('btn-capture').innerText = pack.btnCapture; document.getElementById('lang-drop-title').innerText = pack.dropTitle;
+            document.getElementById('lang-drop-desc').innerText = pack.dropDesc;
         }
 
         /* ==========================================================================
-           CORE 2. WEB AUDIO API SYNTHESIZER & REAL FILE BUFFER ROUTING MUX
+           CORE 2. YOUTUBE URL ID AUTO EXTRACTOR (정규식 자동 파싱 제어기)
+           ========================================================================== */
+        function autoExtractYoutubeId(input) {
+            const url = input.value.trim();
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            if (match && match[1]) {
+                input.value = match[1]; // 링크 전체가 들어오면 즉시 ID 11자리만 남기고 변경
+                console.log(`[Auto-Parse] 유튜브 비디오 ID 추출 완료: ${match[1]}`);
+            }
+        }
+
+        /* ==========================================================================
+           CORE 3. WEB AUDIO API SYNTHESIZER & MULTI-CHANNEL STREAM ROUTING
            ========================================================================== */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let noiseNode = null; let noiseGain = null;
-        let localAudioStore = {}; // 로컬 오디오 이진 바이너리 버퍼 딕셔너리 데이터베이스
+        let localAudioStore = {}; 
 
         function playBeep(freq, duration, type="sine", gainVal=0.15) {
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
@@ -278,7 +291,7 @@
             osc.start(now); osc.stop(now + duration);
         }
 
-        // 압축 정비형 하이 엔드 FX 매트릭스 연산자 리스트
+        // --- 사운드 매트릭스 전체 보강 복구 라인업 ---
         function playFanfare() {
             const now = audioCtx.currentTime; const notes = [130.81, 196.00, 261.63, 329.63, 392.00, 523.25];
             notes.forEach((f, i) => {
@@ -336,6 +349,7 @@
         function playLevelUp() { [440, 554, 660, 880].forEach((f,i)=> { setTimeout(() => playBeep(f, 0.12, 'sine', 0.15), i*70); }); }
         function playCoin() { playBeep(987.77, 0.04, 'sine', 0.15); setTimeout(() => playBeep(1318.51, 0.2, 'sine', 0.2), 50); }
         function playWhistle() { const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.setValueAtTime(2000, now); gainNode.gain.setValueAtTime(0.25, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.35); osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.36); }
+        function playSingingBowl() { const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.setValueAtTime(220, now); gainNode.gain.setValueAtTime(0.2, now); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 4.0); osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 4.01); }
 
         function toggleNoise(type) {
             const volInput = document.getElementById('noiseVolume');
@@ -362,7 +376,7 @@
             volInput.oninput = (e) => { if(noiseGain) noiseGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime); };
         }
 
-        // 로컬 오디오 파일/폴더 비동기 어레이버퍼 분석 디코더
+        // 로컬 오디오 비동기 파일 파서 및 스토어 바인딩
         function handleLocalFiles(files) {
             for (let i = 0; i < files.length; i++) {
                 const file = files[i]; const reader = new FileReader();
@@ -370,7 +384,6 @@
                     audioCtx.decodeAudioData(e.target.result, function(buffer) {
                         const localId = `local-${Date.now()}-${i}`;
                         localAudioStore[localId] = buffer;
-                        // 매트릭스 리스트에 가상 트랙 즉시 등록 유도
                         videoDataList.push({ id: Date.now().toString() + i, videoId: localId, title: `📁 [Local] ${file.name}`, startSec: 0, endSec: Math.floor(buffer.duration), isLocal: true, fadeIn: 0, fadeOut: 500 });
                         renderVideoList();
                     });
@@ -380,7 +393,7 @@
         }
 
         /* ==========================================================================
-           CORE 3. TTS SPEECH SYSTEM & CHAIN CONTROL
+           CORE 4. TTS SPEECH CONTROLLER
            ========================================================================== */
         const synth = window.speechSynthesis; const voiceSelect = document.getElementById('voiceSelect');
         let allVoices = [];
@@ -419,11 +432,13 @@
         function stopText() { if (synth.speaking) synth.cancel(); }
 
         /* ==========================================================================
-           CORE 4. CUSTOM TIMELINE INTERVAL ENGINE & FADE IN/OUT MIXER
+           CORE 5. INDEPENDENT DUAL CHANNEL PLAYBACK ENGINE (YOUTUBE & LOCAL MIXING)
            ========================================================================== */
-        let player = null; let stopTimeout = null; let progressInterval = null;
-        let activeLocalSource = null; let activeLocalGain = null; // 로컬 오디오 믹싱 노드
-        let isTrackingStarted = false; let currentTrack = null;
+        let player = null; let progressInterval = null;
+        let activeLocalSource = null; let activeLocalGain = null; 
+        let isTrackingStarted = false; let currentTrack = null; let currentLocalTrack = null;
+        let localStopTimeout = null;
+        
         let videoDataList = [{ id: "init-1", videoId: "dQw4w9WgXcQ", title: "유튜브 기본 연출곡", startSec: 43, endSec: 55, isLocal: false, fadeIn: 0, fadeOut: 500 }];
         let currentEditingId = null;
 
@@ -433,58 +448,99 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-hidden-core', {
                 videoId: 'dQw4w9WgXcQ', host: 'https://www.youtube-nocookie.com',
-                playerVars: { 'playsinline': 1, 'controls': 0, 'disablekb': 1, 'autoplay': 0, 'rel': 0, 'modestbranding': 1 },
+                playerVars: { 'playsinline': 1, 'controls': 1, 'autoplay': 0, 'rel': 0, 'modestbranding': 1 },
                 events: { 'onReady': () => renderVideoList(), 'onStateChange': onPlayerStateChange }
             });
         }
+
+        // 유튜브 광고 스트림 실시간 스킵/뮤트 제어 루프 (0.4초 단위 폴링)
+        setInterval(() => {
+            if (player && typeof player.getCurrentTime === 'function') {
+                const skipBtn = document.querySelector('.ytp-ad-skip-button, .ytp-skip-ad-button');
+                if(skipBtn) { skipBtn.click(); console.log('[Core] 인터셉트 광고 디스미스 처리'); }
+                const adOverlay = document.querySelectorAll('.ytp-ad-overlay-container, .video-ads');
+                adOverlay.forEach(el => el.style.display = 'none');
+            }
+        }, 400);
 
         function onPlayerStateChange(event) {
             const statusText = document.getElementById('statusText');
             if (event.data === YT.PlayerState.PLAYING && currentTrack && !currentTrack.isLocal) {
                 const currentTime = player.getCurrentTime();
-                if (Math.abs(currentTime - currentTrack.startSec) > 5 && !isTrackingStarted) {
-                    statusText.innerText = (currentLang==='KO')?"⏳ 초기 광고 감지 및 차단 우회 중...":"⏳ Ad-Block Bypassing...";
+                // 프리셋 시작 지점 강제 동기화 보정
+                if (Math.abs(currentTime - currentTrack.startSec) > 4 && !isTrackingStarted) {
+                    statusText.innerText = "⏳ 타겟 구간 스트림 강제 정렬 중...";
                     return; 
                 }
                 if (!isTrackingStarted) {
                     isTrackingStarted = true;
-                    executeTimelineMonitor(currentTrack.startSec, currentTrack.endSec, currentTrack.fadeIn, currentTrack.fadeOut, false);
+                    executeYoutubeTimeline(currentTrack.startSec, currentTrack.endSec, currentTrack.fadeIn, currentTrack.fadeOut);
                 }
             }
         }
 
-        // 핵심 통합 가변 연산 스케줄러 (유튜브 & 로컬 통합 타임라인 처리기)
-        function executeTimelineMonitor(start, end, fadeInMs, fadeOutMs, isLocalTrack) {
+        // 채널 1: 유튜브 가변 타임라인 기동
+        function executeYoutubeTimeline(start, end, fadeInMs, fadeOutMs) {
             const statusText = document.getElementById('statusText');
             const durationSec = end - start;
-            statusText.innerText = (currentLang==='KO')?`🔥 맞춤 구간 재생 중 (${durationSec}초)`:`🔥 Playing Custom Segment (${durationSec}s)`;
+            statusText.innerText = `🔥 유튜브 구간 재생 중 (${durationSec}초)`;
             document.getElementById('radioIcon').classList.add('animate-spin', 'text-blue-400');
 
-            // 가변 페이드 오디오 볼륨 커브 설계 (Web Audio API 연동 또는 유튜브 API 연동 볼륨 스위칭)
-            if (!isLocalTrack) {
-                // 유튜브 페이드인 믹싱
-                if(fadeInMs > 0) {
-                    player.setVolume(0); let vol = 0;
-                    let fInInterval = setInterval(() => { vol += 10; player.setVolume(vol); if(vol >= 100) clearInterval(fInInterval); }, fadeInMs / 10);
-                } else { player.setVolume(100); }
+            if(fadeInMs > 0) {
+                player.setVolume(0); let vol = 0;
+                let fInInterval = setInterval(() => { vol += 10; player.setVolume(vol); if(vol >= 100) clearInterval(fInInterval); }, fadeInMs / 10);
+            } else { player.setVolume(100); }
 
-                // 페이드 아웃 타이밍 역산 페이드 아웃 타임아웃
-                setTimeout(() => {
-                    let vol = 100;
-                    let fOutInterval = setInterval(() => { vol -= 10; player.setVolume(vol); if(vol <= 0) { clearInterval(fOutInterval); controlActiveVideo('stop'); } }, fadeOutMs / 10);
-                }, (durationSec * 1000) - fadeOutMs);
+            setTimeout(() => {
+                let vol = 100;
+                let fOutInterval = setInterval(() => { vol -= 10; player.setVolume(vol); if(vol <= 0) { clearInterval(fOutInterval); controlActiveVideo('stop'); } }, fadeOutMs / 10);
+            }, (durationSec * 1000) - fadeOutMs);
+
+            startProgressDisplay(durationSec);
+        }
+
+        // 채널 2: 로컬 버퍼 가변 타임라인 기동 (유튜브와 분리하여 멀티 믹싱 실행)
+        function executeLocalTimeline(track) {
+            if (activeLocalSource) { try { activeLocalSource.stop(); } catch(e){} activeLocalSource = null; }
+            clearTimeout(localStopTimeout);
+
+            const buffer = localAudioStore[track.videoId]; if (!buffer) return;
+            activeLocalSource = audioCtx.createBufferSource(); activeLocalSource.buffer = buffer;
+            activeLocalGain = audioCtx.createGain(); activeLocalSource.connect(activeLocalGain); activeLocalGain.connect(audioCtx.destination);
+            
+            const durationSec = track.endSec - track.startSec;
+            const now = audioCtx.currentTime;
+            
+            activeLocalGain.gain.setValueAtTime(0, now);
+            activeLocalGain.gain.linearRampToValueAtTime(0.4, now + (track.fadeIn / 1000));
+            activeLocalGain.gain.setValueAtTime(0.4, now + (durationSec - (track.fadeOut / 1000)));
+            activeLocalGain.gain.linearRampToValueAtTime(0, now + durationSec);
+            
+            activeLocalSource.start(0, track.startSec, durationSec);
+            document.getElementById('playingTitle').innerText = `[MIX] ${track.title}`;
+            
+            localStopTimeout = setTimeout(() => {
+                controlActiveLocal('stop');
+            }, durationSec * 1000);
+        }
+
+        function playTrackSegment(id) {
+            const track = videoDataList.find(v => v.id === id); if (!track) return;
+            
+            if (track.isLocal) {
+                currentLocalTrack = track;
+                executeLocalTimeline(track);
             } else {
-                // 로컬 오디오 버퍼 기반 정밀 페이드 자동 제어 연산
-                const now = audioCtx.currentTime;
-                activeLocalGain.gain.setValueAtTime(0, now);
-                activeLocalGain.gain.linearRampToValueAtTime(0.3, now + (fadeInMs / 1000));
-                activeLocalGain.gain.setValueAtTime(0.3, now + (durationSec - (fadeOutMs / 1000)));
-                activeLocalGain.gain.linearRampToValueAtTime(0, now + durationSec);
-                
-                stopTimeout = setTimeout(() => { controlActiveVideo('stop'); }, durationSec * 1000);
+                if (player && typeof player.stopVideo === 'function') player.stopVideo();
+                clearInterval(progressInterval); isTrackingStarted = false;
+                currentTrack = track;
+                document.getElementById('playingTitle').innerText = track.title;
+                player.unMute(); player.setVolume(100);
+                player.loadVideoById({ videoId: track.videoId, startSeconds: track.startSec });
             }
+        }
 
-            // 실전 타임 인디케이터 기동
+        function startProgressDisplay(durationSec) {
             clearInterval(progressInterval); const startTimeStamp = Date.now();
             progressInterval = setInterval(() => {
                 const elapsed = (Date.now() - startTimeStamp) / 1000;
@@ -493,38 +549,28 @@
             }, 100);
         }
 
-        function playTrackSegment(id) {
-            controlActiveVideo('stop');
-            const track = videoDataList.find(v => v.id === id); if (!track) return;
-            currentTrack = track; isTrackingStarted = false;
-            document.getElementById('playingTitle').innerText = track.title;
+        function controlActiveVideo(action) {
+            if (action === 'stop' && player && typeof player.stopVideo === 'function') {
+                player.stopVideo(); clearInterval(progressInterval); isTrackingStarted = false;
+                document.getElementById('radioIcon').classList.remove('animate-spin', 'text-blue-400');
+                document.getElementById('statusText').innerText = "🛑 유튜브 Endpoint 도달 정지";
+            } else if (action === 'play' && player) { player.playVideo(); }
+        }
 
-            if (track.isLocal) {
-                const buffer = localAudioStore[track.videoId]; if (!buffer) return;
-                activeLocalSource = audioCtx.createBufferSource(); activeLocalSource.buffer = buffer;
-                activeLocalGain = audioCtx.createGain(); activeLocalSource.connect(activeLocalGain); activeLocalGain.connect(audioCtx.destination);
-                
-                activeLocalSource.start(0, track.startSec);
-                executeTimelineMonitor(track.startSec, track.endSec, track.fadeIn, track.fadeOut, true);
-            } else {
-                if(!player || typeof player.loadVideoById !== 'function') return;
-                player.unMute(); player.setVolume(100);
-                player.loadVideoById({ videoId: track.videoId, startSeconds: track.startSec });
+        function controlActiveLocal(action) {
+            if (action === 'stop') {
+                if (activeLocalSource) { try { activeLocalSource.stop(); } catch(e){} activeLocalSource = null; }
+                clearTimeout(localStopTimeout);
+                document.getElementById('statusText').innerText = "🛑 로컬 오디오 재생 종료";
+            } else if (action === 'play' && currentLocalTrack) {
+                executeLocalTimeline(currentLocalTrack);
             }
         }
 
-        function controlActiveVideo(action) {
-            if (action === 'stop') {
-                if (player && typeof player.stopVideo === 'function') player.stopVideo();
-                if (activeLocalSource) { try { activeLocalSource.stop(); } catch(e){} activeLocalSource = null; }
-                clearTimeout(stopTimeout); clearInterval(progressInterval); isTrackingStarted = false;
-                document.getElementById('radioIcon').classList.remove('animate-spin', 'text-blue-400');
-                document.getElementById('statusText').innerText = (currentLang==='KO')?"🛑 타겟 가변 엔드포인트 도달 - 완전 잠금":"🛑 Endpoint Reached - Locked";
-                document.getElementById('playingTitle').innerText = (currentLang==='KO')?"대기 중":"Standby";
-            } else if (action === 'play') {
-                if (currentTrack && currentTrack.isLocal) playTrackSegment(currentTrack.id);
-                else if (player) player.playVideo();
-            }
+        function stopAllChannels() {
+            controlActiveVideo('stop');
+            controlActiveLocal('stop');
+            document.getElementById('playingTitle').innerText = "전 채널 뮤트 대기";
         }
 
         function captureCurrentTime() { if (player && typeof player.getCurrentTime === 'function') document.getElementById('startSec').value = Math.floor(player.getCurrentTime()); }
@@ -552,7 +598,7 @@
                 div.innerHTML = `
                     <div class="flex flex-col truncate flex-1" onclick="playTrackSegment('${item.id}')">
                         <span class="font-semibold text-slate-200 truncate">${item.title}</span>
-                        <span class="text-[9px] text-slate-400">구간: ${item.startSec}초 ~ ${item.endSec}초 (F-In: ${item.fadeIn}ms / F-Out: ${item.fadeOut}ms)</span>
+                        <span class="text-[9px] text-slate-400">구간: ${item.startSec}초 ~ ${item.endSec}초 (In: ${item.fadeIn}ms / Out: ${item.fadeOut}ms)</span>
                     </div>
                     <div class="flex gap-1 ml-1">
                         <button onclick="editItem('${item.id}')" class="bg-slate-600 hover:bg-slate-500 px-1.5 py-0.5 rounded text-[9px]">수정</button>
@@ -572,7 +618,7 @@
         }
         function deleteItem(id) { videoDataList = videoDataList.filter(v => v.id !== id); renderVideoList(); }
         function clearForm() { document.getElementById('ytUrl').value = ''; document.getElementById('ytTitle').value = ''; document.getElementById('startSec').value = '0'; document.getElementById('endSec').value = '10'; currentEditingId = null; document.getElementById('saveBtn').innerText = "트랙 저장"; }
-        function exportToCSV() { let csv = "ID,VideoID,Title,StartSec,EndSec,FadeIn,FadeOut\n"; videoDataList.forEach(v => { csv += `"${v.id}","${v.videoId}","${v.title}",${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`; }); const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.setAttribute("download", "AudioStudio_v8_Backup.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+        function exportToCSV() { let csv = "ID,VideoID,Title,StartSec,EndSec,FadeIn,FadeOut\n"; videoDataList.forEach(v => { csv += `"${v.id}","${v.videoId}","${v.title}",${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`; }); const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.setAttribute("download", "AudioStudio_v85_Backup.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link); }
         function importFromCSV(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(e) { const text = e.target.result; const lines = text.split("\n"); const newList = []; for (let i = 1; i < lines.length; i++) { if (!lines[i].trim()) continue; const parts = lines[i].split(","); if (parts.length >= 7) { newList.push({ id: parts[0].replace(/"/g, ''), videoId: parts[1].replace(/"/g, ''), title: parts[2].replace(/"/g, ''), startSec: parseInt(parts[3]) || 0, endSec: parseInt(parts[4]) || 10, fadeIn: parseInt(parts[5]) || 0, fadeOut: parseInt(parts[6]) || 500, isLocal: parts[1].includes('local-') }); } } if(newList.length > 0) { videoDataList = newList; renderVideoList(); } }; reader.readAsText(file); }
     </script>
 </body>
