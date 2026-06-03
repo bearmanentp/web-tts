@@ -3,95 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>In-Browser TTS Player</title>
+    <title>Ultimate Audio & Video Workspace</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        /* 사운드 합성을 위한 Web Audio API 노드 관리용 스타일 및 애니메이션 구동 */
+        .active-noise { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex p-6 gap-6">
 
-    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full space-y-6">
-        <div class="text-center">
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">In-Browser TTS</h1>
-            <p class="text-sm text-slate-500 mt-1">Powered by your browser's built-in Text-to-Speech engine.</p>
-        </div>
-
+    <div class="w-80 bg-slate-800 p-6 rounded-2xl shadow-xl flex flex-col gap-6 border border-slate-700">
         <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Select Voice</label>
-            <select id="voiceSelect" class="w-full bg-slate-100 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">Loading available voices...</option>
-            </select>
+            <h2 class="text-xl font-bold tracking-tight text-blue-400 mb-1">Sound Effects</h2>
+            <p class="text-xs text-slate-400">시작/종료 알림음 및 집중 사운드</p>
         </div>
 
-        <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Text to Speak</label>
-            <textarea id="ttsText" rows="4" class="w-full bg-slate-100 border border-slate-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400" placeholder="Type something here...">안녕하세요! 브라우저의 모든 목소리를 안정적으로 선택하여 사용할 수 있는 TTS 시스템입니다. Welcome to the flexible In-Browser TTS!</textarea>
+        <hr class="border-slate-700">
+
+        <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-slate-300">TTS Chime Option</h3>
+            <label class="flex items-center gap-3 bg-slate-750 p-3 rounded-lg border border-slate-700 cursor-pointer hover:bg-slate-700 transition">
+                <input type="checkbox" id="useChime" checked class="w-4 h-4 text-blue-600 rounded bg-slate-900 border-slate-700">
+                <span class="text-sm">TTS 시작/종료 효과음 자동 재생</span>
+            </label>
         </div>
 
-        <div class="flex gap-2">
-            <button id="playBtn" onclick="speakText()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition duration-200 shadow-md">
-                Listen
-            </button>
-            <button id="stopBtn" onclick="stopText()" class="bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-3 rounded-lg transition duration-200 shadow-md">
-                Stop
-            </button>
+        <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-slate-300">Manual Triggers</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="playChime(true)" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition">🔔 시작 띵동</button>
+                <button onclick="playChime(false)" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition">🔕 종료 띵동</button>
+                <button onclick="playBell()" class="bg-slate-700 hover:bg-slate-600 p-2 text-xs rounded-lg font-medium transition col-span-2">⛪ 깊은 종소리 (Bell)</button>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-slate-300">Focus Ambient (Noise)</h3>
+            <div class="flex flex-col gap-2">
+                <button id="whiteNoiseBtn" onclick="toggleNoise('white')" class="w-full bg-slate-700 hover:bg-slate-600 py-2.5 text-xs rounded-lg font-medium transition">⚪ 화이트 노이즈 켜기</button>
+                <button id="pinkNoiseBtn" onclick="toggleNoise('pink')" class="w-full bg-slate-700 hover:bg-slate-600 py-2.5 text-xs rounded-lg font-medium transition">🟤 핑크 노이즈 켜기</button>
+            </div>
+            <div class="pt-1">
+                <label class="block text-xxs text-slate-400 mb-1">노이즈 볼륨 조절</label>
+                <input type="range" id="noiseVolume" min="0" max="0.1" step="0.01" value="0.03" class="w-full accent-blue-500">
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 flex flex-col gap-6">
+        
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 space-y-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold tracking-tight text-white">In-Browser TTS & Video Hub</h1>
+                <span class="text-xs bg-slate-700 px-3 py-1 rounded-full text-slate-300">Cross-Browser Engine v2.5</span>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-1">
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Select Voice</label>
+                    <select id="voiceSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100"></select>
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Text to Speak</label>
+                    <textarea id="ttsText" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-100" placeholder="텍스트를 입력하세요...">안녕하세요! 기능이 한층 업그레이드된 통합 오디오 워크스페이스입니다.</textarea>
+                </div>
+            </div>
+
+            <div class="flex gap-2 justify-end">
+                <button onclick="speakText()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-2 rounded-lg transition shadow-md text-sm">Listen</button>
+                <button onclick="stopText()" class="bg-red-600 hover:bg-red-500 text-white font-medium px-4 py-2 rounded-lg transition shadow-md text-sm">Stop</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6 flex-1">
+            
+            <div class="col-span-7 bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 flex flex-col gap-4">
+                <h2 class="text-lg font-bold text-slate-200">YouTube Video Manager</h2>
+                
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-3">
+                    <div class="flex gap-2">
+                        <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm" placeholder="유튜브 영상 링크 또는 ID 입력">
+                        <input type="text" id="ytTitle" class="w-40 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm" placeholder="영상 제목 명명">
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <div>
+                            <label class="block text-slate-400 mb-1">시작 시점(초)</label>
+                            <input type="number" id="startSec" value="0" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">마무리 시점(초)</label>
+                            <input type="number" id="endSec" value="60" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">페이드 인(초)</label>
+                            <input type="number" id="fadeIn" value="2" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">페이드 아웃(초)</label>
+                            <input type="number" id="fadeOut" value="2" class="w-full bg-slate-800 border border-slate-700 rounded p-1 text-center">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-1">
+                        <div class="flex gap-2">
+                            <button onclick="saveVideoItem()" id="saveBtn" class="bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-4 py-1.5 rounded transition text-white">비디오 추가 / 저장</button>
+                            <button onclick="clearForm()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-1.5 rounded transition">취소</button>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="exportToCSV()" class="bg-indigo-600 hover:bg-indigo-500 text-xxs px-2.5 py-1.5 rounded transition text-white font-medium">CSV 내보내기</button>
+                            <label class="bg-purple-600 hover:bg-purple-500 text-xxs px-2.5 py-1.5 rounded transition text-white font-medium cursor-pointer">
+                                CSV 불러오기
+                                <input type="file" id="csvFileInput" accept=".csv" onchange="importFromCSV(event)" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 overflow-y-auto max-h-64 space-y-2" id="videoListContainer">
+                    </div>
+            </div>
+
+            <div class="col-span-5 bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center min-h-[340px]">
+                <div class="w-full flex justify-between items-center mb-2">
+                    <h2 class="text-sm font-bold text-slate-300">Mini Video Display</h2>
+                    <span id="playingTitle" class="text-xs text-blue-400 font-medium truncate max-w-[180px]">재생 중인 영상 없음</span>
+                </div>
+                <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center relative border border-slate-700">
+                    <div id="ytPlayerNode"></div>
+                </div>
+                <p class="text-xxs text-slate-500 mt-2 text-center w-full">※ 지정된 구간을 넘어가면 페이드 아웃 후 자동 정지 및 볼륨 초기화 처리가 작동합니다.</p>
+            </div>
+
         </div>
     </div>
 
     <script>
-        const synth = window.speechSynthesis;
-        const voiceSelect = document.getElementById('voiceSelect');
-        let allVoices = [];
-        let lastSelectedVoiceName = ""; // 사용자가 마지막으로 선택한 목소리 이름을 기억합니다.
+        /* ==========================================================================
+           CORE 1. WEB AUDIO API 기반 효과음 및 노이즈 생성 엔진
+           ========================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let noiseNode = null;
+        let noiseGain = null;
 
-        // 1. 브라우저에서 제공하는 전체 목소리 목록을 가져와 드롭다운을 만드는 함수
-        function updateVoiceList() {
-            allVoices = synth.getVoices();
+        // 띵동댕동 소리 합성 장치 (시작: 상행선 음계, 종료: 하행선 음계)
+        function playChime(isStart) {
+            const now = audioCtx.currentTime;
+            const freqs = isStart ? [523.25, 659.25, 783.99, 1046.50] : [1046.50, 783.99, 659.25, 523.25]; // C-E-G-C 대역 아르페지오
             
-            // 현재 선택되어 있던 목소리 이름 저장 (목록이 갱신될 때 초기화되는 것 방지)
-            if (voiceSelect.value) {
-                lastSelectedVoiceName = voiceSelect.value;
-            }
+            freqs.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + index * 0.12);
+                
+                gainNode.gain.setValueAtTime(0.3, now + index * 0.12);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.12 + 0.6);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start(now + index * 0.12);
+                osc.stop(now + index * 0.12 + 0.6);
+            });
+        }
 
-            voiceSelect.innerHTML = '';
+        // 깊고 웅장한 종소리 합성 알고리즘 (FM 및 배음 구조 모사)
+        function playBell() {
+            const now = audioCtx.currentTime;
+            const fundamental = 220; // 기본 주파수 (A3)
+            const partials = [1, 1.2, 1.5, 2, 2.5, 3]; // 불협화 종소리 배음 구조 변조
+            
+            partials.forEach((p) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(fundamental * p, now);
+                
+                // 고조파일수록 빨리 감쇄하는 자연 물리 현상 적용
+                const duration = 2.5 / p; 
+                gainNode.gain.setValueAtTime(0.15, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + duration);
+            });
+        }
 
-            if (allVoices.length === 0) {
-                voiceSelect.innerHTML = '<option value="">No voices available</option>';
+        // 오디오 버퍼 조작을 통한 리얼타임 집중 소음(White/Pink Noise) 생성 장치
+        function toggleNoise(type) {
+            const volumeInput = document.getElementById('noiseVolume');
+            
+            if (noiseNode) {
+                noiseNode.stop();
+                noiseNode = null;
+                document.getElementById('whiteNoiseBtn').classList.remove('bg-blue-600', 'active-noise');
+                document.getElementById('pinkNoiseBtn').classList.remove('bg-amber-600', 'active-noise');
+                if (noiseGain) noiseGain.disconnect();
                 return;
             }
 
-            // 모든 목소리를 드롭다운에 추가
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+
+            if (type === 'white') {
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+                document.getElementById('whiteNoiseBtn').classList.add('bg-blue-600', 'active-noise');
+            } else if (type === 'pink') {
+                let b0, b1, b2, b3, b4, b5, b6;
+                b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    let white = Math.random() * 2 - 1;
+                    b0 = 0.99886 * b0 + white * 0.0555179;
+                    b1 = 0.99332 * b1 + white * 0.0750759;
+                    b2 = 0.96900 * b2 + white * 0.1538520;
+                    b3 = 0.86650 * b3 + white * 0.3104856;
+                    b4 = 0.55000 * b4 + white * 0.5329522;
+                    b5 = -0.7616 * b5 - white * 0.0168980;
+                    output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+                    output[i] *= 0.11; // 대역폭 보정
+                    b6 = white * 0.115926;
+                }
+                document.getElementById('pinkNoiseBtn').classList.add('bg-amber-600', 'active-noise');
+            }
+
+            noiseNode = audioCtx.createBufferSource();
+            noiseNode.buffer = noiseBuffer;
+            noiseNode.loop = true;
+
+            noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(parseFloat(volumeInput.value), audioCtx.currentTime);
+
+            noiseNode.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noiseNode.start();
+
+            // 실시간 볼륨 슬라이더 이벤트 연결
+            volumeInput.oninput = (e) => {
+                if(noiseGain) noiseGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+            };
+        }
+
+        /* ==========================================================================
+           CORE 2. 순수 브라우저 내장 WEB SPEECH API 안정화 런타임
+           ========================================================================== */
+        const synth = window.speechSynthesis;
+        const voiceSelect = document.getElementById('voiceSelect');
+        let allVoices = [];
+        let lastSelectedVoiceName = "";
+
+        function updateVoiceList() {
+            allVoices = synth.getVoices();
+            if (voiceSelect.value) lastSelectedVoiceName = voiceSelect.value;
+            voiceSelect.innerHTML = '';
+
+            if (allVoices.length === 0) {
+                voiceSelect.innerHTML = '<option value="">등록 가능한 목소리 없음</option>';
+                return;
+            }
+
             allVoices.forEach(voice => {
                 const option = document.createElement('option');
                 option.value = voice.name;
-                
-                // 고품질(Neural/Natural) 음성 표시 추가
                 let qualityHint = voice.name.includes('Neural') || voice.name.includes('Natural') ? ' ✨' : '';
                 option.textContent = `${voice.name} (${voice.lang})${qualityHint}`;
-                
                 voiceSelect.appendChild(option);
             });
 
-            // 목록이 갱신되더라도 이전에 선택했던 목소리가 목록에 있다면 강제로 다시 선택해둠 (튕김 방지)
             if (lastSelectedVoiceName) {
-                const stillExists = allVoices.some(v => v.name === lastSelectedVoiceName);
-                if (stillExists) {
+                if (allVoices.some(v => v.name === lastSelectedVoiceName)) {
                     voiceSelect.value = lastSelectedVoiceName;
                 }
             }
         }
 
-        // 엣지/크롬의 비동기 목소리 로딩 및 실시간 목록 변경 대응
         if (typeof synth !== 'undefined') {
             updateVoiceList();
-            if (synth.onvoiceschanged !== undefined) {
-                synth.onvoiceschanged = updateVoiceList;
-            }
+            if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = updateVoiceList;
         }
 
-        // 2. 말하기 기능 실행
         function speakText() {
             if (synth.speaking || synth.pending) {
                 synth.cancel();
-                setTimeout(startSpeaking, 150); // 안전한 재시작을 위한 딜레이
+                setTimeout(startSpeaking, 150);
                 return;
             }
             startSpeaking();
@@ -99,46 +304,299 @@
 
         function startSpeaking() {
             const text = document.getElementById('ttsText').value.trim();
-            if (!text) {
-                alert('Please enter some text.');
-                return;
+            if (!text) return;
+
+            // 옵션 선택 시 시작 차임 벨 울림
+            if (document.getElementById('useChime').checked) {
+                playChime(true);
             }
 
-            const selectedVoiceName = voiceSelect.value;
-            // 이름 기반으로 정확한 목소리 객체 매칭
-            const targetVoice = allVoices.find(v => v.name === selectedVoiceName);
-
-            if (!targetVoice) {
-                alert('Selected voice is temporarily unavailable. Please try again.');
-                return;
-            }
-
+            const targetVoice = allVoices.find(v => v.name === voiceSelect.value);
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.voice = targetVoice;
             
-            // [핵심 버그 수정] 목소리가 바뀌어도 브라우저가 언어 코드를 인지하지 못해 엉뚱하게 읽는 버그 원천 차단
-            utterance.lang = targetVoice.lang; 
+            if (targetVoice) {
+                utterance.voice = targetVoice;
+                utterance.lang = targetVoice.lang;
+            }
 
-            utterance.rate = 1.0;
-            utterance.pitch = 1.0;
+            utterance.onend = () => {
+                if (document.getElementById('useChime').checked) playChime(false);
+            };
 
-            // 긴 문장 읽을 때 중간에 끊기는 크로미움 버그 방지 (Heartbeat)
+            // 브라우저 백그라운드 멈춤 극복 가속 하트비트 스크립트
             const heartbeat = setInterval(() => {
-                if (!synth.speaking) {
-                    clearInterval(heartbeat);
-                } else {
-                    synth.pause();
-                    synth.resume();
-                }
+                if (!synth.speaking) clearInterval(heartbeat);
+                else { synth.pause(); synth.resume(); }
             }, 10000);
 
             synth.speak(utterance);
         }
 
         function stopText() {
-            if (synth.speaking) {
-                synth.cancel();
+            if (synth.speaking) synth.cancel();
+        }
+
+
+        /* ==========================================================================
+           CORE 3. YOUTUBE IFRAME API & 페이드 인/아웃 고정밀 트래커
+           ========================================================================== */
+        let ytPlayer = null;
+        let videoDataList = []; // 전체 영속 저장소 비디오 객체 배열
+        let currentEditingId = null; // 수정 연동 추적 ID
+        let fadeInterval = null;
+        let timeMonitorInterval = null;
+
+        // 유튜브 프레임워크 초기화 바인딩
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('ytPlayerNode', {
+                height: '100%',
+                width: '100%',
+                videoId: '', 
+                playerVars: { 'playsinline': 1, 'controls': 1 },
+                events: { 'onStateChange': onPlayerStateChange }
+            });
+        }
+
+        // 비디오 식별 추출 정규식 헬퍼 함수
+        function extractVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : url;
+        }
+
+        // 비디오 추가 및 수정 통합 라우터
+        function saveVideoItem() {
+            const urlInput = document.getElementById('ytUrl').value.trim();
+            const titleInput = document.getElementById('ytTitle').value.trim();
+            
+            if(!urlInput) { alert("유튜브 링크 또는 ID를 기입하세요."); return; }
+            
+            const vId = extractVideoId(urlInput);
+            const title = titleInput || `비디오_${vId.substring(0,4)}`;
+
+            const item = {
+                id: currentEditingId || Date.now().toString(),
+                videoId: vId,
+                title: title,
+                startSec: parseInt(document.getElementById('startSec').value) || 0,
+                endSec: parseInt(document.getElementById('endSec').value) || 60,
+                fadeIn: parseInt(document.getElementById('fadeIn').value) || 0,
+                fadeOut: parseInt(document.getElementById('fadeOut').value) || 0
+            };
+
+            if (currentEditingId) {
+                // 수정 모드 반영
+                const idx = videoDataList.findIndex(v => v.id === currentEditingId);
+                if(idx !== -1) videoDataList[idx] = item;
+                currentEditingId = null;
+                document.getElementById('saveBtn').innerText = "비디오 추가 / 저장";
+            } else {
+                // 신규 모드 추가
+                videoDataList.push(item);
             }
+
+            clearForm();
+            renderVideoList();
+        }
+
+        function renderVideoList() {
+            const container = document.getElementById('videoListContainer');
+            container.innerHTML = '';
+
+            videoDataList.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-slate-900 p-3 rounded-xl border border-slate-700 hover:border-blue-500 transition";
+                div.innerHTML = `
+                    <div class="flex-1 min-w-0 cursor-pointer" onclick="playVideoItem('${item.id}')">
+                        <p class="text-sm font-semibold text-slate-200 truncate">${item.title}</p>
+                        <p class="text-xxs text-slate-400 mt-0.5">구간: ${item.startSec}초 ~ ${item.endSec}초 (F-In: ${item.fadeIn}s / F-Out: ${item.fadeOut}s)</p>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        <button onclick="editVideoItem('${item.id}')" class="text-xs text-yellow-400 hover:text-yellow-300 font-medium px-2 py-1 bg-slate-800 rounded">수정</button>
+                        <button onclick="deleteVideoItem('${item.id}')" class="text-xs text-red-400 hover:text-red-300 font-medium px-2 py-1 bg-slate-800 rounded">삭제</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function editVideoItem(id) {
+            const item = videoDataList.find(v => v.id === id);
+            if(!item) return;
+
+            currentEditingId = item.id;
+            document.getElementById('ytUrl').value = `https://www.youtube.com/watch?v=${item.videoId}`;
+            document.getElementById('ytTitle').value = item.title;
+            document.getElementById('document.getElementById');
+            document.getElementById('startSec').value = item.startSec;
+            document.getElementById('endSec').value = item.endSec;
+            document.getElementById('fadeIn').value = item.fadeIn;
+            document.getElementById('fadeOut').value = item.fadeOut;
+
+            document.getElementById('saveBtn').innerText = "변경사항 저장";
+        }
+
+        function deleteVideoItem(id) {
+            videoDataList = videoDataList.filter(v => v.id !== id);
+            renderVideoList();
+        }
+
+        function clearForm() {
+            currentEditingId = null;
+            document.getElementById('ytUrl').value = '';
+            document.getElementById('ytTitle').value = '';
+            document.getElementById('startSec').value = '0';
+            document.getElementById('endSec').value = '60';
+            document.getElementById('fadeIn').value = '2';
+            document.getElementById('fadeOut').value = '2';
+            document.getElementById('saveBtn').innerText = "비디오 추가 / 저장";
+        }
+
+        // 특정 리스트 아이템 실행 및 정밀 오디오 페이드 볼륨 제어 매커니즘
+        function playVideoItem(id) {
+            const item = videoDataList.find(v => v.id === id);
+            if (!item || !ytPlayer) return;
+
+            // 기존 인터벌 타임라인 소멸 처리
+            clearInterval(fadeInterval);
+            clearInterval(timeMonitorInterval);
+
+            document.getElementById('playingTitle').innerText = item.title;
+            
+            // 지정 큐 지점으로 로드 및 재생
+            ytPlayer.loadVideoById({
+                videoId: item.videoId,
+                startSeconds: item.startSec
+            });
+
+            // 오디오 페이드 인 프로세스 세팅
+            if (item.fadeIn > 0) {
+                ytPlayer.setVolume(0);
+                let currentVol = 0;
+                const step = 100 / (item.fadeIn * 10); // 100ms마다 볼륨 상승량 계산
+                
+                fadeInterval = setInterval(() => {
+                    currentVol += step;
+                    if (currentVol >= 100) {
+                        ytPlayer.setVolume(100);
+                        clearInterval(fadeInterval);
+                    } else {
+                        ytPlayer.setVolume(Math.floor(currentVol));
+                    }
+                }, 100);
+            } else {
+                ytPlayer.setVolume(100);
+            }
+
+            // 고정밀 런타임 종료 시점 및 페이드 아웃 구간 감시 모니터링
+            timeMonitorInterval = setInterval(() => {
+                const currTime = ytPlayer.getCurrentTime();
+                const timeLeft = item.endSec - currTime;
+
+                // 페이드 아웃 조건 시작 처리 점검
+                if (item.fadeOut > 0 && timeLeft <= item.fadeOut && timeLeft > 0) {
+                    let currentVol = ytPlayer.getVolume();
+                    if(currentVol > 0) {
+                        const fadeOutStep = currentVol / (timeLeft * 10);
+                        ytPlayer.setVolume(Math.max(0, Math.floor(currentVol - fadeOutStep)));
+                    }
+                }
+
+                // 지정된 마무리 시간 초과 시 완벽 정지 및 리셋
+                if (currTime >= item.endSec) {
+                    clearInterval(timeMonitorInterval);
+                    clearInterval(fadeInterval);
+                    ytPlayer.stopVideo();
+                    ytPlayer.setVolume(100); // 다음 재생용 볼륨 원복
+                    document.getElementById('playingTitle').innerText = "재생 종료";
+                }
+            }, 100);
+        }
+
+        function onPlayerStateChange(event) {
+            // 외부 컨트롤로 인해 멈추는 경우 모니터링 인터벌 해제 제어
+            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
+                // 사용자 수동 컨트롤 대응용 예외 핸들러 영역
+            }
+        }
+
+        /* ==========================================================================
+           CORE 4. CSV 데이터 익스포트 및 인포트 파싱 엔진
+           ========================================================================== */
+        function exportToCSV() {
+            if (videoDataList.length === 0) { alert("내보낼 데이터 목록이 비어있습니다."); return; }
+
+            // CSV 헤더 배열 생성 및 RFC 4180 컴플라이언스 처리
+            let csvContent = "\uFEFF"; // 엑셀 한글 깨짐 방지용 UTF-8 BOM 필수 주입
+            csvContent += "id,videoId,title,startSec,endSec,fadeIn,fadeOut\n";
+
+            videoDataList.forEach(v => {
+                // 제목에 콤마가 포함될 수 있으므로 따옴표 이스케이핑
+                const safeTitle = `"${v.title.replace(/"/g, '""')}"`;
+                csvContent += `${v.id},${v.videoId},${safeTitle},${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `tts_yt_workspace_list_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function importFromCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const lines = text.split("\n");
+                const importedData = [];
+
+                // 첫 줄 헤더 스킵 후 라인 파싱 실행
+                for (let i = 1; i < lines.length; i++) {
+                    let line = lines[i].trim();
+                    if (!line) continue;
+
+                    // 정규식을 활용하여 큰따옴표 안의 콤마 이스케이프 파싱 실행
+                    const matches = line.match(/(".*?"|[^,]+)(?=\s*,|\s*$|\s*\n)/g) || line.split(",");
+                    if (matches.length < 7) {
+                        // 규격에 맞지 않는 불완전 레코드 스킵 연산
+                        const simpleSplit = line.split(",");
+                        if (simpleSplit.length >= 7) {
+                            importedData.push({
+                                id: simpleSplit[0], videoId: simpleSplit[1],
+                                title: simpleSplit[2].replace(/"/g, ''),
+                                startSec: parseInt(simpleSplit[3]), endSec: parseInt(simpleSplit[4]),
+                                fadeIn: parseInt(simpleSplit[5]), fadeOut: parseInt(simpleSplit[6])
+                            });
+                        }
+                        continue;
+                    }
+
+                    importedData.push({
+                        id: matches[0],
+                        videoId: matches[1],
+                        title: matches[2].replace(/"/g, ''), // 따옴표 복구
+                        startSec: parseInt(matches[3]),
+                        endSec: parseInt(matches[4]),
+                        fadeIn: parseInt(matches[5]),
+                        fadeOut: parseInt(matches[6])
+                    });
+                }
+
+                if (importedData.length > 0) {
+                    videoDataList = importedData;
+                    renderVideoList();
+                    alert(`총 ${importedData.length}개의 비디오 프로필을 CSV에서 정상적으로 불러왔습니다.`);
+                } else {
+                    alert("유효한 데이터를 CSV 내부에서 찾지 못했습니다.");
+                }
+            };
+            reader.readAsText(file, "UTF-8");
+            event.target.value = ''; // 재업로드 가능하도록 초기화
         }
     </script>
 </body>
