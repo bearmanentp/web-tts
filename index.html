@@ -2,103 +2,133 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>DJ Master Studio v2.0 - FX Enhanced</title>
+    <title>Ultimate DJ Pro Master Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .waveform { height: 100px; background: #020617; border: 1px solid #1e293b; position: relative; overflow: hidden; }
+        .bar { background: #38bdf8; display: inline-block; width: 2px; margin-right: 1px; }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 p-6 font-sans">
-
-    <div class="max-w-6xl mx-auto grid grid-cols-12 gap-6">
-        
-        <!-- DJ 믹싱 데스크 (크로스페이더 영향 O) -->
-        <div class="col-span-8 bg-slate-900 p-6 rounded-3xl border border-slate-700 shadow-2xl">
-            <h2 class="text-xl font-bold mb-4 text-amber-500">🎧 Mixing Console (Music Only)</h2>
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <!-- Deck A -->
-                <div class="bg-slate-800 p-4 rounded-xl">
-                    <h3 class="font-bold mb-2">DECK A</h3>
-                    <input type="file" class="mb-2 text-xs w-full" onchange="loadDeck('A', this)">
-                    <div class="flex gap-2"><button onclick="playDeck('A')" class="bg-green-600 px-4 py-2 rounded">▶️</button></div>
-                </div>
-                <!-- Deck B -->
-                <div class="bg-slate-800 p-4 rounded-xl">
-                    <h3 class="font-bold mb-2">DECK B</h3>
-                    <input type="file" class="mb-2 text-xs w-full" onchange="loadDeck('B', this)">
-                    <div class="flex gap-2"><button onclick="playDeck('B')" class="bg-green-600 px-4 py-2 rounded">▶️</button></div>
-                </div>
+    <div class="max-w-6xl mx-auto space-y-6">
+        <div class="flex justify-between items-center bg-slate-900 p-4 rounded-2xl border border-slate-700">
+            <h1 class="text-2xl font-black text-amber-500">🎧 PRO DJ MASTER SUITE v3.0</h1>
+            <div class="flex gap-2">
+                <button onclick="saveSession()" class="bg-blue-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-500">데이터 전체 자동 저장</button>
             </div>
-            <input type="range" min="0" max="1" step="0.01" value="0.5" class="w-full accent-amber-500" oninput="crossfade(this.value)">
         </div>
 
-        <!-- ⚡ 독립적인 FX & TTS 컨트롤 (마스터 출력 연결) -->
-        <div class="col-span-4 bg-slate-900 p-6 rounded-3xl border border-sky-900 space-y-4">
-            <h2 class="text-xl font-bold text-sky-400">⚡ Master FX & TTS</h2>
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="playSfx('chime')" class="bg-sky-700 hover:bg-sky-600 p-3 rounded font-bold">🔔 차임</button>
-                <button onclick="playSfx('fanfare')" class="bg-sky-700 hover:bg-sky-600 p-3 rounded font-bold">🎺 팡파르</button>
+        <div class="grid grid-cols-2 gap-6">
+            <div id="deckA" class="bg-slate-900 p-6 rounded-3xl border border-slate-700">
+                <h2 class="text-sm font-bold text-slate-400 mb-2">DECK A</h2>
+                <input type="file" class="text-xs mb-2" onchange="uploadTrack('A', this)">
+                <div id="waveA" class="waveform mb-4 rounded"></div>
+                <div class="flex gap-2"><button onclick="playDeck('A')" class="flex-1 bg-green-600 py-2 rounded font-bold">PLAY</button><button onclick="stopDeck('A')" class="bg-red-600 px-4 rounded">STOP</button></div>
             </div>
-            <textarea id="ttsText" class="w-full bg-slate-800 p-3 rounded-lg border border-slate-600" placeholder="방송할 대사..."></textarea>
-            <button onclick="speak()" class="w-full bg-emerald-600 py-3 rounded-xl font-bold hover:bg-emerald-500">🔊 방송 송출 (최대 볼륨)</button>
+            <div id="deckB" class="bg-slate-900 p-6 rounded-3xl border border-slate-700">
+                <h2 class="text-sm font-bold text-slate-400 mb-2">DECK B</h2>
+                <input type="file" class="text-xs mb-2" onchange="uploadTrack('B', this)">
+                <div id="waveB" class="waveform mb-4 rounded"></div>
+                <div class="flex gap-2"><button onclick="playDeck('B')" class="flex-1 bg-green-600 py-2 rounded font-bold">PLAY</button><button onclick="stopDeck('B')" class="bg-red-600 px-4 rounded">STOP</button></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-8 bg-slate-900 p-6 rounded-3xl border border-emerald-900">
+                <h2 class="text-lg font-bold mb-4 text-emerald-400">🗣️ 방송 관리 (CSV 연동)</h2>
+                <select id="voiceSelect" class="w-full bg-slate-800 p-2 rounded mb-2"></select>
+                <textarea id="scriptBox" class="w-full bg-slate-950 p-4 rounded-xl font-mono text-sm h-32"></textarea>
+                <div class="flex gap-4 mt-4">
+                    <button onclick="speak()" class="flex-1 bg-emerald-600 py-3 rounded-lg font-bold">🎙️ 방송 송출</button>
+                    <button onclick="exportCSV()" class="bg-slate-700 px-6 rounded-lg">CSV 저장</button>
+                </div>
+            </div>
+            <div class="col-span-4 bg-slate-900 p-6 rounded-3xl border border-slate-700 space-y-2">
+                <h2 class="text-lg font-bold text-sky-400">⚡ FX 라이브러리</h2>
+                <button onclick="playFx(880)" class="w-full bg-sky-800 hover:bg-sky-700 p-3 rounded font-bold">🔔 안내 차임</button>
+                <button onclick="playFx(523)" class="w-full bg-sky-800 hover:bg-sky-700 p-3 rounded font-bold">🎺 팡파르</button>
+                <button onclick="playFx(150)" class="w-full bg-sky-800 hover:bg-sky-700 p-3 rounded font-bold">💣 베이스 서브드롭</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioCtx = new AudioContext();
+        let decks = { A: { gain: audioCtx.createGain(), source: null, buffer: null }, B: { gain: audioCtx.createGain(), source: null, buffer: null } };
         
-        // 믹서용 게인 노드
-        const mixerA = ctx.createGain();
-        const mixerB = ctx.createGain();
-        mixerA.connect(ctx.destination);
-        mixerB.connect(ctx.destination);
+        // 데이터 영구 저장을 위한 IndexedDB 설정
+        let db;
+        const request = indexedDB.open("DJStudioDB", 1);
+        request.onupgradeneeded = e => { db = e.target.result; db.createObjectStore("settings", { keyPath: "id" }); };
+        request.onsuccess = e => { db = e.target.result; loadSession(); };
 
-        let decks = { A: { gain: mixerA, buffer: null, source: null }, B: { gain: mixerB, buffer: null, source: null } };
-
-        async function loadDeck(id, input) {
+        async function uploadTrack(id, input) {
             const file = input.files[0];
             const arr = await file.arrayBuffer();
-            decks[id].buffer = await ctx.decodeAudioData(arr);
+            decks[id].buffer = await audioCtx.decodeAudioData(arr);
+            drawWave(id, decks[id].buffer);
+        }
+
+        function drawWave(id, buffer) {
+            const container = document.getElementById('wave' + id);
+            container.innerHTML = '';
+            const data = buffer.getChannelData(0);
+            for(let i=0; i<100; i++) {
+                const div = document.createElement('div');
+                div.className = 'bar';
+                div.style.height = Math.abs(data[Math.floor(i * (data.length/100))]) * 150 + 'px';
+                container.appendChild(div);
+            }
         }
 
         function playDeck(id) {
-            if (decks[id].source) decks[id].source.stop();
-            decks[id].source = ctx.createBufferSource();
+            if(decks[id].source) decks[id].source.stop();
+            decks[id].source = audioCtx.createBufferSource();
             decks[id].source.buffer = decks[id].buffer;
             decks[id].source.connect(decks[id].gain);
+            decks[id].gain.connect(audioCtx.destination);
             decks[id].source.start();
         }
 
-        function crossfade(val) {
-            mixerA.gain.value = Math.cos(val * Math.PI / 2);
-            mixerB.gain.value = Math.sin(val * Math.PI / 2);
+        function playFx(freq) {
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.frequency.value = freq;
+            osc.connect(g); g.connect(audioCtx.destination);
+            osc.start(); g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1); osc.stop(audioCtx.currentTime + 1);
         }
 
-        // 효과음 출력 강화 (직접 마스터 연결 + 볼륨 증폭)
-        function playSfx(type) {
-            const osc = ctx.createOscillator();
-            const gainNode = ctx.createGain();
-            
-            // FX 출력 볼륨 0.8로 대폭 상향
-            gainNode.gain.value = 0.8; 
-            
-            osc.connect(gainNode);
-            gainNode.connect(ctx.destination);
-            
-            if(type === 'chime') osc.frequency.value = 880;
-            else if(type === 'fanfare') osc.frequency.value = 523;
-            
-            osc.start();
-            osc.stop(ctx.currentTime + 0.5);
-        }
-
-        // TTS 볼륨 강제 세팅 및 보정
         function speak() {
-            const text = document.getElementById('ttsText').value;
-            const u = new SpeechSynthesisUtterance(text);
-            u.lang = 'ko-KR';
-            u.volume = 1.0; // 시스템 최대 볼륨 설정
-            u.rate = 1.0;
-            u.pitch = 1.0;
-            window.speechSynthesis.speak(u);
+            const t = new SpeechSynthesisUtterance(document.getElementById('scriptBox').value);
+            const voices = speechSynthesis.getVoices();
+            t.voice = voices.find(v => v.name === document.getElementById('voiceSelect').value);
+            speechSynthesis.speak(t);
         }
+
+        function saveSession() {
+            const tx = db.transaction("settings", "readwrite");
+            tx.objectStore("settings").put({ id: "main", text: document.getElementById('scriptBox').value });
+            alert("세션이 DB에 안전하게 저장되었습니다.");
+        }
+
+        function loadSession() {
+            const tx = db.transaction("settings", "readonly");
+            const req = tx.objectStore("settings").get("main");
+            req.onsuccess = () => { if(req.result) document.getElementById('scriptBox').value = req.result.text; };
+        }
+
+        function exportCSV() {
+            const b = new Blob([document.getElementById('scriptBox').value], {type: 'text/csv'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'script.csv'; a.click();
+        }
+
+        // 보이스 리스트 로드
+        speechSynthesis.onvoiceschanged = () => {
+            const s = document.getElementById('voiceSelect');
+            speechSynthesis.getVoices().forEach(v => {
+                const o = document.createElement('option'); o.value = v.name; o.textContent = v.name; s.appendChild(o);
+            });
+        };
     </script>
 </body>
 </html>
