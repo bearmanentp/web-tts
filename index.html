@@ -3,38 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTS Player</title>
+    <title>In-Browser TTS Player</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
     <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full space-y-6">
         <div class="text-center">
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">모바일 & 사파리 지원 TTS</h1>
-            <p class="text-sm text-slate-500 mt-1">아이폰, 맥북 사파리에서도 정상 작동합니다.</p>
+            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">In-Browser TTS</h1>
+            <p class="text-sm text-slate-500 mt-1">Powered by your browser's built-in Text-to-Speech engine.</p>
         </div>
 
-        <!-- 설정 영역 -->
         <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">목소리 고르기</label>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Select Voice</label>
             <select id="voiceSelect" class="w-full bg-slate-100 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">목소리를 불러오는 중입니다...</option>
+                <option value="">Loading available voices...</option>
             </select>
         </div>
 
-        <!-- 텍스트 입력 영역 -->
         <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">텍스트 입력</label>
-            <textarea id="ttsText" rows="4" class="w-full bg-slate-100 border border-slate-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400" placeholder="내용을 입력하세요...">안녕하세요! 사파리 브라우저에서도 아주 잘 작동합니다. Welcome to Safari TTS test!</textarea>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Text to Speak</label>
+            <textarea id="ttsText" rows="4" class="w-full bg-slate-100 border border-slate-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400" placeholder="Type something here...">안녕하세요! 브라우저의 모든 목소리를 안정적으로 선택하여 사용할 수 있는 TTS 시스템입니다. Welcome to the flexible In-Browser TTS!</textarea>
         </div>
 
-        <!-- 제어 버튼 -->
         <div class="flex gap-2">
             <button id="playBtn" onclick="speakText()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition duration-200 shadow-md">
-                목소리 듣기
+                Listen
             </button>
             <button id="stopBtn" onclick="stopText()" class="bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-3 rounded-lg transition duration-200 shadow-md">
-                정지
+                Stop
             </button>
         </div>
     </div>
@@ -42,72 +39,98 @@
     <script>
         const synth = window.speechSynthesis;
         const voiceSelect = document.getElementById('voiceSelect');
-        let voices = [];
+        let allVoices = [];
+        let lastSelectedVoiceName = ""; // 사용자가 마지막으로 선택한 목소리 이름을 기억합니다.
 
-        function loadVoices() {
-            voices = synth.getVoices();
+        // 1. 브라우저에서 제공하는 전체 목소리 목록을 가져와 드롭다운을 만드는 함수
+        function updateVoiceList() {
+            allVoices = synth.getVoices();
             
-            // 사파리 초기 로딩 시 목록이 비어있을 때를 대비한 안전 장치
-            if (voices.length === 0) return;
+            // 현재 선택되어 있던 목소리 이름 저장 (목록이 갱신될 때 초기화되는 것 방지)
+            if (voiceSelect.value) {
+                lastSelectedVoiceName = voiceSelect.value;
+            }
 
             voiceSelect.innerHTML = '';
 
-            // 한국어(ko)와 영어(en)만 필터링
-            const filteredVoices = voices.filter(voice => 
-                voice.lang.startsWith('ko') || voice.lang.startsWith('en')
-            );
-
-            if (filteredVoices.length === 0) {
-                voiceSelect.innerHTML = '<option value="">지원하는 목소리가 없습니다.</option>';
+            if (allVoices.length === 0) {
+                voiceSelect.innerHTML = '<option value="">No voices available</option>';
                 return;
             }
 
-            filteredVoices.forEach(voice => {
+            // 모든 목소리를 드롭다운에 추가
+            allVoices.forEach(voice => {
                 const option = document.createElement('option');
                 option.value = voice.name;
                 
-                // 사파리/애플 목소리 구분을 위해 이름 뒤에 프리미엄/Siri 표시 분기 처리
-                let quality = voice.name.includes('Premium') || voice.name.includes('Siri') ? ' [고품질]' : '';
-                option.textContent = `${voice.name} (${voice.lang})${quality}`;
+                // 고품질(Neural/Natural) 음성 표시 추가
+                let qualityHint = voice.name.includes('Neural') || voice.name.includes('Natural') ? ' ✨' : '';
+                option.textContent = `${voice.name} (${voice.lang})${qualityHint}`;
+                
                 voiceSelect.appendChild(option);
             });
+
+            // 목록이 갱신되더라도 이전에 선택했던 목소리가 목록에 있다면 강제로 다시 선택해둠 (튕김 방지)
+            if (lastSelectedVoiceName) {
+                const stillExists = allVoices.some(v => v.name === lastSelectedVoiceName);
+                if (stillExists) {
+                    voiceSelect.value = lastSelectedVoiceName;
+                }
+            }
         }
 
-        // 일반 브라우저용 이벤트
+        // 엣지/크롬의 비동기 목소리 로딩 및 실시간 목록 변경 대응
         if (typeof synth !== 'undefined') {
+            updateVoiceList();
             if (synth.onvoiceschanged !== undefined) {
-                synth.onvoiceschanged = loadVoices;
+                synth.onvoiceschanged = updateVoiceList;
             }
-            // 사파리를 위해 주기적으로 목소리가 로드되었는지 체크하는 인터벌 추가 (사파리 버그 방지)
-            const safariCheck = setInterval(() => {
-                loadVoices();
-                if (voices.length > 0) clearInterval(safariCheck);
-            }, 100);
         }
 
+        // 2. 말하기 기능 실행
         function speakText() {
-            if (synth.speaking) {
-                synth.cancel(); 
-                // 사파리에서는 cancel 직후 바로 speak를 호출하면 씹히는 경우가 있어 살짝 딜레이를 줍니다.
-                setTimeout(startSpeaking, 100);
-            } else {
-                startSpeaking();
+            if (synth.speaking || synth.pending) {
+                synth.cancel();
+                setTimeout(startSpeaking, 150); // 안전한 재시작을 위한 딜레이
+                return;
             }
+            startSpeaking();
         }
 
         function startSpeaking() {
             const text = document.getElementById('ttsText').value.trim();
             if (!text) {
-                alert('텍스트를 입력해주세요!');
+                alert('Please enter some text.');
+                return;
+            }
+
+            const selectedVoiceName = voiceSelect.value;
+            // 이름 기반으로 정확한 목소리 객체 매칭
+            const targetVoice = allVoices.find(v => v.name === selectedVoiceName);
+
+            if (!targetVoice) {
+                alert('Selected voice is temporarily unavailable. Please try again.');
                 return;
             }
 
             const utterance = new SpeechSynthesisUtterance(text);
-            const selectedVoiceName = voiceSelect.value;
+            utterance.voice = targetVoice;
             
-            utterance.voice = voices.find(voice => voice.name === selectedVoiceName);
-            utterance.rate = 1.0; 
+            // [핵심 버그 수정] 목소리가 바뀌어도 브라우저가 언어 코드를 인지하지 못해 엉뚱하게 읽는 버그 원천 차단
+            utterance.lang = targetVoice.lang; 
+
+            utterance.rate = 1.0;
             utterance.pitch = 1.0;
+
+            // 긴 문장 읽을 때 중간에 끊기는 크로미움 버그 방지 (Heartbeat)
+            const heartbeat = setInterval(() => {
+                if (!synth.speaking) {
+                    clearInterval(heartbeat);
+                } else {
+                    synth.pause();
+                    synth.resume();
+                }
+            }, 10000);
 
             synth.speak(utterance);
         }
