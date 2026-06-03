@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Audio & TTS Studio v7.0</title>
+    <title>Ultimate Audio Studio v8.0 Enterprise</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         .active-noise { animation: pulse 2s infinite; }
@@ -17,137 +17,84 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex p-4 gap-4 select-none font-sans">
 
-    <!-- 좌측 사이드바: 60종 대규모 FX 마스터 매트릭스 -->
     <div class="w-[26rem] bg-slate-800 p-4 rounded-2xl shadow-xl flex flex-col gap-3 border border-slate-700 overflow-y-auto max-h-[calc(100vh-2rem)]">
         <div>
-            <h2 id="lang-fx-title" class="text-lg font-bold tracking-tight text-blue-400">FX Sound Matrix (60 Presets)</h2>
-            <p id="lang-fx-desc" class="text-xxs text-slate-400">실전 행사 및 방송용 고밀도 합성 오디오 엔진</p>
+            <div class="flex justify-between items-center">
+                <h2 id="lang-fx-title" class="text-base font-bold tracking-tight text-blue-400">FX Sound Matrix (Essential)</h2>
+                <span class="text-[10px] bg-blue-900 text-blue-200 px-2 py-0.5 rounded font-mono">Web Audio Synth</span>
+            </div>
+            <p id="lang-fx-desc" class="text-xxs text-slate-400">실제 행사/디렉팅에 즉시 투입 가능한 실전용 오디오 믹스</p>
         </div>
 
         <hr class="border-slate-700">
 
-        <!-- 카테고리 1: 실전 대형 행사 및 무대 연출 (Grand Event & Stage) -->
         <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">👑 <span id="cat-1">Grand Event & Stage (대형 행사/시상식)</span></h3>
+            <h3 class="text-xxs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">👑 <span id="cat-1">Opening & Awards (개막식/시상식)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playFanfare()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">🎺 시상식 오케스트라 팡파르</button>
-                <button onclick="playDrumRoll()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">🥁 긴장감 고조 드럼롤 (3초)</button>
-                <button onclick="playOrchestraHit()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">💥 웅장한 오케스트라 히트</button>
-                <button onclick="playEpicBrass()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">📯 판타지 에픽 브라스 오프닝</button>
-                <button onclick="playGlitchIntro()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">⚡ 사이버 테크노 글리치 인트로</button>
-                <button onclick="playLaserShow()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">✨ 화려한 레이저 오프닝 쇼</button>
-                <button onclick="playRiser()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">🚀 분위기 빌드업 초고음 라이저</button>
-                <button onclick="playSubDrop()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-amber-500 truncate">💣 무대를 울리는 딥 서브드롭</button>
+                <button onclick="playFanfare()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">🎺 종합 시상식 오케스트라 팡파르</button>
+                <button onclick="playDrumRoll()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">🥁 결과 발표 긴장감 드럼롤</button>
+                <button onclick="playOrchestraHit()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">💥 웅장한 오케스트라 임팩트 히트</button>
+                <button onclick="playEpicBrass()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">📯 귀빈 입장 에픽 브라스 시그널</button>
+                <button onclick="playSubDrop()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">💣 무대 베이스 중저음 서브드롭</button>
+                <button onclick="playRiser()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-amber-500 truncate">🚀 클라이맥스 빌드업 라이저 (3초)</button>
             </div>
         </div>
 
-        <!-- 카테고리 2: 클래식 안내 방송 및 차임 (Standard Broadcast Chimes) -->
         <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">🔔 <span id="cat-2">Standard Chimes (안내 방송/시그널)</span></h3>
+            <h3 class="text-xxs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">🔔 <span id="cat-2">Broadcast Chimes (안내방송/시그널)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playChime(true)" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">📢 시작 알림 (클래식 4타음)</button>
-                <button onclick="playChime(false)" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">🔕 종료 알림 (역순 4타음)</button>
-                <button onclick="playSchoolBell()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">🏫 정겨운 학교 종소리 (솔도라솔)</button>
-                <button onclick="playCyberBell()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">📡 미래지향 스마트시티 차임</button>
-                <button onclick="playAirportChime()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">✈️ 국제공항 아나운서 차임</button>
-                <button onclick="playElevatorBell()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">🏢 호텔 엘리베이터 띵- 동</button>
-                <button onclick="playGongEcho()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">⛩️ 전통 타악기 징 에코 벨</button>
-                <button onclick="playDeepBell()" class="bg-slate-700 hover:bg-slate-600 p-1.5 rounded text-left font-medium border-l-2 border-sky-500 truncate">⛪ 웅장한 유럽 대성당 종소리</button>
+                <button onclick="playChime(true)" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">📢 개식 통보 안내 차임 (시작)</button>
+                <button onclick="playChime(false)" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">🔕 폐식 통보 안내 차임 (종료)</button>
+                <button onclick="playAirportChime()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">✈️ 국제공항 VIP 아나운서 차임</button>
+                <button onclick="playCyberBell()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">📡 미래지향 스마트 전시관 알림음</button>
+                <button onclick="playElevatorBell()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">🏢 스마트 빌딩 부드러운 띵동</button>
+                <button onclick="playGongEcho()" class="bg-slate-700 hover:bg-slate-600 p-2 rounded text-left font-medium border-l-2 border-sky-500 truncate">⛩️ 전통 연회 개막 징 공명음</button>
             </div>
         </div>
 
-        <!-- 카테고리 3: 퀴즈쇼 및 게임 레크리에이션 (Quiz & Gamification) -->
         <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">🎮 <span id="cat-3">Quiz & Gamification (퀴즈/게임/예능)</span></h3>
+            <h3 class="text-xxs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">🎮 <span id="cat-3">Event & Quiz Game (이벤트/예능/퀴즈)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playSuccess()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎉 정답 / 미션 성공 카당!</button>
-                <button onclick="playFailure()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-orange-400 truncate">❌ 오답 / 미션 실패 (꽝-)</button>
-                <button onclick="playTickTimer()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-yellow-400 truncate">⏱️ 초읽기 째깍째깍+버저 (5초)</button>
-                <button onclick="playCoin()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🪙 레트로 오케이드 코인 획득</button>
-                <button onclick="playLevelUp()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">✨ 레벨 업 화려한 멜로디</button>
-                <button onclick="playSlotMachine()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎰 슬롯머신 결과 대기 드르륵</button>
-                <button onclick="playWheelSpin()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎡 돌려돌려 돌림판 스핀음</button>
-                <button onclick="playPowerUp()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">⚡ 에너지 충전 파워업</button>
+                <button onclick="playSuccess()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left font-semibold truncate">🎉 정답 선언 / 미션 성공 카당!</button>
+                <button onclick="playFailure()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left font-semibold text-orange-400 truncate">❌ 오답 처리 / 탈락 버저 (꽝-)</button>
+                <button onclick="playTickTimer()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left text-yellow-400 truncate">⏱️ 타임아웃 초읽기+최종 버저</button>
+                <button onclick="playLevelUp()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left truncate">✨ 순위 상승 화려한 축하 멜로디</button>
+                <button onclick="playCoin()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left truncate">🪙 포인트/경품 획득 레트로 음</button>
+                <button onclick="playWhistle()" class="bg-slate-750 hover:bg-slate-700 p-2 rounded text-left text-purple-300 truncate">🎺 경기 시작/종료 심판 호루라기</button>
             </div>
         </div>
 
-        <!-- 카테고리 4: 알림음 및 UI 제어 오디오 (System Alert & UI) -->
         <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1">🚨 <span id="cat-4">System Alerts & UI (알림/경고)</span></h3>
+            <h3 class="text-xxs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1">🌿 <span id="cat-4">Focus & Relax Ambient (공간 백그라운드)</span></h3>
             <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playBeep(440, 0.1, 'sine')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">단일 표준 사인 비프음</button>
-                <button onclick="playDoublePop()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">부드러운 톡-톡 팝업음</button>
-                <button onclick="playError()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-red-400 truncate">🚨 고음 긴급 마스터 경고</button>
-                <button onclick="playSirens()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-rose-300 truncate">🚒 소방 출동 사이렌 오실레이터</button>
-                <button onclick="playCardSwipe()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">슥- 스마트 카드 리더 태그</button>
-                <button onclick="playWhistle()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎺 체육대회 심판 호루라기</button>
-                <button onclick="playRadarScan()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">📡 잠수함 레이더 스캔 핑음</button>
-                <button onclick="playEmergencyBuzzer()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-red-400 truncate">⚠️ 대피령 공장 대형 버저</button>
-            </div>
-        </div>
-
-        <!-- 카테고리 5: 오피스 및 라이프 다큐멘터리 (Office & Real Life) -->
-        <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1">🏢 <span id="cat-5">Office & Everyday Life (일상/오피스)</span></h3>
-            <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playKeyboard(4)" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">⌨️ 기계식 청축 키보드 타자음</button>
-                <button onclick="playPhoneRing()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">📞 80년대 레트로 다이얼 벨</button>
-                <button onclick="playDoorbell()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🚪 무선 디지털 초인종 딩동</button>
-                <button onclick="playCameraClick()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">📸 DSLR 셔터 미러리스 스냅</button>
-                <button onclick="playCashRegister()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-yellow-300 truncate">💰 마트 계산기 짤랑 체킹</button>
-                <button onclick="playPaperRustle()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">📄 인쇄 서류 종이 넘기는 소리</button>
-                <button onclick="playGlassClink()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🥂 건배 축배 와인잔 크리스탈</button>
-                <button onclick="playCarHorn()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🚗 자동차 크랙션 빵-빵</button>
-            </div>
-        </div>
-
-        <!-- 카테고리 6: 시네마틱 및 악기 텍스처 (Cinematic Instruments) -->
-        <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-pink-400 uppercase tracking-wider flex items-center gap-1">🎻 <span id="cat-6">Acoustic & Cinematic (악기/시네마틱)</span></h3>
-            <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button onclick="playArpeggio([523.25, 659.25, 783.99, 1046.50])" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">✨ 영롱한 하프 아르페지오</button>
-                <button onclick="playGuitarPluck()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎸 클래식 어쿠스틱기타 피킹</button>
-                <button onclick="playSynthesizerPad()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🌌 신비로운 우주 안개 패드 화음</button>
-                <button onclick="playWaterDrop()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">💧 동굴 속 투명한 물방울 낙하</button>
-                <button onclick="playWoodBlock()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🪵 국악 국악기 목탁과 우드블럭</button>
-                <button onclick="playTriangleMelody()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">📐 오케스트라 고음 트라이앵글</button>
-                <button onclick="playJazzOrgan()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🎹 빈티지 재즈 오르간 화음</button>
-                <button onclick="playRetroJump()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🍄 마리오 8비트 점프 사운드</button>
-            </div>
-        </div>
-
-        <!-- 카테고리 7: 공간 앰비언트 치료 및 휴식 (Ambient Therapies) -->
-        <div class="space-y-1">
-            <h3 class="text-xxs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1">🌿 <span id="cat-7">Therapy Ambient (메디테이션/치유)</span></h3>
-            <div class="grid grid-cols-2 gap-1 text-xxs">
-                <button id="whiteNoiseBtn" onclick="toggleNoise('white')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">⚪ 아날로그 화이트 노이즈</button>
-                <button id="pinkNoiseBtn" onclick="toggleNoise('pink')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🟤 딥 포커스 핑크 노이즈</button>
-                <button id="brownNoiseBtn" onclick="toggleNoise('brown')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🔴 명상 뇌파 브라운 노이즈</button>
-                <button onclick="playWindGust()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🌬️ 히말라야 가을 골바람 소리</button>
-                <button onclick="playOceanWaves()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🌊 동해안 모래사장 무한 파도</button>
-                <button onclick="playHeartbeat()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-rose-400 truncate">❤️ 안정감을 주는 심장 박동</button>
-                <button onclick="playSingingBowl()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-teal-400 truncate">🧘 티베트 힐링 싱잉볼 공명</button>
-                <button onclick="playRaindrop()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🌧️ 새벽 유리창 아날로그 빗소리</button>
+                <button id="whiteNoiseBtn" onclick="toggleNoise('white')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">⚪ 집중용 화이트 노이즈</button>
+                <button id="pinkNoiseBtn" onclick="toggleNoise('pink')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🟤 안정감 핑크 노이즈</button>
+                <button id="brownNoiseBtn" onclick="toggleNoise('brown')" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left truncate">🔴 명상 브라운 노이즈</button>
+                <button onclick="playSingingBowl()" class="bg-slate-750 hover:bg-slate-700 p-1.5 rounded text-left text-teal-300 truncate">🧘 명상 치유 티베트 싱잉볼</button>
             </div>
             <div class="pt-1">
-                <label id="lang-noise-vol" class="block text-[10px] text-slate-400 mb-0.5">앰비언트 백그라운드 노이즈 마스터 볼륨</label>
+                <label id="lang-noise-vol" class="block text-[10px] text-slate-400 mb-0.5">앰비언트 백그라운드 마스터 볼륨</label>
                 <input type="range" id="noiseVolume" min="0" max="0.1" step="0.01" value="0.03" class="w-full accent-blue-500">
             </div>
         </div>
+
+        <div class="mt-2 p-3 bg-slate-900 rounded-xl border border-dashed border-slate-600 text-center space-y-2">
+            <div id="lang-drop-title" class="text-xxs font-bold text-slate-300">📁 로컬 음원 파일 / 폴더 탑재 매트릭스</div>
+            <p id="lang-drop-desc" class="text-[10px] text-slate-500">외부 파일(.mp3, .wav)이나 폴더를 여기에 드래그 앤 드롭하세요</p>
+            <input type="file" id="localAudioFile" multiple accept="audio/*" onchange="handleLocalFiles(this.files)" class="hidden">
+            <label for="localAudioFile" class="inline-block bg-slate-700 hover:bg-slate-600 text-xxs px-3 py-1 rounded cursor-pointer transition">파일 선택</label>
+        </div>
     </div>
 
-    <!-- 우측 메인 영역 -->
     <div class="flex-1 flex flex-col gap-3">
         
-        <!-- 상단: TTS 마스터 허브 및 옵션 연동 -->
         <div class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 space-y-3">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">In-Browser TTS & Audio Hub v7.0</h1>
-                    <!-- 다국어 토글 인풋 -->
+                    <h1 id="lang-main-title" class="text-lg font-bold tracking-tight text-white">Ultimate Audio Hub & Broadcast v8.0</h1>
                     <button onclick="toggleUILanguage()" id="langToggleBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-2 py-0.5 rounded font-bold text-xxs transition">Language: KO</button>
                 </div>
-                <span class="text-xxs bg-emerald-700 px-2.5 py-0.5 rounded-full text-emerald-100 font-semibold">🔊 Pro Synthesis Chain</span>
+                <span class="text-xxs bg-emerald-700 px-2.5 py-0.5 rounded-full text-emerald-100 font-semibold">🔊 Live Core Engine</span>
             </div>
             
             <div class="grid grid-cols-12 gap-3">
@@ -156,7 +103,6 @@
                         <label id="lang-select-voice" class="block text-xxs font-medium text-slate-400 mb-0.5">Select Voice (목소리 선택)</label>
                         <select id="voiceSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xxs text-slate-100"></select>
                     </div>
-                    <!-- FX 사운드 트리거 자동 셀렉터 조립 부 -->
                     <div>
                         <label id="lang-start-fx" class="block text-xxs font-semibold text-emerald-400 mb-0.5">🟢 TTS 시작 효과음</label>
                         <select id="ttsStartFx" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xxs text-slate-100">
@@ -164,8 +110,6 @@
                             <option value="chime" selected>시작 안내 차임 (Chime)</option>
                             <option value="airport">공항 안내음 (Airport)</option>
                             <option value="fanfare">시상식 팡파르 (Fanfare)</option>
-                            <option value="doublepop">부드러운 팝업 (Pop)</option>
-                            <option value="cyber">미래형 사이버 벨 (Cyber)</option>
                         </select>
                     </div>
                     <div>
@@ -175,14 +119,13 @@
                             <option value="chime_end" selected>종료 안내 차임 (Chime End)</option>
                             <option value="elevator">엘리베이터 벨 (Elevator)</option>
                             <option value="success">퀴즈 정답 사운드 (Success)</option>
-                            <option value="gong">전통 징 울림 (Gong)</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-span-9 flex flex-col justify-between">
                     <div>
                         <label id="lang-textarea" class="block text-xxs font-medium text-slate-400 mb-0.5">Text to Speak (방송 대사 입력)</label>
-                        <textarea id="ttsText" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-100 font-mono" placeholder="원하는 텍스트를 입력하세요...">안녕하십니까. 잠시 후 방송이 진행될 예정이오니 내빈 여러분께서는 자리에 지참해 주시기 바랍니다.</textarea>
+                        <textarea id="ttsText" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-100 font-mono" placeholder="대사를 입력해 주세요.">안녕하십니까. 안내 말씀 드립니다. 잠시 후 믹싱 스테이션 오디오 정밀 제어 시연회가 진행될 예정이오니 참가자 여러분께서는 메인 부스로 집중해 주시기 바랍니다.</textarea>
                     </div>
                     <div class="flex gap-2 justify-end pt-1">
                         <button onclick="speakChain()" id="btn-speak" class="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-1.5 rounded-lg transition text-xs">🔊 효과음 연동 방송 재생</button>
@@ -192,37 +135,44 @@
             </div>
         </div>
 
-        <!-- 하단: 유튜브 3초 무광고 타겟 링커 및 모니터 -->
         <div class="grid grid-cols-12 gap-3 flex-1">
             
-            <!-- 트랙 관리 매트릭스 -->
             <div class="col-span-7 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col gap-2">
-                <h2 id="lang-mgr-title" class="text-xs font-bold text-slate-200 uppercase tracking-wide">Audio Track Manager (Ad-Free Engine)</h2>
+                <h2 id="lang-mgr-title" class="text-xs font-bold text-slate-200 uppercase tracking-wide">Audio Track Manager (Custom Timeline)</h2>
                 
                 <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700 space-y-1.5">
                     <div class="flex gap-2">
-                        <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="유튜브 링크 또는 ID 비디오 소스 코드 입력" value="dQw4w9WgXcQ">
-                        <input type="text" id="ytTitle" class="w-32 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="트랙명 식별 번호" value="시그널 시상식 음악">
+                        <input type="text" id="ytUrl" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="유튜브 ID 또는 로컬 가상 ID 매핑" value="dQw4w9WgXcQ">
+                        <input type="text" id="ytTitle" class="w-32 bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-xxs" placeholder="트랙 식별 명칭" value="메인 백그라운드 뮤직">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-2 p-2 bg-slate-850 rounded-lg border border-slate-750">
                         <div class="space-y-0.5">
-                            <label id="lang-start-sec" class="block text-[10px] text-slate-400">시작 타임라인 설정 (초)</label>
+                            <label id="lang-start-sec" class="block text-[10px] text-slate-400">구간 시작 지점 (초)</label>
                             <div class="flex gap-1">
                                 <input type="number" id="startSec" value="43" class="w-full bg-slate-800 border border-slate-700 rounded p-0.5 text-center text-xs">
-                                <button onclick="captureCurrentTime('start')" id="btn-capture" class="bg-blue-600 hover:bg-blue-500 text-[10px] px-1.5 rounded whitespace-nowrap">⏱️ 현재 타임 캡처</button>
+                                <button onclick="captureCurrentTime()" id="btn-capture" class="bg-blue-600 hover:bg-blue-500 text-[10px] px-1.5 rounded whitespace-nowrap">⏱️ 캡처</button>
                             </div>
                         </div>
                         <div class="space-y-0.5">
-                            <label id="lang-cut-sec" class="block text-[10px] text-slate-400">마무리 인터벌 컷</label>
-                            <div class="flex gap-1">
-                                <input type="text" id="val-cut" value="+3초 즉시 자동 파괴" disabled class="w-full bg-slate-950 border border-slate-800 text-slate-500 rounded p-0.5 text-center text-xxs font-bold">
-                            </div>
+                            <label id="lang-end-sec-label" class="block text-[10px] text-slate-400">구간 종료 지점 (초)</label>
+                            <input type="number" id="endSec" value="55" class="w-full bg-slate-800 border border-slate-700 rounded p-0.5 text-center text-xs">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 px-1 text-[10px] text-slate-400">
+                        <div>
+                            <span id="lang-fade-in-lbl">페이드 인 (Fade-In):</span> <span id="fadeInVal" class="text-blue-400 font-mono">0</span>ms
+                            <input type="range" id="fadeInTime" min="0" max="3000" step="100" value="0" oninput="document.getElementById('fadeInVal').innerText=this.value" class="w-full accent-blue-500">
+                        </div>
+                        <div>
+                            <span id="lang-fade-out-lbl">페이드 아웃 (Fade-Out):</span> <span id="fadeOutVal" class="text-rose-400 font-mono">500</span>ms
+                            <input type="range" id="fadeOutTime" min="0" max="5000" step="100" value="500" oninput="document.getElementById('fadeOutVal').innerText=this.value" class="w-full accent-rose-500">
                         </div>
                     </div>
 
                     <div class="flex justify-between items-center pt-1">
-                        <button onclick="saveVideoItem()" id="saveBtn" class="bg-emerald-600 hover:bg-emerald-500 text-xxs px-3 py-1 rounded transition font-semibold">트랙 슬롯 저장</button>
+                        <button onclick="saveVideoItem()" id="saveBtn" class="bg-emerald-600 hover:bg-emerald-500 text-xxs px-3 py-1 rounded transition font-semibold">트랙 저장</button>
                         <div class="flex gap-1">
                             <button onclick="exportToCSV()" id="btn-export" class="bg-indigo-600 hover:bg-indigo-500 text-[9px] px-1.5 py-0.5 rounded">CSV 백업</button>
                             <label id="btn-import" class="bg-purple-600 hover:bg-purple-500 text-[9px] px-1.5 py-0.5 rounded cursor-pointer">가져오기<input type="file" id="csvFileInput" accept=".csv" onchange="importFromCSV(event)" class="hidden"></label>
@@ -230,10 +180,9 @@
                     </div>
                 </div>
 
-                <div class="flex-1 overflow-y-auto max-h-44 space-y-1" id="videoListContainer"></div>
+                <div class="flex-1 overflow-y-auto max-h-36 space-y-1" id="videoListContainer"></div>
             </div>
 
-            <!-- 우측: 모니터 데스크 및 유튜브 API 샌드박스 코어 -->
             <div class="col-span-5 bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 flex flex-col justify-between items-center min-h-[250px]">
                 <div class="w-full flex justify-between items-center">
                     <h2 id="lang-desk-title" class="text-xxs font-bold text-slate-400 uppercase">Audio Desk Status Monitor</h2>
@@ -243,18 +192,17 @@
                 <div class="w-full flex-1 bg-slate-950 rounded-xl flex flex-col items-center justify-center relative border border-slate-700 p-3 mt-1.5">
                     <div class="text-center space-y-1.5">
                         <div id="radioIcon" class="text-2xl transition-all duration-300">📻</div>
-                        <div id="statusText" class="text-xxs font-medium text-slate-400">광고 우회 스크립트 대기 중</div>
-                        <div id="timeProgress" class="text-xxs tracking-wider font-mono text-slate-500">00:00 / 00:03</div>
+                        <div id="statusText" class="text-xxs font-medium text-slate-400">트랙 스트림 차단 대기 중</div>
+                        <div id="timeProgress" class="text-xxs tracking-wider font-mono text-slate-500">00:00 / 00:00</div>
                     </div>
-                    <!-- 인라인 IFrame 가상 노드 -->
                     <div id="playerWrapper" class="hidden-player">
                         <div id="yt-hidden-core"></div>
                     </div>
                 </div>
                 
                 <div class="w-full grid grid-cols-2 gap-1 mt-2">
-                    <button onclick="controlActiveVideo('play')" id="btn-force" class="bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded transition">▶️ 강제 스트림</button>
-                    <button onclick="controlActiveVideo('stop')" id="btn-force-stop" class="bg-red-900/50 hover:bg-red-900 text-red-300 py-1 text-xxs font-medium rounded transition">⏹️ 뮤트 차단</button>
+                    <button onclick="controlActiveVideo('play')" id="btn-force" class="bg-slate-700 hover:bg-slate-600 py-1 text-xxs font-medium rounded transition">▶️ 수동 재생</button>
+                    <button onclick="controlActiveVideo('stop')" id="btn-force-stop" class="bg-red-900/50 hover:bg-red-900 text-red-300 py-1 text-xxs font-medium rounded transition">⏹️ 재생 차단</button>
                 </div>
             </div>
 
@@ -263,35 +211,35 @@
 
     <script>
         /* ==========================================================================
-           CORE 1. UI MULTI-LANGUAGE RESOURCE MAP (국문/영문 라벨 정의)
+           CORE 1. UI MULTI-LANGUAGE RESOURCE MAP
            ========================================================================== */
         let currentLang = 'KO';
         const langPack = {
             KO: {
-                fxTitle: "FX 사운드 매트릭스 (60종 프리셋)", fxDesc: "실전 행사 및 방송용 고밀도 합성 오디오 엔진",
-                cat1: "Grand Event & Stage (대형 행사/시상식)", cat2: "Standard Chimes (안내 방송/시그널)",
-                cat3: "Quiz & Gamification (퀴즈/게임/예능)", cat4: "System Alerts & UI (알림/경고)",
-                cat5: "Office & Everyday Life (일상/오피스)", cat6: "Acoustic & Cinematic (악기/시네마틱)",
-                cat7: "Therapy Ambient (메디테이션/치유)", noiseVol: "앰비언트 백그라운드 노이즈 마스터 볼륨",
-                mainTitle: "In-Browser TTS & Audio Hub v7.0", selectVoice: "Select Voice (목소리 선택)",
-                startFx: "🟢 TTS 시작 효과음", endFx: "🔴 TTS 종료 효과음", textarea: "Text to Speak (방송 대사 입력)",
-                btnSpeak: "🔊 효과음 연동 방송 재생", btnStop: "정지 (Stop)", mgrTitle: "Audio Track Manager (Ad-Free Engine)",
-                startSec: "시작 타임라인 설정 (초)", cutSec: "마무리 인터벌 컷", valCut: "+3초 즉시 자동 파괴",
-                saveBtn: "트랙 슬롯 저장", btnExport: "CSV 백업", btnImport: "가져오기", deskTitle: "Audio Desk Status Monitor",
-                btnForce: "▶️ 강제 스트림", btnForceStop: "⏹️ 뮤트 차단", btnCapture: "⏱️ 현재 타임 캡처"
+                fxTitle: "FX 사운드 매트릭스 (실전형)", fxDesc: "실제 행사/디렉팅에 즉시 투입 가능한 실전용 오디오 믹스",
+                cat1: "Opening & Awards (개막식/시상식)", cat2: "Broadcast Chimes (안내방송/시그널)",
+                cat3: "Event & Quiz Game (이벤트/예능/퀴즈)", cat4: "Focus & Relax Ambient (공간 백그라운드)",
+                noiseVol: "앰비언트 백그라운드 마스터 볼륨", mainTitle: "Ultimate Audio Hub & Broadcast v8.0",
+                selectVoice: "Select Voice (목소리 선택)", startFx: "🟢 TTS 시작 효과음", endFx: "🔴 TTS 종료 효과음",
+                textarea: "Text to Speak (방송 대사 입력)", btnSpeak: "🔊 효과음 연동 방송 재생", btnStop: "정지 (Stop)",
+                mgrTitle: "Audio Track Manager (Custom Timeline)", startSec: "구간 시작 지점 (초)", endSecLabel: "구간 종료 지점 (초)",
+                fadeInLbl: "페이드 인 (Fade-In):", fadeOutLbl: "페이드 아웃 (Fade-Out):", saveBtn: "트랙 저장",
+                btnExport: "CSV 백업", btnImport: "가져오기", deskTitle: "Audio Desk Status Monitor",
+                btnForce: "▶️ 수동 재생", btnForceStop: "⏹️ 재생 차단", btnCapture: "⏱️ 캡처", dropTitle: "📁 로컬 음원 파일 / 폴더 탑재 매트릭스",
+                dropDesc: "외부 파일(.mp3, .wav)이나 폴더를 여기에 드래그 앤 드롭하세요"
             },
             EN: {
-                fxTitle: "FX Sound Matrix (60 Presets)", fxDesc: "High-density synthesis audio engine for events",
-                cat1: "Grand Event & Stage", cat2: "Standard Broadcast Chimes",
-                cat3: "Quiz & Gamification Show", cat4: "System Alerts & Interface",
-                cat5: "Office & Everyday Real Life", cat6: "Acoustic & Cinematic Textures",
-                cat7: "Therapy & Deep Ambient", noiseVol: "Ambient Noise Master Volume Controll",
-                mainTitle: "In-Browser TTS & Audio Hub v7.0", selectVoice: "Select Synth Voice Profile",
-                startFx: "🟢 TTS Start Sound FX Chain", endFx: "🔴 TTS End Sound FX Chain", textarea: "Broadcast Script Input Desk",
-                btnSpeak: "🔊 Play Linked Audio Broadcast", btnStop: "Stop System", mgrTitle: "Audio Track Manager (Ad-Free Engine)",
-                startSec: "Set Audio Start Timeline (Seconds)", cutSec: "Automatic Audio Kill Interval", valCut: "+3s Auto Cut-off Armed",
-                saveBtn: "Save Track Slot", btnExport: "CSV Backup", btnImport: "Import CSV", deskTitle: "Audio Desk Status Monitor",
-                btnForce: "▶️ Force Play Stream", btnForceStop: "⏹️ Force Stop Kill", btnCapture: "⏱️ Capture Current Time"
+                fxTitle: "FX Sound Matrix (Essential)", fxDesc: "Production-ready audio synthesis system for real stages",
+                cat1: "Opening & Awards Stage", cat2: "Broadcast Chimes & Signals",
+                cat3: "Event & Quiz Gameplay", cat4: "Focus & Relax Ambient",
+                noiseVol: "Ambient Noise Master Volume", mainTitle: "Ultimate Audio Hub & Broadcast v8.0",
+                selectVoice: "Select Voice Target", startFx: "🟢 TTS Start Sound FX Chain", endFx: "🔴 TTS End Sound FX Chain",
+                textarea: "Broadcast Script Input Desk", btnSpeak: "🔊 Play Linked Audio Broadcast", btnStop: "Stop System",
+                mgrTitle: "Audio Track Manager (Custom Timeline)", startSec: "Timeline Start Point (Sec)", endSecLabel: "Timeline End Point (Sec)",
+                fadeInLbl: "Fade-In Dynamic:", fadeOutLbl: "Fade-Out Dynamic:", saveBtn: "Save Track",
+                btnExport: "CSV Export", btnImport: "Import CSV", deskTitle: "Audio Desk Status Monitor",
+                btnForce: "▶️ Manual Stream", btnForceStop: "⏹️ Force Stop Kill", btnCapture: "⏱️ Capt", dropTitle: "📁 Local Audio File / Folder Matrix Dropzone",
+                dropDesc: "Drag & drop local media (.mp3, .wav) or entire folder asset houses"
             }
         };
 
@@ -300,240 +248,94 @@
             document.getElementById('langToggleBtn').innerText = `Language: ${currentLang}`;
             const pack = langPack[currentLang];
             
-            document.getElementById('lang-fx-title').innerText = pack.fxTitle;
-            document.getElementById('lang-fx-desc').innerText = pack.fxDesc;
+            document.getElementById('lang-fx-title').innerText = pack.fxTitle; document.getElementById('lang-fx-desc').innerText = pack.fxDesc;
             document.getElementById('cat-1').innerText = pack.cat1; document.getElementById('cat-2').innerText = pack.cat2;
             document.getElementById('cat-3').innerText = pack.cat3; document.getElementById('cat-4').innerText = pack.cat4;
-            document.getElementById('cat-5').innerText = pack.cat5; document.getElementById('cat-6').innerText = pack.cat6;
-            document.getElementById('cat-7').innerText = pack.cat7; document.getElementById('lang-noise-vol').innerText = pack.noiseVol;
-            document.getElementById('lang-main-title').innerText = pack.mainTitle; document.getElementById('lang-select-voice').innerText = pack.selectVoice;
-            document.getElementById('lang-start-fx').innerText = pack.startFx; document.getElementById('lang-end-fx').innerText = pack.endFx;
-            document.getElementById('lang-textarea').innerText = pack.textarea; document.getElementById('btn-speak').innerText = pack.btnSpeak;
-            document.getElementById('btn-stop').innerText = pack.btnStop; document.getElementById('lang-mgr-title').innerText = pack.mgrTitle;
-            document.getElementById('lang-start-sec').innerText = pack.startSec; document.getElementById('lang-cut-sec').innerText = pack.cutSec;
-            document.getElementById('val-cut').value = pack.valCut; document.getElementById('saveBtn').innerText = pack.saveBtn;
+            document.getElementById('lang-noise-vol').innerText = pack.noiseVol; document.getElementById('lang-main-title').innerText = pack.mainTitle;
+            document.getElementById('lang-select-voice').innerText = pack.selectVoice; document.getElementById('lang-start-fx').innerText = pack.startFx;
+            document.getElementById('lang-end-fx').innerText = pack.endFx; document.getElementById('lang-textarea').innerText = pack.textarea;
+            document.getElementById('btn-speak').innerText = pack.btnSpeak; document.getElementById('btn-stop').innerText = pack.btnStop;
+            document.getElementById('lang-mgr-title').innerText = pack.mgrTitle; document.getElementById('lang-start-sec').innerText = pack.startSec;
+            document.getElementById('lang-end-sec-label').innerText = pack.endSecLabel; document.getElementById('lang-fade-in-lbl').innerText = pack.fadeInLbl;
+            document.getElementById('lang-fade-out-lbl').innerText = pack.fadeOutLbl; document.getElementById('saveBtn').innerText = pack.saveBtn;
             document.getElementById('btn-export').innerText = pack.btnExport; document.getElementById('btn-import').childNodes[0].textContent = pack.btnImport;
             document.getElementById('lang-desk-title').innerText = pack.deskTitle; document.getElementById('btn-force').innerText = pack.btnForce;
-            document.getElementById('btn-force-stop').innerText = pack.btnForceStop;
-            document.getElementById('btn-capture').innerText = pack.btnCapture;
+            document.getElementById('btn-force-stop').innerText = pack.btnForceStop; document.getElementById('btn-capture').innerText = pack.btnCapture;
+            document.getElementById('lang-drop-title').innerText = pack.dropTitle; document.getElementById('lang-drop-desc').innerText = pack.dropDesc;
         }
 
         /* ==========================================================================
-           CORE 2. 고성능 WEB AUDIO API 오디오 가상 악기 및 효과음 엔진 (총 60종 고정밀 튜닝)
+           CORE 2. WEB AUDIO API SYNTHESIZER & REAL FILE BUFFER ROUTING MUX
            ========================================================================== */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let noiseNode = null; let noiseGain = null;
+        let localAudioStore = {}; // 로컬 오디오 이진 바이너리 버퍼 딕셔너리 데이터베이스
 
         function playBeep(freq, duration, type="sine", gainVal=0.15) {
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = type; osc.frequency.setValueAtTime(freq, now);
-            gainNode.gain.setValueAtTime(gainVal, now); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + duration);
+            osc.type = type; osc.frequency.setValueAtTime(freq, now); gainNode.gain.setValueAtTime(gainVal, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + duration);
         }
 
-        // --- 카테고리 1. 실전 대형 행사 연출 신디사이저 부 ---
+        // 압축 정비형 하이 엔드 FX 매트릭스 연산자 리스트
         function playFanfare() {
-            const now = audioCtx.currentTime; const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+            const now = audioCtx.currentTime; const notes = [130.81, 196.00, 261.63, 329.63, 392.00, 523.25];
             notes.forEach((f, i) => {
                 const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(f, now + i*0.08);
-                gainNode.gain.setValueAtTime(0.04, now + i*0.08); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now + i*0.08); osc.stop(now + 1.3);
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(f, now + i*0.06); gainNode.gain.setValueAtTime(0.04, now + i*0.06);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.5); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                osc.start(now + i*0.06); osc.stop(now + 1.6);
             });
         }
         function playDrumRoll() {
-            const now = audioCtx.currentTime;
-            for(let i=0; i<30; i++) {
-                setTimeout(() => playBeep(60 + Math.random()*40, 0.08, 'triangle', 0.25), i * 80);
-            }
-            setTimeout(() => playOrchestraHit(), 2400);
+            for(let i=0; i<35; i++) { setTimeout(() => playBeep(55 + Math.random()*35, 0.07, 'triangle', 0.25), i * 65); }
+            setTimeout(() => playOrchestraHit(), 2275);
         }
-        function playOrchestraHit() {
-            const now = audioCtx.currentTime; const freqs = [110, 220, 330, 440, 554, 660, 880];
-            freqs.forEach(f => {
-                playBeep(f, 0.4, 'sawtooth', 0.08); playBeep(f*1.01, 0.4, 'triangle', 0.08);
-            });
-        }
+        function playOrchestraHit() { [110, 220, 330, 440, 554, 660].forEach(f => { playBeep(f, 0.4, 'sawtooth', 0.08); playBeep(f*1.01, 0.4, 'triangle', 0.08); }); }
         function playEpicBrass() {
-            const now = audioCtx.currentTime; [146.83, 220.00, 293.66].forEach(f => {
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(f, now);
-                osc.frequency.linearRampToValueAtTime(f*1.5, now + 1.5); gainNode.gain.setValueAtTime(0.06, now);
-                gainNode.gain.linearRampToValueAtTime(0.001, now + 1.5); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.start(now); osc.stop(now + 1.51);
+            const now = audioCtx.currentTime; [110.00, 165.00, 220.00].forEach(f => {
+                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain(); osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(f, now); osc.frequency.linearRampToValueAtTime(f*1.33, now + 1.2);
+                gainNode.gain.setValueAtTime(0.07, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 1.2);
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 1.21);
             });
-        }
-        function playGlitchIntro() {
-            for(let i=0; i<15; i++) {
-                setTimeout(() => playBeep(1500 * Math.random(), 0.02, 'sawtooth', 0.15), i * 40);
-            }
-        }
-        function playLaserShow() {
-            for(let i=0; i<6; i++) {
-                setTimeout(() => {
-                    const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                    osc.frequency.setValueAtTime(2000 - i*200, now); osc.frequency.exponentialRampToValueAtTime(200, now + 0.2);
-                    gainNode.gain.setValueAtTime(0.1, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 0.2);
-                    osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.21);
-                }, i * 150);
-            }
-        }
-        function playRiser() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'sine'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(2500, now + 2.0);
-            gainNode.gain.setValueAtTime(0.01, now); gainNode.gain.linearRampToValueAtTime(0.2, now + 1.8);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 2.0); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-            osc.start(now); osc.stop(now + 2.01);
         }
         function playSubDrop() {
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.frequency.setValueAtTime(90, now); osc.frequency.exponentialRampToValueAtTime(20, now + 2.0);
-            gainNode.gain.setValueAtTime(0.4, now); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 2.01);
+            osc.frequency.setValueAtTime(100, now); osc.frequency.exponentialRampToValueAtTime(15, now + 1.8);
+            gainNode.gain.setValueAtTime(0.45, now); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 1.81);
         }
-
-        // --- 카테고리 2. 표준 안내방송 차임 프리셋 ---
+        function playRiser() {
+            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+            osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(2000, now + 2.5);
+            gainNode.gain.setValueAtTime(0.01, now); gainNode.gain.linearRampToValueAtTime(0.2, now + 2.3);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 2.5); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + 2.51);
+        }
         function playChime(isStart) {
-            const now = audioCtx.currentTime; const freqs = isStart ? [523.25, 659.25, 783.99, 1046.50] : [1046.50, 783.99, 659.25, 523.25];
-            freqs.forEach((freq, i) => { setTimeout(() => playBeep(freq, 0.6, 'sine', 0.15), i * 150); });
-        }
-        function playSchoolBell() {
-            const notes = [392.00, 523.25, 440.00, 392.00];
-            notes.forEach((f, i) => { setTimeout(() => playBeep(f, 0.7, 'sine', 0.2), i * 500); });
-        }
-        function playCyberBell() {
-            playBeep(880, 0.1, 'triangle', 0.2); setTimeout(() => playBeep(1320, 0.08, 'sine', 0.15), 80);
-            setTimeout(() => playBeep(1760, 0.2, 'sine', 0.15), 160);
+            const notes = isStart ? [523.25, 659.25, 783.99, 1046.50] : [1046.50, 783.99, 659.25, 523.25];
+            notes.forEach((freq, i) => { setTimeout(() => playBeep(freq, 0.5, 'sine', 0.15), i * 140); });
         }
         function playAirportChime() {
-            playBeep(554.37, 0.3, 'sine', 0.2); setTimeout(() => playBeep(440.00, 0.3, 'sine', 0.2), 200);
-            setTimeout(() => playBeep(349.23, 0.3, 'sine', 0.2), 400); setTimeout(() => playBeep(554.37, 0.5, 'sine', 0.2), 600);
+            playBeep(554.37, 0.25, 'sine', 0.18); setTimeout(() => playBeep(440.00, 0.25, 'sine', 0.18), 180);
+            setTimeout(() => playBeep(349.23, 0.25, 'sine', 0.18), 360); setTimeout(() => playBeep(554.37, 0.4, 'sine', 0.18), 540);
         }
-        function playElevatorBell() { playBeep(659.25, 0.3, 'sine', 0.2); setTimeout(() => playBeep(523.25, 0.5, 'sine', 0.2), 180); }
+        function playCyberBell() { playBeep(880, 0.08, 'triangle', 0.2); setTimeout(() => playBeep(1320, 0.06, 'sine', 0.15), 60); setTimeout(() => playBeep(1760, 0.18, 'sine', 0.15), 120); }
+        function playElevatorBell() { playBeep(659.25, 0.25, 'sine', 0.2); setTimeout(() => playBeep(523.25, 0.4, 'sine', 0.2), 150); }
         function playGongEcho() {
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(140, now); gainNode.gain.setValueAtTime(0.3, now);
-            gainNode.gain.linearRampToValueAtTime(0.05, now + 0.5); gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 2.51);
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(130, now); gainNode.gain.setValueAtTime(0.35, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 2.0); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+            osc.start(now); osc.stop(now + 2.01);
         }
-        function playDeepBell() {
-            const now = audioCtx.currentTime; [1, 1.2, 1.5, 2].forEach(p => {
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(110 * p, now); gainNode.gain.setValueAtTime(0.12, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 3.0); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.start(now); osc.stop(now + 3.1);
-            });
-        }
-
-        // --- 카테고리 3. 퀴즈 / 레크리에이션 게임 엔진 ---
-        function playSuccess() {
-            playBeep(523.25, 0.08, 'sine', 0.2); setTimeout(() => playBeep(783.99, 0.08, 'sine', 0.2), 80);
-            setTimeout(() => playBeep(1046.50, 0.3, 'sine', 0.3), 160);
-        }
-        function playFailure() { playBeep(220, 0.2, 'sawtooth', 0.25); setTimeout(() => playBeep(147, 0.5, 'sawtooth', 0.25), 150); }
-        function playTickTimer() {
-            for(let i=0; i<5; i++) { setTimeout(() => playBeep(880, 0.03, 'sine', 0.15), i * 1000); }
-            setTimeout(() => playBeep(330, 0.6, 'sawtooth', 0.25), 5000);
-        }
-        function playCoin() { playBeep(987.77, 0.05, 'sine', 0.15); setTimeout(() => playBeep(1318.51, 0.25, 'sine', 0.2), 60); }
-        function playLevelUp() {
-            const arr = [523, 659, 783, 1046, 1318]; arr.forEach((f,i)=> { setTimeout(() => playBeep(f, 0.15, 'sine', 0.15), i*80); });
-        }
-        function playSlotMachine() {
-            for(let i=0; i<10; i++) { setTimeout(() => playBeep(600 + i*100, 0.04, 'triangle', 0.15), i*80); }
-        }
-        function playWheelSpin() {
-            for(let i=0; i<12; i++) { setTimeout(() => playBeep(1200 - i*50, 0.02, 'sine', 0.15), i*i*10); }
-        }
-        function playPowerUp() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(1800, now + 0.6);
-            gainNode.gain.setValueAtTime(0.01, now); gainNode.gain.linearRampToValueAtTime(0.15, now + 0.5);
-            gainNode.gain.linearRampToValueAtTime(0.001, now + 0.6); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-            osc.start(now); osc.stop(now + 0.61);
-        }
-
-        // --- 카테고리 4. 알림음 및 경고 인프라 ---
-        function playDoublePop() { playBeep(600, 0.04, 'sine'); setTimeout(() => playBeep(850, 0.04, 'sine'), 50); }
-        function playError() { playBeep(160, 0.2, 'sawtooth', 0.25); playBeep(163, 0.2, 'sawtooth', 0.25); }
-        function playSirens() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'sine'; osc.frequency.setValueAtTime(700, now); osc.frequency.linearRampToValueAtTime(1100, now + 0.4);
-            osc.frequency.linearRampToValueAtTime(700, now + 0.8); gainNode.gain.setValueAtTime(0.1, now);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.81);
-        }
-        function playCardSwipe() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(800, now + 0.1);
-            gainNode.gain.setValueAtTime(0.12, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 0.1);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.11);
-        }
-        function playWhistle() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'sine'; osc.frequency.setValueAtTime(2200, now); gainNode.gain.setValueAtTime(0.25, now);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-            osc.start(now); osc.stop(now + 0.41);
-        }
-        function playRadarScan() { playBeep(1400, 0.06, 'sine', 0.2); setTimeout(() => playBeep(1390, 0.4, 'sine', 0.03), 60); }
-        function playEmergencyBuzzer() {
-            for(let i=0; i<3; i++) { setTimeout(() => { playBeep(220, 0.25, 'sawtooth', 0.3); }, i*400); }
-        }
-
-        // --- 카테고리 5. 일상 / 오피스 환경 리얼 사운드 ---
-        function playKeyboard(times) {
-            for(let i=0; i<times; i++) { setTimeout(() => { playBeep(180 + Math.random()*150, 0.02, 'triangle', 0.1); }, i * 90); }
-        }
-        function playPhoneRing() {
-            for(let i=0; i<8; i++) { setTimeout(() => { playBeep(1400, 0.02, 'sine', 0.1); playBeep(1600, 0.02, 'sine', 0.1); }, i * 50); }
-        }
-        function playDoorbell() { playBeep(659.25, 0.3, 'sine', 0.15); setTimeout(() => playBeep(523.25, 0.5, 'sine', 0.15), 250); }
-        function playCameraClick() { playBeep(1800, 0.01, 'triangle', 0.08); playBeep(120, 0.03, 'sawtooth', 0.15); }
-        function playCashRegister() { playBeep(1500, 0.05, 'sine', 0.15); setTimeout(() => playBeep(900, 0.2, 'triangle', 0.1), 50); }
-        function playPaperRustle() {
-            for(let i=0; i<5; i++) { setTimeout(() => playBeep(2000 + Math.random()*3000, 0.02, 'sine', 0.02), i*30); }
-        }
-        function playGlassClink() { playBeep(2800, 0.5, 'sine', 0.15); }
-        function playCarHorn() { playBeep(400, 0.15, 'sawtooth', 0.15); setTimeout(() => playBeep(400, 0.15, 'sawtooth', 0.15), 200); }
-
-        // --- 카테고리 6. 어쿠스틱 악기 시네마틱 라인업 ---
-        function playArpeggio(arr) { arr.forEach((f, i) => { setTimeout(() => playBeep(f, 0.4, 'sine', 0.1), i * 100); }); }
-        function playGuitarPluck() { playBeep(196.00, 0.6, 'triangle', 0.25); }
-        function playSynthesizerPad() { [261.63, 329.63, 392.00].forEach(f => playBeep(f, 1.5, 'sine', 0.05)); }
-        function playWaterDrop() { playBeep(1300, 0.02, 'sine', 0.2); setTimeout(() => playBeep(2400, 0.06, 'sine', 0.15), 15); }
-        function playWoodBlock() { playBeep(480, 0.06, 'triangle', 0.3); }
-        function playTriangleMelody() { playBeep(3135.96, 1.0, 'sine', 0.15); }
-        function playJazzOrgan() { [196, 293, 392, 493].forEach(f => playBeep(f, 0.8, 'sawtooth', 0.03)); }
-        function playRetroJump() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(900, now + 0.18);
-            gainNode.gain.setValueAtTime(0.15, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 0.18);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.19);
-        }
-
-        // --- 카테고리 7. 메디테이션 케어 및 앰비언트 노이즈 ---
-        function playWindGust() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(90, now); osc.frequency.linearRampToValueAtTime(220, now + 0.8);
-            osc.frequency.linearRampToValueAtTime(70, now + 1.5); gainNode.gain.setValueAtTime(0.01, now);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 1.51);
-        }
-        function playOceanWaves() {
-            const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-            osc.type = 'sine'; osc.frequency.setValueAtTime(75, now); gainNode.gain.setValueAtTime(0.01, now);
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 2.5);
-        }
-        function playHeartbeat() { playBeep(55, 0.08, 'triangle', 0.4); setTimeout(() => playBeep(50, 0.1, 'triangle', 0.3), 160); }
-        function playSingingBowl() {
-            const now = audioCtx.currentTime; [0, 1.5, -2].forEach(dt => {
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(293.66 + dt, now); gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 3.5); osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.start(now); osc.stop(now + 3.6);
-            });
-        }
-        function playRaindrop() {
-            for(let i=0; i<8; i++) { setTimeout(() => playBeep(1800 + Math.random()*400, 0.01, 'sine', 0.05), Math.random()*1000); }
-        }
+        function playSuccess() { playBeep(523.25, 0.06, 'sine', 0.2); setTimeout(() => playBeep(783.99, 0.06, 'sine', 0.2), 60); setTimeout(() => playBeep(1046.50, 0.25, 'sine', 0.3), 120); }
+        function playFailure() { playBeep(180, 0.15, 'sawtooth', 0.25); setTimeout(() => playBeep(130, 0.4, 'sawtooth', 0.25), 120); }
+        function playTickTimer() { for(let i=0; i<3; i++) { setTimeout(() => playBeep(880, 0.03, 'sine', 0.15), i * 1000); } setTimeout(() => playBeep(260, 0.5, 'sawtooth', 0.25), 3000); }
+        function playLevelUp() { [440, 554, 660, 880].forEach((f,i)=> { setTimeout(() => playBeep(f, 0.12, 'sine', 0.15), i*70); }); }
+        function playCoin() { playBeep(987.77, 0.04, 'sine', 0.15); setTimeout(() => playBeep(1318.51, 0.2, 'sine', 0.2), 50); }
+        function playWhistle() { const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.setValueAtTime(2000, now); gainNode.gain.setValueAtTime(0.25, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.35); osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.36); }
 
         function toggleNoise(type) {
             const volInput = document.getElementById('noiseVolume');
@@ -544,200 +346,217 @@
                 document.getElementById('brownNoiseBtn').classList.remove('bg-red-700', 'active-noise');
                 if (noiseGain) noiseGain.disconnect(); return;
             }
-            const bufferSize = 2 * audioCtx.sampleRate; const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const output = noiseBuffer.getChannelData(0);
-
-            if (type === 'white') {
-                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
-                document.getElementById('whiteNoiseBtn').classList.add('bg-blue-600', 'active-noise');
-            } else if (type === 'pink') {
+            const bufferSize = 2 * audioCtx.sampleRate; const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate); const output = noiseBuffer.getChannelData(0);
+            if (type === 'white') { for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1; document.getElementById('whiteNoiseBtn').classList.add('bg-blue-600', 'active-noise'); }
+            else if (type === 'pink') {
                 let b0, b1, b2, b3, b4, b5, b6; b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
                 for (let i = 0; i < bufferSize; i++) {
-                    let white = Math.random() * 2 - 1;
-                    b0 = 0.99886 * b0 + white * 0.0555179; b1 = 0.99332 * b1 + white * 0.0750759; b2 = 0.96900 * b2 + white * 0.1538520;
-                    b3 = 0.86650 * b3 + white * 0.3104856; b4 = 0.55000 * b4 + white * 0.5329522; b5 = -0.7616 * b5 - white * 0.0168980;
-                    output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362; output[i] *= 0.11; b6 = white * 0.115926;
+                    let white = Math.random() * 2 - 1; b0 = 0.99886 * b0 + white * 0.0555179; b1 = 0.99332 * b1 + white * 0.0750759; b2 = 0.96900 * b2 + white * 0.1538520; b3 = 0.86650 * b3 + white * 0.3104856; b4 = 0.55000 * b4 + white * 0.5329522; b5 = -0.7616 * b5 - white * 0.0168980; output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362; output[i] *= 0.11; b6 = white * 0.115926;
                 }
                 document.getElementById('pinkNoiseBtn').classList.add('bg-amber-600', 'active-noise');
             } else if (type === 'brown') {
-                let lastOut = 0.0;
-                for (let i = 0; i < bufferSize; i++) {
-                    let white = Math.random() * 2 - 1;
-                    output[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = output[i]; output[i] *= 3.5;
-                }
+                let lastOut = 0.0; for (let i = 0; i < bufferSize; i++) { let white = Math.random() * 2 - 1; output[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = output[i]; output[i] *= 3.5; }
                 document.getElementById('brownNoiseBtn').classList.add('bg-red-700', 'active-noise');
             }
-
-            noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = noiseBuffer; noiseNode.loop = true;
-            noiseGain = audioCtx.createGain(); noiseGain.gain.setValueAtTime(parseFloat(volInput.value), audioCtx.currentTime);
-            noiseNode.connect(noiseGain); noiseGain.connect(audioCtx.destination); noiseNode.start();
+            noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = noiseBuffer; noiseNode.loop = true; noiseGain = audioCtx.createGain(); noiseGain.gain.setValueAtTime(parseFloat(volInput.value), audioCtx.currentTime); noiseNode.connect(noiseGain); noiseGain.connect(audioCtx.destination); noiseNode.start();
             volInput.oninput = (e) => { if(noiseGain) noiseGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime); };
         }
 
+        // 로컬 오디오 파일/폴더 비동기 어레이버퍼 분석 디코더
+        function handleLocalFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i]; const reader = new FileReader();
+                reader.onload = function(e) {
+                    audioCtx.decodeAudioData(e.target.result, function(buffer) {
+                        const localId = `local-${Date.now()}-${i}`;
+                        localAudioStore[localId] = buffer;
+                        // 매트릭스 리스트에 가상 트랙 즉시 등록 유도
+                        videoDataList.push({ id: Date.now().toString() + i, videoId: localId, title: `📁 [Local] ${file.name}`, startSec: 0, endSec: Math.floor(buffer.duration), isLocal: true, fadeIn: 0, fadeOut: 500 });
+                        renderVideoList();
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
         /* ==========================================================================
-           CORE 3. TTS SPEECH API + FX 사운드 시작/종료 완벽 싱크 연동 체인
+           CORE 3. TTS SPEECH SYSTEM & CHAIN CONTROL
            ========================================================================== */
         const synth = window.speechSynthesis; const voiceSelect = document.getElementById('voiceSelect');
-        let allVoices = []; let lastSelectedVoiceName = "";
+        let allVoices = [];
 
         function updateVoiceList() {
-            allVoices = synth.getVoices(); if (voiceSelect.value) lastSelectedVoiceName = voiceSelect.value;
-            voiceSelect.innerHTML = ''; if (allVoices.length === 0) { voiceSelect.innerHTML = '<option value="">Voice List Empty</option>'; return; }
+            allVoices = synth.getVoices(); voiceSelect.innerHTML = '';
+            if (allVoices.length === 0) { voiceSelect.innerHTML = '<option value="">No Voices Found</option>'; return; }
             allVoices.forEach(voice => {
                 const option = document.createElement('option'); option.value = voice.name;
-                let hint = voice.name.includes('Neural') || voice.name.includes('Natural') ? ' ✨' : '';
-                option.textContent = `${voice.name} (${voice.lang})${hint}`; voiceSelect.appendChild(option);
+                option.textContent = `${voice.name} (${voice.lang})`; voiceSelect.appendChild(option);
             });
-            if (lastSelectedVoiceName && allVoices.some(v => v.name === lastSelectedVoiceName)) voiceSelect.value = lastSelectedVoiceName;
         }
         if (typeof synth !== 'undefined') { updateVoiceList(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = updateVoiceList; }
 
-        // [핵심 매커니즘] 시작 효과음 재생 종료 후 정확히 인터벌을 감지하여 TTS를 실행하는 프로 체인 구조
         function speakChain() {
-            if (synth.speaking || synth.pending) { synth.cancel(); }
-            
-            const startFxType = document.getElementById('ttsStartFx').value;
-            let delay = 0;
-
-            // 1. 시작 효과음 선별 재생 및 딜레이 연산
-            if (startFxType === 'chime') { playChime(true); delay = 1100; } 
+            if (synth.speaking) synth.cancel();
+            const startFxType = document.getElementById('ttsStartFx').value; let delay = 0;
+            if (startFxType === 'chime') { playChime(true); delay = 1100; }
             else if (startFxType === 'airport') { playAirportChime(); delay = 1300; }
             else if (startFxType === 'fanfare') { playFanfare(); delay = 1600; }
-            else if (startFxType === 'doublepop') { playDoublePop(); delay = 200; }
-            else if (startFxType === 'cyber') { playCyberBell(); delay = 400; }
 
-            // 2. 오디오 인터벌 확보 후 비동기 TTS 스트리밍 바인딩
             setTimeout(() => {
                 const text = document.getElementById('ttsText').value.trim(); if (!text) return;
-                const targetVoice = allVoices.find(v => v.name === voiceSelect.value);
                 const utterance = new SpeechSynthesisUtterance(text);
-                
+                const targetVoice = allVoices.find(v => v.name === voiceSelect.value);
                 if (targetVoice) { utterance.voice = targetVoice; utterance.lang = targetVoice.lang; }
-
-                // 3. TTS 음성 재생이 끝나는 즉시(onend) 종료 효과음 연계 바인딩
                 utterance.onend = function() {
                     const endFxType = document.getElementById('ttsEndFx').value;
                     if (endFxType === 'chime_end') playChime(false);
                     else if (endFxType === 'elevator') playElevatorBell();
                     else if (endFxType === 'success') playSuccess();
-                    else if (endFxType === 'gong') playGongEcho();
                 };
-
-                // 안드로이드/크롬 가상 런타임 프리징 방지용 하트비트 스크립트
-                const hb = setInterval(() => { if (!synth.speaking) clearInterval(hb); else { synth.pause(); synth.resume(); } }, 10000);
                 synth.speak(utterance);
             }, delay);
         }
-
         function stopText() { if (synth.speaking) synth.cancel(); }
 
         /* ==========================================================================
-           CORE 4. YOUTUBE NO-COOKIE IFRAME API - 광고 무력화 3초 컷 오디오 엔진
+           CORE 4. CUSTOM TIMELINE INTERVAL ENGINE & FADE IN/OUT MIXER
            ========================================================================== */
         let player = null; let stopTimeout = null; let progressInterval = null;
-        let isTrackingStarted = false; let currentPlayingStartSec = 0;
-        let videoDataList = [{ id: "init-1", videoId: "dQw4w9WgXcQ", title: "릭롤 시그널 팩", startSec: 43 }];
+        let activeLocalSource = null; let activeLocalGain = null; // 로컬 오디오 믹싱 노드
+        let isTrackingStarted = false; let currentTrack = null;
+        let videoDataList = [{ id: "init-1", videoId: "dQw4w9WgXcQ", title: "유튜브 기본 연출곡", startSec: 43, endSec: 55, isLocal: false, fadeIn: 0, fadeOut: 500 }];
         let currentEditingId = null;
 
         const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        document.getElementsByTagName('head')[0].appendChild(tag);
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-hidden-core', {
-                videoId: 'dQw4w9WgXcQ',
-                host: 'https://www.youtube-nocookie.com',
+                videoId: 'dQw4w9WgXcQ', host: 'https://www.youtube-nocookie.com',
                 playerVars: { 'playsinline': 1, 'controls': 0, 'disablekb': 1, 'autoplay': 0, 'rel': 0, 'modestbranding': 1 },
-                events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange }
+                events: { 'onReady': () => renderVideoList(), 'onStateChange': onPlayerStateChange }
             });
         }
-        function onPlayerReady() { renderVideoList(); }
 
         function onPlayerStateChange(event) {
             const statusText = document.getElementById('statusText');
-            const radioIcon = document.getElementById('radioIcon');
-            
-            if (event.data === YT.PlayerState.PLAYING) {
+            if (event.data === YT.PlayerState.PLAYING && currentTrack && !currentTrack.isLocal) {
                 const currentTime = player.getCurrentTime();
-                
-                // 지정 구간 매칭 계산식 (광고 실행 시 타임라인 격차 발생으로 우회)
-                if (Math.abs(currentTime - currentPlayingStartSec) > 5 && !isTrackingStarted) {
-                    statusText.innerText = (currentLang==='KO')?"⏳ 초기 광고 스크립트 자동 격리 중...":"⏳ Isolating Initial Ads...";
+                if (Math.abs(currentTime - currentTrack.startSec) > 5 && !isTrackingStarted) {
+                    statusText.innerText = (currentLang==='KO')?"⏳ 초기 광고 감지 및 차단 우회 중...":"⏳ Ad-Block Bypassing...";
                     return; 
                 }
-
                 if (!isTrackingStarted) {
                     isTrackingStarted = true;
-                    statusText.innerText = (currentLang==='KO')?"🔥 순수 음원 감지! 3초 정밀 컷 작동...":"🔥 Source Detected! 3s Cut Active...";
-                    radioIcon.classList.add('animate-spin', 'text-blue-400');
-                    
-                    clearTimeout(stopTimeout);
-                    stopTimeout = setTimeout(() => { controlActiveVideo('stop'); }, 3000);
-
-                    clearInterval(progressInterval);
-                    const startTimeStamp = Date.now();
-                    progressInterval = setInterval(() => {
-                        const elapsed = (Date.now() - startTimeStamp) / 1000;
-                        const displayOffset = elapsed > 3 ? 3.0 : elapsed;
-                        document.getElementById('timeProgress').innerText = `00:${String(Math.floor(displayOffset)).padStart(2,'0')} / 00:03`;
-                    }, 50);
+                    executeTimelineMonitor(currentTrack.startSec, currentTrack.endSec, currentTrack.fadeIn, currentTrack.fadeOut, false);
                 }
-            } else if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
-                radioIcon.classList.remove('animate-spin', 'text-blue-400');
             }
+        }
+
+        // 핵심 통합 가변 연산 스케줄러 (유튜브 & 로컬 통합 타임라인 처리기)
+        function executeTimelineMonitor(start, end, fadeInMs, fadeOutMs, isLocalTrack) {
+            const statusText = document.getElementById('statusText');
+            const durationSec = end - start;
+            statusText.innerText = (currentLang==='KO')?`🔥 맞춤 구간 재생 중 (${durationSec}초)`:`🔥 Playing Custom Segment (${durationSec}s)`;
+            document.getElementById('radioIcon').classList.add('animate-spin', 'text-blue-400');
+
+            // 가변 페이드 오디오 볼륨 커브 설계 (Web Audio API 연동 또는 유튜브 API 연동 볼륨 스위칭)
+            if (!isLocalTrack) {
+                // 유튜브 페이드인 믹싱
+                if(fadeInMs > 0) {
+                    player.setVolume(0); let vol = 0;
+                    let fInInterval = setInterval(() => { vol += 10; player.setVolume(vol); if(vol >= 100) clearInterval(fInInterval); }, fadeInMs / 10);
+                } else { player.setVolume(100); }
+
+                // 페이드 아웃 타이밍 역산 페이드 아웃 타임아웃
+                setTimeout(() => {
+                    let vol = 100;
+                    let fOutInterval = setInterval(() => { vol -= 10; player.setVolume(vol); if(vol <= 0) { clearInterval(fOutInterval); controlActiveVideo('stop'); } }, fadeOutMs / 10);
+                }, (durationSec * 1000) - fadeOutMs);
+            } else {
+                // 로컬 오디오 버퍼 기반 정밀 페이드 자동 제어 연산
+                const now = audioCtx.currentTime;
+                activeLocalGain.gain.setValueAtTime(0, now);
+                activeLocalGain.gain.linearRampToValueAtTime(0.3, now + (fadeInMs / 1000));
+                activeLocalGain.gain.setValueAtTime(0.3, now + (durationSec - (fadeOutMs / 1000)));
+                activeLocalGain.gain.linearRampToValueAtTime(0, now + durationSec);
+                
+                stopTimeout = setTimeout(() => { controlActiveVideo('stop'); }, durationSec * 1000);
+            }
+
+            // 실전 타임 인디케이터 기동
+            clearInterval(progressInterval); const startTimeStamp = Date.now();
+            progressInterval = setInterval(() => {
+                const elapsed = (Date.now() - startTimeStamp) / 1000;
+                if(elapsed >= durationSec) { clearInterval(progressInterval); }
+                document.getElementById('timeProgress').innerText = `00:${String(Math.floor(elapsed)).padStart(2,'0')} / 00:${String(durationSec).padStart(2,'0')}`;
+            }, 100);
         }
 
         function playTrackSegment(id) {
-            const track = videoDataList.find(v => v.id === id); if (!track || !player || typeof player.loadVideoById !== 'function') return;
+            controlActiveVideo('stop');
+            const track = videoDataList.find(v => v.id === id); if (!track) return;
+            currentTrack = track; isTrackingStarted = false;
             document.getElementById('playingTitle').innerText = track.title;
-            currentPlayingStartSec = track.startSec; isTrackingStarted = false;
-            
-            clearTimeout(stopTimeout); clearInterval(progressInterval);
-            document.getElementById('timeProgress').innerText = "00:00 / 00:03";
-            player.unMute(); player.setVolume(100);
-            player.loadVideoById({ videoId: track.videoId, startSeconds: track.startSec });
-        }
 
-        function controlActiveVideo(action) {
-            if (!player || typeof player.stopVideo !== 'function') return;
-            const statusText = document.getElementById('statusText');
-            if (action === 'play') { player.playVideo(); } 
-            else if (action === 'stop') {
-                player.stopVideo(); clearTimeout(stopTimeout); clearInterval(progressInterval); isTrackingStarted = false;
-                document.getElementById('timeProgress').innerText = "00:03 / 00:03";
-                statusText.innerText = (currentLang==='KO')?"🛑 3초 도달 완벽 오디오 락다운.":"🛑 3s Limit Reached. Audio Locked.";
-                document.getElementById('playingTitle').innerText = (currentLang==='KO')?"대기 중":"Standby";
+            if (track.isLocal) {
+                const buffer = localAudioStore[track.videoId]; if (!buffer) return;
+                activeLocalSource = audioCtx.createBufferSource(); activeLocalSource.buffer = buffer;
+                activeLocalGain = audioCtx.createGain(); activeLocalSource.connect(activeLocalGain); activeLocalGain.connect(audioCtx.destination);
+                
+                activeLocalSource.start(0, track.startSec);
+                executeTimelineMonitor(track.startSec, track.endSec, track.fadeIn, track.fadeOut, true);
+            } else {
+                if(!player || typeof player.loadVideoById !== 'function') return;
+                player.unMute(); player.setVolume(100);
+                player.loadVideoById({ videoId: track.videoId, startSeconds: track.startSec });
             }
         }
 
-        function extractVideoId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp); return (match && match[2].length === 11) ? match[2] : url;
+        function controlActiveVideo(action) {
+            if (action === 'stop') {
+                if (player && typeof player.stopVideo === 'function') player.stopVideo();
+                if (activeLocalSource) { try { activeLocalSource.stop(); } catch(e){} activeLocalSource = null; }
+                clearTimeout(stopTimeout); clearInterval(progressInterval); isTrackingStarted = false;
+                document.getElementById('radioIcon').classList.remove('animate-spin', 'text-blue-400');
+                document.getElementById('statusText').innerText = (currentLang==='KO')?"🛑 타겟 가변 엔드포인트 도달 - 완전 잠금":"🛑 Endpoint Reached - Locked";
+                document.getElementById('playingTitle').innerText = (currentLang==='KO')?"대기 중":"Standby";
+            } else if (action === 'play') {
+                if (currentTrack && currentTrack.isLocal) playTrackSegment(currentTrack.id);
+                else if (player) player.playVideo();
+            }
         }
-        function captureCurrentTime(target) {
-            if (!player || typeof player.getCurrentTime !== 'function') return;
-            document.getElementById('startSec').value = Math.floor(player.getCurrentTime());
-        }
+
+        function captureCurrentTime() { if (player && typeof player.getCurrentTime === 'function') document.getElementById('startSec').value = Math.floor(player.getCurrentTime()); }
+
         function saveVideoItem() {
             const urlInput = document.getElementById('ytUrl').value.trim(); const titleInput = document.getElementById('ytTitle').value.trim();
-            if(!urlInput) return; const vId = extractVideoId(urlInput); const title = titleInput || `Track_${vId.substring(0,4)}`;
-            const item = { id: currentEditingId || Date.now().toString(), videoId: vId, title: title, startSec: parseInt(document.getElementById('startSec').value) || 0 };
+            if(!urlInput) return;
+            const startVal = parseInt(document.getElementById('startSec').value) || 0;
+            const endVal = parseInt(document.getElementById('endSec').value) || (startVal + 10);
+            const item = {
+                id: currentEditingId || Date.now().toString(), videoId: urlInput,
+                title: titleInput || `Track_${urlInput.substring(0,4)}`, startSec: startVal, endSec: endVal,
+                isLocal: urlInput.startsWith('local-'), fadeIn: parseInt(document.getElementById('fadeInTime').value)||0, fadeOut: parseInt(document.getElementById('fadeOutTime').value)||0
+            };
             if (currentEditingId) { const idx = videoDataList.findIndex(v => v.id === currentEditingId); if(idx !== -1) videoDataList[idx] = item; } 
             else { videoDataList.push(item); }
             clearForm(); renderVideoList();
         }
+
         function renderVideoList() {
             const container = document.getElementById('videoListContainer'); container.innerHTML = '';
             videoDataList.forEach(item => {
                 const div = document.createElement('div');
-                div.className = "bg-slate-750 p-1.5 rounded-xl flex justify-between items-center border border-slate-700 text-xxs hover:border-slate-500 transition";
+                div.className = "bg-slate-750 p-1.5 rounded-xl flex justify-between items-center border border-slate-700 text-xxs hover:border-slate-500 transition cursor-pointer";
                 div.innerHTML = `
-                    <div class="flex flex-col truncate flex-1 cursor-pointer" onclick="playTrackSegment('${item.id}')">
-                        <span class="font-semibold text-slate-200 truncate">🎵 ${item.title}</span>
-                        <span class="text-[9px] text-slate-400">ID: ${item.videoId} | Start: ${item.startSec}s</span>
+                    <div class="flex flex-col truncate flex-1" onclick="playTrackSegment('${item.id}')">
+                        <span class="font-semibold text-slate-200 truncate">${item.title}</span>
+                        <span class="text-[9px] text-slate-400">구간: ${item.startSec}초 ~ ${item.endSec}초 (F-In: ${item.fadeIn}ms / F-Out: ${item.fadeOut}ms)</span>
                     </div>
                     <div class="flex gap-1 ml-1">
-                        <button onclick="editItem('${item.id}')" class="bg-slate-600 hover:bg-slate-500 px-1.5 py-0.5 rounded text-[9px]">Fix</button>
-                        <button onclick="deleteItem('${item.id}')" class="bg-red-900/60 hover:bg-red-800 px-1.5 py-0.5 rounded text-[9px] text-red-300">Del</button>
+                        <button onclick="editItem('${item.id}')" class="bg-slate-600 hover:bg-slate-500 px-1.5 py-0.5 rounded text-[9px]">수정</button>
+                        <button onclick="deleteItem('${item.id}')" class="bg-red-900/60 hover:bg-red-800 px-1.5 py-0.5 rounded text-[9px] text-red-300">삭제</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -746,29 +565,15 @@
         function editItem(id) {
             const item = videoDataList.find(v => v.id === id); if(!item) return;
             document.getElementById('ytUrl').value = item.videoId; document.getElementById('ytTitle').value = item.title;
-            document.getElementById('startSec').value = item.startSec; currentEditingId = id;
-            document.getElementById('saveBtn').innerText = (currentLang==='KO')?"트랙 업데이트":"Update Track";
+            document.getElementById('startSec').value = item.startSec; document.getElementById('endSec').value = item.endSec;
+            document.getElementById('fadeInTime').value = item.fadeIn; document.getElementById('fadeInVal').innerText = item.fadeIn;
+            document.getElementById('fadeOutTime').value = item.fadeOut; document.getElementById('fadeOutVal').innerText = item.fadeOut;
+            currentEditingId = id; document.getElementById('saveBtn').innerText = "업데이트";
         }
         function deleteItem(id) { videoDataList = videoDataList.filter(v => v.id !== id); renderVideoList(); }
-        function clearForm() { document.getElementById('ytUrl').value = ''; document.getElementById('ytTitle').value = ''; document.getElementById('startSec').value = '0'; currentEditingId = null; document.getElementById('saveBtn').innerText = (currentLang==='KO')?"트랙 슬롯 저장":"Save Track Slot"; }
-        function exportToCSV() {
-            let csv = "ID,VideoID,Title,StartSec\n"; videoDataList.forEach(v => { csv += `"${v.id}","${v.videoId}","${v.title}",${v.startSec}\n`; });
-            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob); link.setAttribute("download", "AudioStudio_v7_Backup.csv");
-            document.body.appendChild(link); link.click(); document.body.removeChild(link);
-        }
-        function importFromCSV(event) {
-            const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
-            reader.onload = function(e) {
-                const text = e.target.result; const lines = text.split("\n"); const newList = [];
-                for (let i = 1; i < lines.length; i++) {
-                    if (!lines[i].trim()) continue; const parts = lines[i].split(",");
-                    if (parts.length >= 4) { newList.push({ id: parts[0].replace(/"/g, ''), videoId: parts[1].replace(/"/g, ''), title: parts[2].replace(/"/g, ''), startSec: parseInt(parts[3]) || 0 }); }
-                }
-                if(newList.length > 0) { videoDataList = newList; renderVideoList(); }
-            };
-            reader.readAsText(file);
-        }
+        function clearForm() { document.getElementById('ytUrl').value = ''; document.getElementById('ytTitle').value = ''; document.getElementById('startSec').value = '0'; document.getElementById('endSec').value = '10'; currentEditingId = null; document.getElementById('saveBtn').innerText = "트랙 저장"; }
+        function exportToCSV() { let csv = "ID,VideoID,Title,StartSec,EndSec,FadeIn,FadeOut\n"; videoDataList.forEach(v => { csv += `"${v.id}","${v.videoId}","${v.title}",${v.startSec},${v.endSec},${v.fadeIn},${v.fadeOut}\n`; }); const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.setAttribute("download", "AudioStudio_v8_Backup.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+        function importFromCSV(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(e) { const text = e.target.result; const lines = text.split("\n"); const newList = []; for (let i = 1; i < lines.length; i++) { if (!lines[i].trim()) continue; const parts = lines[i].split(","); if (parts.length >= 7) { newList.push({ id: parts[0].replace(/"/g, ''), videoId: parts[1].replace(/"/g, ''), title: parts[2].replace(/"/g, ''), startSec: parseInt(parts[3]) || 0, endSec: parseInt(parts[4]) || 10, fadeIn: parseInt(parts[5]) || 0, fadeOut: parseInt(parts[6]) || 500, isLocal: parts[1].includes('local-') }); } } if(newList.length > 0) { videoDataList = newList; renderVideoList(); } }; reader.readAsText(file); }
     </script>
 </body>
 </html>
